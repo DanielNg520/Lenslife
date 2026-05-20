@@ -1,0 +1,5 @@
+The model watches how cloudy your lens solution gets over time and learns what "normal" looks like for you specifically.
+Every time you close the case, it measures how much protein and debris shook off your lens into the solution. It stores that number. After enough sessions, it knows your personal baseline — maybe you naturally run slightly cloudier because of your lens brand or environment.
+Then it does one thing: flag when today's reading is significantly off compared to your history. Not compared to some generic threshold — compared to you. That means both directions: unusually dirty (replace your lens) and unusually clean (something probably went wrong with the measurement — don't trust this reading).
+The UCI dataset just gives it a starting guess for what "normal" probably looks like before it has any of your data, so it isn't completely blind on day one.
+That's it. No diagnosis, no bacterial detection. Just: "this is outside your normal range — either the lens is fouled or the reading is suspect."
