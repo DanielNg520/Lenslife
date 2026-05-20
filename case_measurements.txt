@@ -1,0 +1,9 @@
+MEASUREMENTS FOR EACH TYPE OF CASE (IN MM)
+ESP32 - Devkit
+	Length:	65
+	Width:	30
+
+Unified Chamber +1 for liner
+	Inner diameter: 20mm
+	Depth: 10mm
+	Volume: ~3.1mL
