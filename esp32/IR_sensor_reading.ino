@@ -1,3 +1,8 @@
+/*
+ * DEPRECATED bench sketch — not used in production.
+ * Production firmware: esp32/firmware/ (ESP-IDF + NimBLE).
+ * Case RGB status uses the ESP32-S3 onboard WS2812 (see esp32/firmware/), not these pins.
+ */
 #include <Wire.h>
 #include <Adafruit_ADS1X15.h>
 #include <math.h>

@@ -1,0 +1,21 @@
+idf_component_register(
+    SRCS
+        "app_main.c"
+        "lenslife_nvs.c"
+        "lenslife_i2c.c"
+        "lenslife_ads1115.c"
+        "lenslife_ds18b20.c"
+        "lenslife_actuators.c"
+        "lenslife_sensor.c"
+        "lenslife_measure.c"
+        "lenslife_ble.c"
+        "lenslife_rgb_status.c"
+        "lenslife_power.c"
+    INCLUDE_DIRS "."
+    REQUIRES
+        nvs_flash
+        driver
+        esp_timer
+        bt
+        led_strip
+)
