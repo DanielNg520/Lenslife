@@ -4,12 +4,16 @@ class Esp32DeviceStatus {
   final bool phRisk;
   final bool tempReadValid;
   final bool blankIsStale;
+  final bool phSensorValid;
+  final bool irSensorValid;
 
   const Esp32DeviceStatus({
     required this.killConditionTriggered,
     required this.phRisk,
     required this.tempReadValid,
     required this.blankIsStale,
+    this.phSensorValid = false,
+    this.irSensorValid = false,
   });
 
   static Esp32DeviceStatus? tryParse(List<int> bytes) {
@@ -22,6 +26,8 @@ class Esp32DeviceStatus {
       phRisk: (status & 0x02) != 0,
       tempReadValid: (status & 0x04) != 0,
       blankIsStale: (status & 0x08) != 0,
+      phSensorValid: (status & 0x10) != 0,
+      irSensorValid: (status & 0x20) != 0,
     );
   }
 
@@ -29,6 +35,8 @@ class Esp32DeviceStatus {
     final parts = <String>[];
     if (killConditionTriggered) parts.add('kill triggered');
     if (phRisk) parts.add('pH risk');
+    if (phSensorValid) parts.add('pH sensor OK');
+    if (irSensorValid) parts.add('IR OK');
     if (tempReadValid) parts.add('temp OK');
     if (blankIsStale) parts.add('blank stale (>7d)');
     if (parts.isEmpty) return 'All clear';

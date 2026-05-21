@@ -166,7 +166,7 @@ class Esp32BleService {
     }
   }
 
-  void _onNotify(List<int> value, {Esp32DeviceStatus? deviceStatus}) {
+  Future<void> _onNotify(List<int> value, {Esp32DeviceStatus? deviceStatus}) async {
     final payload = Esp32SensorPayload.tryParse(value);
     if (payload == null) {
       developer.log(
@@ -175,7 +175,8 @@ class Esp32BleService {
       );
       return;
     }
-    onSensorPayload?.call(payload, deviceStatus);
+    final status = deviceStatus ?? await readDeviceStatus();
+    onSensorPayload?.call(payload, status);
   }
 
   Future<Esp32DeviceStatus?> readDeviceStatus() async {

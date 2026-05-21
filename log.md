@@ -131,7 +131,7 @@ Implemented per `lenslife_ml_cursor_prompt.md`. Health score (0–100) is comput
 | IR LED | 5 | Sensor illumination (not status RGB) |
 | Vibration motor | 6 | 10 s cleaning cycle |
 | Reed switch | 7 | Lid close → wake + trigger |
-| WS2812 RGB | 38 | Onboard status LED (see below) |
+| WS2812 RGB | 48 | Onboard status LED (DevKitC-1; see below) |
 
 **Not used:** SSD1306 OLED, external RGB LED pins from legacy `.ino`, GPIO 0/35/36/37/38 for generic IO (38 dedicated to WS2812).
 
@@ -141,7 +141,7 @@ Implemented per `lenslife_ml_cursor_prompt.md`. Health score (0–100) is comput
 |-------|----------|
 | **OLED** | Removed — no SSD1306 driver; Phase 0 logged on serial only |
 | **Reed switch** | **Kept** — lid close wakes device and starts measurement |
-| **Case RGB** | **Onboard WS2812 (GPIO38)** — green / yellow / red + blue while BLE advertising; not separate red/green/yellow discrete LEDs |
+| **Case RGB** | **Onboard WS2812 (GPIO48)** — green / yellow / red + blue while BLE advertising; not separate red/green/yellow discrete LEDs |
 | **Legacy `IR_sensor_reading.ino`** | Deprecated; marked with comment pointing to `esp32/firmware/` |
 
 ### 4.5 RGB status mapping
@@ -155,7 +155,7 @@ Implemented per `lenslife_ml_cursor_prompt.md`. Health score (0–100) is comput
 | Blue | BLE advertising |
 | Off | Deep sleep |
 
-Some DevKit boards wire WS2812 to **GPIO48** — change `LENSELIFE_PIN_RGB_WS2812` in `main/lenslife_pins.h` if needed.
+Default WS2812 pin is **GPIO48** (`LENSELIFE_PIN_RGB_WS2812` in `main/lenslife_pins.h`). Use **GPIO38** only on boards that wire the LED there.
 
 ### 4.6 Measurement sequence
 
@@ -396,11 +396,19 @@ Only three physics-derived features per session:
 - `float` only on ESP32; forbidden GPIO list unchanged  
 - ADS1115 PGA ±4.096 V unchanged  
 
-### 12.5 Follow-ups
+### 12.5 Sensor degradation (2026-05-20)
+
+- `lenslife_hw.c` — boot probe for IR / pH / temp / motor / RGB; minimum requirement is IR path  
+- IR-only: skips pH settle and A0; `ph_valid=false`; neutral pH 7.0 in payload; no false pH risk  
+- ML: `lenslife_anomaly_score_filtered()` and Welford updates skip invalid features  
+- STATUS bits `0x10` (pH valid), `0x20` (IR valid); Flutter gates pH score/Welford on `phSensorValid`  
+- NVS `ph_mode`: 0=auto, 1=force on, 2=force off  
+
+### 12.6 Follow-ups
 
 - Wire `wearDays` / `aqi` into `SensorSessionHandler.processPayload()` from onboarding and weather  
 - Replace `lenslife_classify.c` body after 20+ labeled bench sessions  
-- Update `ESP32_BLE_Implementation.md` to match 21-byte payload if used as source of truth  
+- Update `ESP32_BLE_Implementation.md` to match 21-byte payload and STATUS bits  
 
 ---
 

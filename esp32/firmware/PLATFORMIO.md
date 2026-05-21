@@ -96,7 +96,7 @@ Windows example: `COM3`
 | Port not found | Install CP210x or USB-JTAG driver; try another cable (data, not charge-only) |
 | Timed out waiting for packet header | Hold **BOOT**, press **RESET**, release **BOOT**, run upload again |
 | Wrong chip | Board must be **ESP32-S3**; env is `esp32-s3-n16r8` |
-| RGB LED wrong color / off | WS2812 may be on **GPIO48** on some DevKits — change `LENSELIFE_PIN_RGB_WS2812` in `main/lenslife_pins.h` |
+| RGB LED wrong color / off | Default is **GPIO48**; if your board uses GPIO38, change `LENSELIFE_PIN_RGB_WS2812` in `main/lenslife_pins.h` |
 
 ## After flash
 

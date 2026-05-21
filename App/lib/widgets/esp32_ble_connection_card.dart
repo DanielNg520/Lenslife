@@ -55,7 +55,8 @@ class _Esp32BleConnectionCardState extends State<Esp32BleConnectionCard> {
             'Health ${result.healthScore.round()}%'
             '${result.isAnomaly ? ' · anomaly' : ''}'
             '${result.killTriggered ? ' · replace soon' : ''}'
-            '${result.phRisk ? ' · pH risk' : ''}';
+            '${result.phRisk ? ' · pH risk' : ''}'
+            '${!result.phValid ? ' · IR-only' : ''}';
       }
     });
   }

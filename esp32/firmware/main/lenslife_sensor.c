@@ -3,6 +3,7 @@
 #include <math.h>
 #include <string.h>
 
+#include "lenslife_hw.h"
 #include "lenslife_pins.h"
 
 void lenslife_sensor_compute(
@@ -11,6 +12,7 @@ void lenslife_sensor_compute(
     float ph_raw,
     float temp_c,
     float t_blank,
+    bool ph_valid,
     lenslife_sensor_values_t *out)
 {
     float blank = t_blank;
@@ -20,7 +22,11 @@ void lenslife_sensor_compute(
 
     out->deltaT_fouling = (t_pre - t_post) / blank;
     out->deltaT_residual = t_post / blank;
-    out->ph_corrected = ph_raw + (temp_c - 25.0f) * 0.003f;
+    if (ph_valid) {
+        out->ph_corrected = ph_raw + (temp_c - 25.0f) * 0.003f;
+    } else {
+        out->ph_corrected = LENSELIFE_PH_NEUTRAL;
+    }
     out->temp_celsius = temp_c;
     out->t_blank = t_blank;
 }
@@ -39,6 +45,12 @@ uint8_t lenslife_sensor_build_status_byte(const lenslife_sensor_frame_t *frame)
     }
     if (frame->blank_stale) {
         status |= 0x08;
+    }
+    if (frame->ph_valid) {
+        status |= LENSELIFE_STATUS_PH_VALID;
+    }
+    if (frame->ir_valid) {
+        status |= LENSELIFE_STATUS_IR_VALID;
     }
     return status;
 }
@@ -61,7 +73,7 @@ lenslife_phase0_state_t lenslife_sensor_phase0_state(const lenslife_sensor_frame
     if (frame->kill_condition) {
         return LENSELIFE_PHASE0_REPLACE_SOON;
     }
-    if (frame->ph_risk) {
+    if (frame->ph_valid && frame->ph_risk) {
         return LENSELIFE_PHASE0_PH_RISK;
     }
     if (frame->anomaly_score > 2.5f) {

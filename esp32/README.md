@@ -3,7 +3,7 @@
 Production firmware: **`firmware/`** (ESP-IDF + NimBLE, ESP32-S3-WROOM-1 N16R8).
 
 - **Reed GPIO7** — lid closes → measure  
-- **Onboard WS2812 GPIO38** — green / yellow / red status (+ blue during BLE)  
+- **Onboard WS2812 GPIO48** — green / yellow / red status (+ blue during BLE)  
 - **Flutter app** — full health score and server sync  
 
 See [`firmware/README.md`](firmware/README.md).

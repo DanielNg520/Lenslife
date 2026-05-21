@@ -28,10 +28,29 @@ float welford_std(const welford_t *w)
 
 float lenslife_anomaly_score(float dT, float pH, float temp_c)
 {
+    return lenslife_anomaly_score_filtered(dT, pH, temp_c, true, true);
+}
+
+float lenslife_anomaly_score_filtered(
+    float dT,
+    float pH,
+    float temp_c,
+    bool ph_valid,
+    bool temp_valid)
+{
+    float sum = 0.0f;
     float z_dT = (dT - w_dT.mean) / (welford_std(&w_dT) + 1e-6f);
-    float z_pH = (pH - w_pH.mean) / (welford_std(&w_pH) + 1e-6f);
-    float z_temp = (temp_c - w_temp.mean) / (welford_std(&w_temp) + 1e-6f);
-    return sqrtf(z_dT * z_dT + z_pH * z_pH + z_temp * z_temp);
+    sum += z_dT * z_dT;
+
+    if (ph_valid) {
+        float z_pH = (pH - w_pH.mean) / (welford_std(&w_pH) + 1e-6f);
+        sum += z_pH * z_pH;
+    }
+    if (temp_valid) {
+        float z_temp = (temp_c - w_temp.mean) / (welford_std(&w_temp) + 1e-6f);
+        sum += z_temp * z_temp;
+    }
+    return sqrtf(sum);
 }
 
 void lenslife_welford_save(void)
@@ -81,8 +100,22 @@ void lenslife_welford_load(void)
 
 void lenslife_welford_update_session(float dT, float pH, float temp_c)
 {
+    lenslife_welford_update_session_filtered(dT, pH, temp_c, true, true);
+}
+
+void lenslife_welford_update_session_filtered(
+    float dT,
+    float pH,
+    float temp_c,
+    bool ph_valid,
+    bool temp_valid)
+{
     welford_update(&w_dT, dT);
-    welford_update(&w_pH, pH);
-    welford_update(&w_temp, temp_c);
+    if (ph_valid) {
+        welford_update(&w_pH, pH);
+    }
+    if (temp_valid) {
+        welford_update(&w_temp, temp_c);
+    }
     lenslife_welford_save();
 }

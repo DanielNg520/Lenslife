@@ -28,6 +28,8 @@ typedef struct {
     lenslife_sensor_values_t values;
     bool kill_condition;
     bool ph_risk;
+    bool ph_valid;
+    bool ir_valid;
     bool temp_valid;
     bool blank_stale;
     float anomaly_score;
@@ -47,6 +49,7 @@ void lenslife_sensor_compute(
     float ph_raw,
     float temp_c,
     float t_blank,
+    bool ph_valid,
     lenslife_sensor_values_t *out);
 
 uint8_t lenslife_sensor_build_status_byte(const lenslife_sensor_frame_t *frame);

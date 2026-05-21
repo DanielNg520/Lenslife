@@ -11,6 +11,9 @@ class SensorSessionResult {
   final bool isAnomaly;
   final bool killTriggered;
   final bool phRisk;
+  final bool phValid;
+  final bool irValid;
+  final bool tempValid;
 
   const SensorSessionResult({
     required this.payload,
@@ -18,6 +21,9 @@ class SensorSessionResult {
     required this.isAnomaly,
     required this.killTriggered,
     required this.phRisk,
+    required this.phValid,
+    required this.irValid,
+    required this.tempValid,
   });
 }
 
@@ -37,6 +43,10 @@ class SensorSessionHandler {
   }) async {
     await SessionService.ensureClusterIdForSync();
 
+    final phValid = deviceStatus?.phSensorValid ?? false;
+    final irValid = deviceStatus?.irSensorValid ?? true;
+    final tempValid = deviceStatus?.tempReadValid ?? false;
+
     final repo = await WelfordRepository.open();
     final wDT = await repo.load('delta_T');
     final wPH = await repo.load('pH');
@@ -44,14 +54,15 @@ class SensorSessionHandler {
 
     final killTriggered = deviceStatus?.killConditionTriggered ??
         payload.deltaTFouling > killThreshold;
-    final phRisk =
-        deviceStatus?.phRisk ?? isPhRisk(payload.phCorrected);
+    final phRisk = deviceStatus?.phRisk ??
+        isPhRisk(payload.phCorrected, phValid: phValid);
 
     final anomaly = isAnomaly(
       deltaT: payload.deltaTFouling,
       pH: payload.phCorrected,
       wDT: wDT,
       wPH: wPH,
+      phValid: phValid,
     );
 
     final score = computeHealthScore(
@@ -62,17 +73,22 @@ class SensorSessionHandler {
       aqi: aqi,
       wDT: wDT,
       wPH: wPH,
+      phValid: phValid,
     );
 
     final wDTNew = wDT.update(payload.deltaTFouling);
-    final wPHNew = wPH.update(payload.phCorrected);
-    final wTmpNew = wTmp.update(payload.tempCelsius);
-
     await repo.save('delta_T', wDTNew);
-    await repo.save('pH', wPHNew);
-    await repo.save('temp_c', wTmpNew);
 
-    await SessionService.recordSession(payload.deltaTFouling);
+    if (phValid) {
+      await repo.save('pH', wPH.update(payload.phCorrected));
+    }
+    if (tempValid) {
+      await repo.save('temp_c', wTmp.update(payload.tempCelsius));
+    }
+
+    if (irValid) {
+      await SessionService.recordSession(payload.deltaTFouling);
+    }
 
     return SensorSessionResult(
       payload: payload,
@@ -80,6 +96,9 @@ class SensorSessionHandler {
       isAnomaly: anomaly,
       killTriggered: killTriggered,
       phRisk: phRisk,
+      phValid: phValid,
+      irValid: irValid,
+      tempValid: tempValid,
     );
   }
 }

@@ -11,9 +11,9 @@ ESP-IDF + **NimBLE** peripheral firmware.
 | IR LED | 5 | Sensor illumination |
 | Vibration | 6 | Cleaning cycle |
 | Reed switch | 7 | Lid close → wake + measure |
-| **WS2812 RGB** | **38** | Built-in case status LED |
+| **WS2812 RGB** | **48** | Built-in case status LED (DevKitC-1) |
 
-**RGB pin:** `38` on DevKitC-1 v1.1 / LensLife spec. If your board uses **GPIO48**, change `LENSELIFE_PIN_RGB_WS2812` in `lenslife_pins.h`.
+**RGB pin:** `LENSELIFE_PIN_RGB_WS2812` in `lenslife_pins.h` (default **GPIO48**). Use **38** only if your PCB routes WS2812 there instead.
 
 ## Case status LED (WS2812)
 
@@ -26,6 +26,24 @@ ESP-IDF + **NimBLE** peripheral firmware.
 | Off | Deep sleep |
 
 Same thresholds as serial Phase 0 log. Flutter app still shows detailed health score.
+
+## Degraded / partial hardware
+
+At boot, `lenslife_hw_probe()` detects what is connected:
+
+| Capability | Required? | If missing |
+|------------|-------------|------------|
+| IR (ADS1115 A1 + LED) | **Yes** | Init fails — no fouling measurement |
+| pH (ADS1115 A0) | No | Skips 30 s settle + A0 read; IR-only mode |
+| DS18B20 | No | Uses 25 °C; no temp Welford updates |
+| Vibration motor | No | Skips 10 s clean; IR reads still run |
+| WS2812 RGB | No | Logs warning; measurement + BLE continue |
+
+**pH auto-detect:** A0 voltage must be within `0.15–3.9 V` at probe (open AIN usually fails → IR-only).
+
+**NVS `ph_mode` (u32):** `0` = auto (default), `1` = force pH on, `2` = force pH off.
+
+**DEVICE_STATUS bits:** `0x10` = pH valid this session, `0x20` = IR valid. Flutter skips pH scoring when `0x10` clear.
 
 ## Flow
 
@@ -58,4 +76,4 @@ Uses managed component `espressif/led_strip` (RMT driver for WS2812).
 
 ## Legacy sketch
 
-`IR_sensor_reading.ino` is deprecated (separate RGB pins). Production uses GPIO38 WS2812 via `firmware/`.
+`IR_sensor_reading.ino` is deprecated (separate RGB pins). Production uses GPIO48 WS2812 via `firmware/`.

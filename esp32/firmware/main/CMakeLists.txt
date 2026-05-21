@@ -2,6 +2,7 @@ idf_component_register(
     SRCS
         "app_main.c"
         "lenslife_nvs.c"
+        "lenslife_hw.c"
         "lenslife_i2c.c"
         "lenslife_ads1115.c"
         "lenslife_ds18b20.c"

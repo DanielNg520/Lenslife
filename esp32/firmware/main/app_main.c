@@ -1,5 +1,6 @@
 #include "lenslife_actuators.h"
 #include "lenslife_ble.h"
+#include "lenslife_hw.h"
 #include "lenslife_measure.h"
 #include "lenslife_nvs.h"
 #include "lenslife_pins.h"
@@ -19,7 +20,7 @@ static const char *TAG = "lenslife_main";
  * WiFi disabled by design. FL sync is Flutter's responsibility via phone WiFi.
  * Do not initialize esp_wifi or nvs_flash wifi entries.
  *
- * Onboard WS2812 (GPIO38): green / yellow / red case status + blue while BLE advertising.
+ * Onboard WS2812 (GPIO48): green / yellow / red case status + blue while BLE advertising.
  */
 
 static bool wait_for_reed_close(uint32_t timeout_ms)
@@ -112,8 +113,10 @@ void app_main(void)
     lenslife_measure_increment_session_count();
 
     lenslife_ble_stop();
-    lenslife_rgb_show_phase0(lenslife_sensor_phase0_state(&frame));
-    vTaskDelay(pdMS_TO_TICKS(2000));
+    if (lenslife_hw_caps()->rgb_ok) {
+        lenslife_rgb_show_phase0(lenslife_sensor_phase0_state(&frame));
+        vTaskDelay(pdMS_TO_TICKS(2000));
+    }
 
     lenslife_power_enter_deep_sleep();
 }
