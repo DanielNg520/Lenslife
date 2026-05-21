@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:math' as math;
+import 'package:flutter_blue_plus/flutter_blue_plus.dart';
+import 'dart:convert';
 
 void main() {
   runApp(const LensLifeApp());
@@ -24,6 +26,66 @@ class UserAccount {
 
 class AuthStore {
   static final Map<String, UserAccount> accounts = {};
+}
+
+enum LensType {
+  daily,
+  biweekly,
+  monthly,
+}
+
+class LensSettings {
+  LensType type;
+  int daysUsed;
+
+  LensSettings({
+    this.type = LensType.monthly,
+    this.daysUsed = 9,
+  });
+
+  int get limitDays {
+    switch (type) {
+      case LensType.daily:
+        return 1;
+      case LensType.biweekly:
+        return 14;
+      case LensType.monthly:
+        return 30;
+    }
+  }
+
+  String get typeLabel {
+    switch (type) {
+      case LensType.daily:
+        return 'Daily';
+      case LensType.biweekly:
+        return 'Biweekly';
+      case LensType.monthly:
+        return 'Monthly';
+    }
+  }
+
+  int get daysRemaining => (limitDays - daysUsed).clamp(0, limitDays);
+
+  double get percentUsed => (daysUsed / limitDays).clamp(0.0, 1.0);
+
+  String get replaceText {
+    if (daysRemaining == 0) return 'Replace now';
+    if (daysRemaining == 1) return '1 day left';
+    return '$daysRemaining days left';
+  }
+
+  String get lensAgeText => '$daysUsed / $limitDays days';
+}
+
+class AppSessionData {
+  static final LensSettings lensSettings = LensSettings();
+
+  static final List<double> wearTimeLast30Days = [
+    10.2, 11.0, 9.8, 12.1, 10.5, 8.7, 11.4, 10.9, 9.6, 12.3,
+    11.2, 10.1, 8.9, 9.7, 11.8, 12.0, 10.6, 9.5, 11.1, 10.8,
+    12.4, 9.9, 10.2, 11.7, 10.4, 8.8, 9.4, 11.3, 12.2, 11.2,
+  ];
 }
 
 class LensLifeApp extends StatelessWidget {
@@ -629,142 +691,1012 @@ class AccessibleAuthField extends StatelessWidget {
   }
 }
 
-class DashboardPage extends StatelessWidget {
+class DashboardPage extends StatefulWidget {
   final UserAccount account;
 
   const DashboardPage({super.key, required this.account});
 
   @override
+  State<DashboardPage> createState() => _DashboardPageState();
+}
+
+class _DashboardPageState extends State<DashboardPage> {
+  int selectedTab = 0;
+
+  LensSettings get lensSettings => AppSessionData.lensSettings;
+
+  void updateLensSettings(LensType type, int daysUsed) {
+    setState(() {
+      lensSettings.type = type;
+      lensSettings.daysUsed = daysUsed.clamp(0, type == LensType.daily ? 1 : type == LensType.biweekly ? 14 : 30);
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final pages = [
+      LensDashboardTab(
+        account: widget.account,
+        lensSettings: lensSettings,
+        onEditLens: () => showLensSetupSheet(
+          context: context,
+          current: lensSettings,
+          onSave: updateLensSettings,
+        ),
+      ),
+      const LinersSubscriptionTab(),
+      const OptometristTab(),
+    ];
+
     return Scaffold(
       backgroundColor: const Color(0xFFFBFAF7),
       body: SafeArea(
-        child: FocusTraversalGroup(
-          child: Center(
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 430),
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.fromLTRB(16, 12, 16, 32),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-  const Center(
-    child: Padding(
-      padding: EdgeInsets.only(top: 8, bottom: 12),
-      child: AppLogo(size: 140),
-    ),
-  ),
-
-  AccountHeader(account: account),
-  const SizedBox(height: 18),
-                    const Text(
-                      'Today’s Lens Check',
-                      style: TextStyle(
-                        fontSize: 31,
-                        fontWeight: FontWeight.w900,
-                        letterSpacing: -0.9,
-                        color: Color(0xFF151515),
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    const Text(
-                      'Lens health, buildup, and solution quality at a glance.',
-                      style: TextStyle(
-                        color: Color(0xFF444444),
-                        fontSize: 15,
-                        height: 1.35,
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    const WearStatusCard(),
-                    const SizedBox(height: 18),
-                    const DashboardRings(),
-                    const SizedBox(height: 14),
-                    LayoutBuilder(
-                      builder: (context, constraints) {
-                        final isNarrow = constraints.maxWidth < 360;
-                        return GridView.count(
-                          crossAxisCount: isNarrow ? 1 : 2,
-                          crossAxisSpacing: 12,
-                          mainAxisSpacing: 12,
-                          childAspectRatio: isNarrow ? 2.15 : 1.22,
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          children: const [
-                            MetricTile(
-                              icon: Icons.filter_alt_outlined,
-                              title: 'Deposit Level',
-                              value: 'Moderate',
-                              detail: 'Signal loss vs baseline',
-                              cueLabel: 'Orange bar means monitor closely.',
-                              progress: 0.47,
-                            ),
-                            MetricTile(
-                              icon: Icons.event_available_outlined,
-                              title: 'Replace In',
-                              value: '~4 days',
-                              detail: 'Based on current deposit buildup rate',
-                              cueLabel: 'Replace estimate is four days.',
-                              progress: null,
-                            ),
-                            MetricTile(
-                              icon: Icons.science_outlined,
-                              title: 'Solution pH',
-                              value: '6.6',
-                              detail: 'Slight bacterial activity detected',
-                              cueLabel: 'pH is lower than ideal. Clean tonight.',
-                              progress: null,
-                            ),
-                            MetricTile(
-                              icon: Icons.schedule_outlined,
-                              title: 'Wear Time',
-                              value: '11.2 hrs',
-                              detail: 'Today average',
-                              cueLabel: 'Wear time is high for today.',
-                              progress: null,
-                            ),
-                          ],
-                        );
-                      },
-                    ),
-                    const SizedBox(height: 18),
-                    const AccessibleAlertCard(),
-                    const SizedBox(height: 18),
-                    Row(
-                      children: [
-                        const Expanded(
-                          child: SectionTitle(title: 'Stored Readings'),
-                        ),
-                        Semantics(
-                          button: true,
-                          label: 'View all stored readings',
-                          child: TextButton.icon(
-                            onPressed: () {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text(
-                                    'Stored readings list will open in a future version.',
-                                  ),
-                                ),
-                              );
-                            },
-                            icon: const Icon(Icons.history_rounded, size: 18),
-                            label: const Text('View All'),
-                            style: TextButton.styleFrom(
-                              foregroundColor: const Color(0xFF875000),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 8),
-                    const StoredReadingsCard(),
-                  ],
-                ),
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 430),
+            child: pages[selectedTab],
+          ),
+        ),
+      ),
+      bottomNavigationBar: SafeArea(
+        minimum: const EdgeInsets.fromLTRB(18, 0, 18, 12),
+        child: Center(
+          heightFactor: 1,
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 390),
+            child: Container(
+              height: 64,
+              padding: const EdgeInsets.all(7),
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.96),
+                borderRadius: BorderRadius.circular(28),
+                border: Border.all(color: const Color(0xFFE8E2D8)),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.10),
+                    blurRadius: 24,
+                    offset: const Offset(0, 10),
+                  ),
+                ],
+              ),
+              child: Row(
+                children: [
+                  PremiumTabButton(
+                    label: 'Home',
+                    icon: Icons.dashboard_outlined,
+                    selectedIcon: Icons.dashboard_rounded,
+                    selected: selectedTab == 0,
+                    onTap: () => setState(() => selectedTab = 0),
+                  ),
+                  PremiumTabButton(
+                    label: 'Shop',
+                    icon: Icons.inventory_2_outlined,
+                    selectedIcon: Icons.inventory_2_rounded,
+                    selected: selectedTab == 1,
+                    onTap: () => setState(() => selectedTab = 1),
+                  ),
+                  PremiumTabButton(
+                    label: 'Care',
+                    icon: Icons.local_hospital_outlined,
+                    selectedIcon: Icons.local_hospital_rounded,
+                    selected: selectedTab == 2,
+                    onTap: () => setState(() => selectedTab = 2),
+                  ),
+                ],
               ),
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+
+class PremiumTabButton extends StatelessWidget {
+  final String label;
+  final IconData icon;
+  final IconData selectedIcon;
+  final bool selected;
+  final VoidCallback onTap;
+
+  const PremiumTabButton({
+    super.key,
+    required this.label,
+    required this.icon,
+    required this.selectedIcon,
+    required this.selected,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Semantics(
+        button: true,
+        selected: selected,
+        label: label,
+        child: GestureDetector(
+          onTap: onTap,
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 220),
+            curve: Curves.easeOutCubic,
+            margin: const EdgeInsets.symmetric(horizontal: 2),
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            decoration: BoxDecoration(
+              color: selected ? const Color(0xFF151515) : Colors.transparent,
+              borderRadius: BorderRadius.circular(22),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  selected ? selectedIcon : icon,
+                  size: 21,
+                  color: selected ? Colors.white : const Color(0xFF5C5146),
+                ),
+                AnimatedSize(
+                  duration: const Duration(milliseconds: 220),
+                  curve: Curves.easeOutCubic,
+                  child: selected
+                      ? Padding(
+                          padding: const EdgeInsets.only(left: 6),
+                          child: Text(
+                            label,
+                            maxLines: 1,
+                            overflow: TextOverflow.fade,
+                            softWrap: false,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w900,
+                              fontSize: 13,
+                            ),
+                          ),
+                        )
+                      : const SizedBox.shrink(),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class LensDashboardTab extends StatelessWidget {
+  final UserAccount account;
+  final LensSettings lensSettings;
+  final VoidCallback onEditLens;
+
+  const LensDashboardTab({
+    super.key,
+    required this.account,
+    required this.lensSettings,
+    required this.onEditLens,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final averageWearTime = AppSessionData.wearTimeLast30Days.reduce((a, b) => a + b) /
+        AppSessionData.wearTimeLast30Days.length;
+
+    return FocusTraversalGroup(
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.fromLTRB(16, 12, 16, 32),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Center(
+              child: Padding(
+                padding: EdgeInsets.only(top: 8, bottom: 12),
+                child: AppLogo(size: 165),
+              ),
+            ),
+            AccountHeader(account: account),
+            const SizedBox(height: 18),
+            const Text(
+              'Today’s Lens Check',
+              style: TextStyle(
+                fontSize: 31,
+                fontWeight: FontWeight.w900,
+                letterSpacing: -0.9,
+                color: Color(0xFF151515),
+              ),
+            ),
+            const SizedBox(height: 4),
+            const Text(
+              'Lens health, buildup, and solution quality at a glance.',
+              style: TextStyle(
+                color: Color(0xFF444444),
+                fontSize: 15,
+                height: 1.35,
+              ),
+            ),
+            const SizedBox(height: 16),
+            const BleConnectionCard(),
+            const SizedBox(height: 18),
+            const WearStatusCard(),
+            const SizedBox(height: 18),
+            DynamicDashboardRings(
+              lensAgeDays: lensSettings.daysUsed,
+              lensLimitDays: lensSettings.limitDays,
+              lensTypeLabel: lensSettings.typeLabel,
+            ),
+            const SizedBox(height: 14),
+            LayoutBuilder(
+              builder: (context, constraints) {
+                final isNarrow = constraints.maxWidth < 360;
+                return GridView.count(
+                  crossAxisCount: isNarrow ? 1 : 2,
+                  crossAxisSpacing: 12,
+                  mainAxisSpacing: 12,
+                  childAspectRatio: isNarrow ? 2.15 : 1.22,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  children: [
+                    const MetricTile(
+                      icon: Icons.filter_alt_outlined,
+                      title: 'Deposit Level',
+                      value: 'Moderate',
+                      detail: 'Signal loss vs baseline',
+                      cueLabel: 'Orange bar means monitor closely.',
+                      progress: 0.47,
+                    ),
+                    MetricTile(
+                      icon: Icons.event_available_outlined,
+                      title: 'Replace In',
+                      value: lensSettings.replaceText,
+                      detail: '${lensSettings.typeLabel} lenses • ${lensSettings.lensAgeText}',
+                      cueLabel: 'Replacement estimate based on user-entered lens age.',
+                      progress: null,
+                    ),
+                    MetricTile(
+                      icon: Icons.visibility_outlined,
+                      title: 'Lens Type',
+                      value: lensSettings.typeLabel,
+                      detail: 'Tap Edit Lens Setup to update age or replacement cycle',
+                      cueLabel: 'Lens type is ${lensSettings.typeLabel}.',
+                      progress: null,
+                    ),
+                    MetricTile(
+                      icon: Icons.schedule_outlined,
+                      title: 'Wear Time',
+                      value: '${averageWearTime.toStringAsFixed(1)} hrs',
+                      detail: '30-day average. Hardware reset will be added when case detection is connected.',
+                      cueLabel: 'Average wear time from last 30 days.',
+                      progress: null,
+                    ),
+                  ],
+                );
+              },
+            ),
+            const SizedBox(height: 12),
+            SizedBox(
+              width: double.infinity,
+              child: OutlinedButton.icon(
+                onPressed: onEditLens,
+                icon: const Icon(Icons.edit_calendar_rounded),
+                label: const Text('Edit Lens Setup'),
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: const Color(0xFF151515),
+                  side: const BorderSide(color: Color(0xFF151515)),
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                ),
+              ),
+            ),
+            const SizedBox(height: 18),
+            WearTimeHistoryCard(
+              values: AppSessionData.wearTimeLast30Days,
+              averageWearTime: averageWearTime,
+            ),
+            const SizedBox(height: 18),
+            const AccessibleAlertCard(),
+            const SizedBox(height: 18),
+            Row(
+              children: [
+                const Expanded(
+                  child: SectionTitle(title: 'Stored Readings'),
+                ),
+                Semantics(
+                  button: true,
+                  label: 'View all stored readings',
+                  child: TextButton.icon(
+                    onPressed: () {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text(
+                            'Stored readings list will open in a future version.',
+                          ),
+                        ),
+                      );
+                    },
+                    icon: const Icon(Icons.history_rounded, size: 18),
+                    label: const Text('View All'),
+                    style: TextButton.styleFrom(
+                      foregroundColor: const Color(0xFF875000),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            StoredReadingsCard(lensSettings: lensSettings),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+Future<void> showLensSetupSheet({
+  required BuildContext context,
+  required LensSettings current,
+  required void Function(LensType type, int daysUsed) onSave,
+}) async {
+  LensType selectedType = current.type;
+  final daysController = TextEditingController(text: current.daysUsed.toString());
+
+  await showModalBottomSheet(
+    context: context,
+    isScrollControlled: true,
+    backgroundColor: const Color(0xFFFBFAF7),
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
+    ),
+    builder: (context) {
+      return StatefulBuilder(
+        builder: (context, setModalState) {
+          int limitFor(LensType type) {
+            switch (type) {
+              case LensType.daily:
+                return 1;
+              case LensType.biweekly:
+                return 14;
+              case LensType.monthly:
+                return 30;
+            }
+          }
+
+          return Padding(
+            padding: EdgeInsets.fromLTRB(
+              20,
+              20,
+              20,
+              MediaQuery.of(context).viewInsets.bottom + 24,
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Lens Setup',
+                  style: TextStyle(
+                    fontSize: 26,
+                    fontWeight: FontWeight.w900,
+                    color: Color(0xFF151515),
+                  ),
+                ),
+                const SizedBox(height: 6),
+                const Text(
+                  'Tell LensLife how long you have had this pair so the lens age ring and replacement estimate update automatically.',
+                  style: TextStyle(
+                    color: Color(0xFF444444),
+                    height: 1.35,
+                  ),
+                ),
+                const SizedBox(height: 18),
+                const Text(
+                  'Lens replacement cycle',
+                  style: TextStyle(fontWeight: FontWeight.w800),
+                ),
+                const SizedBox(height: 8),
+                Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  children: [
+                    ChoiceChip(
+                      label: const Text('Daily'),
+                      selected: selectedType == LensType.daily,
+                      onSelected: (_) {
+                        setModalState(() {
+                          selectedType = LensType.daily;
+                          daysController.text = '1';
+                        });
+                      },
+                    ),
+                    ChoiceChip(
+                      label: const Text('Biweekly'),
+                      selected: selectedType == LensType.biweekly,
+                      onSelected: (_) {
+                        setModalState(() => selectedType = LensType.biweekly);
+                      },
+                    ),
+                    ChoiceChip(
+                      label: const Text('Monthly'),
+                      selected: selectedType == LensType.monthly,
+                      onSelected: (_) {
+                        setModalState(() => selectedType = LensType.monthly);
+                      },
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                TextField(
+                  controller: daysController,
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    labelText: 'Days you have had this lens pair',
+                    helperText: 'Max for ${selectedType == LensType.daily ? 'daily' : selectedType == LensType.biweekly ? 'biweekly' : 'monthly'} lenses: ${limitFor(selectedType)} days',
+                    filled: true,
+                    fillColor: Colors.white,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(18),
+                      borderSide: const BorderSide(color: Color(0xFFE5DED3)),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton.icon(
+                    onPressed: () {
+                      final entered = int.tryParse(daysController.text.trim()) ?? 0;
+                      final safeDays = entered.clamp(0, limitFor(selectedType));
+                      onSave(selectedType, safeDays);
+                      Navigator.pop(context);
+                    },
+                    icon: const Icon(Icons.check_rounded),
+                    label: const Text('Save Lens Setup'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF151515),
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+      );
+    },
+  );
+
+}
+
+class DynamicDashboardRings extends StatelessWidget {
+  final int lensAgeDays;
+  final int lensLimitDays;
+  final String lensTypeLabel;
+
+  const DynamicDashboardRings({
+    super.key,
+    required this.lensAgeDays,
+    required this.lensLimitDays,
+    required this.lensTypeLabel,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final lensPercent = (lensAgeDays / lensLimitDays).clamp(0.0, 1.0);
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final rings = [
+          const RingMetric(
+            title: 'Cleanliness',
+            centerText: '63%',
+            subText: 'clean',
+            percent: 0.63,
+            semanticLabel: 'Cleanliness is 63 percent clean.',
+          ),
+          const RingMetric(
+            title: 'Eye Safety',
+            centerText: 'Caution',
+            subText: 'Irritation risk',
+            percent: 0.42,
+            semanticLabel: 'Eye safety status is caution due to irritation risk.',
+          ),
+          RingMetric(
+            title: 'Lens Age',
+            centerText: '$lensAgeDays',
+            subText: '/ $lensLimitDays days',
+            percent: lensPercent,
+            semanticLabel: '$lensTypeLabel lens age is $lensAgeDays out of $lensLimitDays days.',
+            accentColor: const Color(0xFF2F86DE),
+          ),
+        ];
+
+        if (constraints.maxWidth < 360) {
+          return Wrap(
+            spacing: 12,
+            runSpacing: 12,
+            alignment: WrapAlignment.center,
+            children: rings,
+          );
+        }
+
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: rings,
+        );
+      },
+    );
+  }
+}
+
+class WearTimeHistoryCard extends StatelessWidget {
+  final List<double> values;
+  final double averageWearTime;
+
+  const WearTimeHistoryCard({
+    super.key,
+    required this.values,
+    required this.averageWearTime,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final maxValue = values.reduce((a, b) => a > b ? a : b);
+    final minValue = values.reduce((a, b) => a < b ? a : b);
+
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border.all(color: const Color(0xFFE5DED3)),
+        borderRadius: BorderRadius.circular(18),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'WEAR TIME HISTORY',
+            style: TextStyle(
+              fontSize: 12,
+              color: Color(0xFF555555),
+              fontWeight: FontWeight.w900,
+              letterSpacing: 1.5,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            '${averageWearTime.toStringAsFixed(1)} hrs average',
+            style: const TextStyle(
+              fontSize: 23,
+              fontWeight: FontWeight.w900,
+              color: Color(0xFF151515),
+            ),
+          ),
+          const SizedBox(height: 4),
+          const Text(
+            'Last 30 days. This is sample history for now; once case detection is connected, wear time can reset when lenses are placed in the case at night.',
+            style: TextStyle(
+              color: Color(0xFF444444),
+              height: 1.3,
+            ),
+          ),
+          const SizedBox(height: 16),
+          SizedBox(
+            height: 140,
+            child: CustomPaint(
+              painter: WearTimeChartPainter(values),
+              child: const SizedBox.expand(),
+            ),
+          ),
+          const SizedBox(height: 8),
+          Row(
+            children: [
+              Text(
+                'Low ${minValue.toStringAsFixed(1)}h',
+                style: const TextStyle(fontSize: 12, color: Color(0xFF555555)),
+              ),
+              const Spacer(),
+              Text(
+                'High ${maxValue.toStringAsFixed(1)}h',
+                style: const TextStyle(fontSize: 12, color: Color(0xFF555555)),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class WearTimeChartPainter extends CustomPainter {
+  final List<double> values;
+
+  WearTimeChartPainter(this.values);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    if (values.isEmpty) return;
+
+    final axisPaint = Paint()
+      ..color = const Color(0xFFE8E2D8)
+      ..strokeWidth = 1;
+
+    final barPaint = Paint()
+      ..color = const Color(0xFFB97812)
+      ..style = PaintingStyle.fill;
+
+    final maxValue = math.max(1.0, values.reduce((a, b) => a > b ? a : b));
+    final barGap = 2.0;
+    final barWidth = (size.width - (values.length - 1) * barGap) / values.length;
+
+    for (int i = 0; i < 4; i++) {
+      final y = size.height * (i / 3);
+      canvas.drawLine(Offset(0, y), Offset(size.width, y), axisPaint);
+    }
+
+    for (int i = 0; i < values.length; i++) {
+      final normalized = (values[i] / maxValue).clamp(0.0, 1.0);
+      final barHeight = size.height * normalized;
+      final x = i * (barWidth + barGap);
+      final rect = RRect.fromRectAndRadius(
+        Rect.fromLTWH(x, size.height - barHeight, barWidth, barHeight),
+        const Radius.circular(4),
+      );
+      canvas.drawRRect(rect, barPaint);
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant WearTimeChartPainter oldDelegate) {
+    return oldDelegate.values != values;
+  }
+}
+
+class LinersSubscriptionTab extends StatelessWidget {
+  const LinersSubscriptionTab({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.fromLTRB(16, 24, 16, 32),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Center(child: AppLogo(size: 165)),
+          const SizedBox(height: 18),
+          const Text(
+            'LensLife Liners',
+            style: TextStyle(
+              fontSize: 31,
+              fontWeight: FontWeight.w900,
+              letterSpacing: -0.9,
+              color: Color(0xFF151515),
+            ),
+          ),
+          const SizedBox(height: 6),
+          const Text(
+            'Disposable case liners help keep the sensing chamber consistent. Choose a liner-only starter kit or a refill plan with saline solution included.',
+            style: TextStyle(
+              color: Color(0xFF444444),
+              fontSize: 15,
+              height: 1.4,
+            ),
+          ),
+          const SizedBox(height: 18),
+          const LinerPlanCard(
+            title: 'Monthly Liner Refill',
+            price: '\$5.99 / month',
+            badge: 'Recommended',
+            details: 'Includes one bottle of saline solution and one fresh set of LensLife liners delivered monthly.',
+            icon: Icons.autorenew_rounded,
+          ),
+          const SizedBox(height: 12),
+          const LinerPlanCard(
+            title: '3-Month Pack',
+            price: '\$14.99',
+            badge: 'Best value',
+            details: 'Includes three bottles of saline solution and three sets of LensLife liners for a 3-month supply.',
+            icon: Icons.inventory_2_rounded,
+          ),
+          const SizedBox(height: 12),
+          const LinerPlanCard(
+            title: 'Starter Kit',
+            price: '\$2.99',
+            badge: 'Liners only',
+            details: 'Starter liner-only kit with six sets of LensLife liners. Saline solution not included.',
+            icon: Icons.shopping_bag_rounded,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class LinerPlanCard extends StatelessWidget {
+  final String title;
+  final String price;
+  final String badge;
+  final String details;
+  final IconData icon;
+
+  const LinerPlanCard({
+    super.key,
+    required this.title,
+    required this.price,
+    required this.badge,
+    required this.details,
+    required this.icon,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border.all(color: const Color(0xFFE5DED3)),
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.035),
+            blurRadius: 14,
+            offset: const Offset(0, 7),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              CircleAvatar(
+                backgroundColor: const Color(0xFFFFF1D6),
+                child: Icon(icon, color: const Color(0xFF875000)),
+              ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Text(
+                  title,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w900,
+                    fontSize: 18,
+                    color: Color(0xFF151515),
+                  ),
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFFFF1D6),
+                  borderRadius: BorderRadius.circular(999),
+                ),
+                child: Text(
+                  badge,
+                  style: const TextStyle(
+                    color: Color(0xFF875000),
+                    fontWeight: FontWeight.w800,
+                    fontSize: 12,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 14),
+          Text(
+            price,
+            style: const TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.w900,
+              color: Color(0xFF151515),
+            ),
+          ),
+          const SizedBox(height: 6),
+          Text(
+            details,
+            style: const TextStyle(
+              color: Color(0xFF444444),
+              height: 1.35,
+            ),
+          ),
+          const SizedBox(height: 14),
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              onPressed: () {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('$title checkout will be added later.')),
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF151515),
+                foregroundColor: Colors.white,
+              ),
+              child: const Text('Choose Plan'),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class OptometristTab extends StatelessWidget {
+  const OptometristTab({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.fromLTRB(16, 24, 16, 32),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Center(child: AppLogo(size: 165)),
+          const SizedBox(height: 18),
+          const Text(
+            'Eye Care Appointments',
+            style: TextStyle(
+              fontSize: 31,
+              fontWeight: FontWeight.w900,
+              letterSpacing: -0.9,
+              color: Color(0xFF151515),
+            ),
+          ),
+          const SizedBox(height: 6),
+          const Text(
+            'Book with an optometrist nearby when LensLife notices frequent irritation risk, dirty readings, or replacement reminders.',
+            style: TextStyle(
+              color: Color(0xFF444444),
+              fontSize: 15,
+              height: 1.4,
+            ),
+          ),
+          const SizedBox(height: 16),
+          Container(
+            padding: const EdgeInsets.all(14),
+            decoration: BoxDecoration(
+              color: const Color(0xFFFFF7E8),
+              borderRadius: BorderRadius.circular(18),
+              border: Border.all(color: const Color(0xFFD69A34)),
+            ),
+            child: const Row(
+              children: [
+                Icon(Icons.info_outline_rounded, color: Color(0xFF875000)),
+                SizedBox(width: 10),
+                Expanded(
+                  child: Text(
+                    'Prototype note: nearby providers are sample cards for now. Later this can connect to location services or a provider API.',
+                    style: TextStyle(
+                      color: Color(0xFF3D3D3D),
+                      height: 1.3,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 14),
+          const AppointmentCard(
+            name: 'Campus Vision Care',
+            distance: '0.8 mi away',
+            nextSlot: 'Today, 4:30 PM',
+            specialty: 'Contact lens fitting • irritation check',
+          ),
+          const SizedBox(height: 12),
+          const AppointmentCard(
+            name: 'ClearView Optometry',
+            distance: '1.6 mi away',
+            nextSlot: 'Tomorrow, 10:15 AM',
+            specialty: 'Routine exam • dry eye support',
+          ),
+          const SizedBox(height: 12),
+          const AppointmentCard(
+            name: 'Coastal Eye Clinic',
+            distance: '2.4 mi away',
+            nextSlot: 'Friday, 2:00 PM',
+            specialty: 'Lens replacement consultation',
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class AppointmentCard extends StatelessWidget {
+  final String name;
+  final String distance;
+  final String nextSlot;
+  final String specialty;
+
+  const AppointmentCard({
+    super.key,
+    required this.name,
+    required this.distance,
+    required this.nextSlot,
+    required this.specialty,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border.all(color: const Color(0xFFE5DED3)),
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              const CircleAvatar(
+                backgroundColor: Color(0xFFEAF3FF),
+                child: Icon(Icons.local_hospital_rounded, color: Color(0xFF2F86DE)),
+              ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Text(
+                  name,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w900,
+                    fontSize: 18,
+                    color: Color(0xFF151515),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 10),
+          Text(
+            distance,
+            style: const TextStyle(
+              color: Color(0xFF555555),
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          const SizedBox(height: 6),
+          Text(
+            specialty,
+            style: const TextStyle(
+              color: Color(0xFF444444),
+              height: 1.3,
+            ),
+          ),
+          const SizedBox(height: 10),
+          Row(
+            children: [
+              const Icon(Icons.calendar_today_rounded, size: 18, color: Color(0xFF875000)),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  'Next available: $nextSlot',
+                  style: const TextStyle(
+                    color: Color(0xFF875000),
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 14),
+          SizedBox(
+            width: double.infinity,
+            child: OutlinedButton.icon(
+              onPressed: () {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('Appointment request for $name will be added later.')),
+                );
+              },
+              icon: const Icon(Icons.event_available_rounded),
+              label: const Text('Request Appointment'),
+              style: OutlinedButton.styleFrom(
+                foregroundColor: const Color(0xFF151515),
+                side: const BorderSide(color: Color(0xFF151515)),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -1294,28 +2226,33 @@ class AccessibleAlertCard extends StatelessWidget {
 }
 
 class StoredReadingsCard extends StatelessWidget {
-  const StoredReadingsCard({super.key});
+  final LensSettings lensSettings;
+
+  const StoredReadingsCard({
+    super.key,
+    required this.lensSettings,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Semantics(
       label:
-          'Stored readings list with deposit level moderate, solution pH 6.6, cleanliness 63 percent, and lens age 9 days.',
+          'Stored readings list with deposit level moderate, solution pH 6.6, cleanliness 63 percent, and lens age ${lensSettings.lensAgeText}.',
       child: Container(
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(18),
           border: Border.all(color: const Color(0xFFE5DED3)),
         ),
-        child: const Column(
+        child: Column(
           children: [
-            ReadingTile(title: 'Deposit Level', value: 'Moderate', time: 'Today'),
-            Divider(height: 1),
-            ReadingTile(title: 'Solution pH', value: '6.6', time: 'Today'),
-            Divider(height: 1),
-            ReadingTile(title: 'Cleanliness', value: '63%', time: 'Today'),
-            Divider(height: 1),
-            ReadingTile(title: 'Lens Age', value: '9 days', time: 'Today'),
+            const ReadingTile(title: 'Deposit Level', value: 'Moderate', time: 'Today'),
+            const Divider(height: 1),
+            const ReadingTile(title: 'Solution pH', value: '6.6', time: 'Today'),
+            const Divider(height: 1),
+            const ReadingTile(title: 'Cleanliness', value: '63%', time: 'Today'),
+            const Divider(height: 1),
+            ReadingTile(title: 'Lens Age', value: lensSettings.lensAgeText, time: lensSettings.typeLabel),
           ],
         ),
       ),
@@ -1373,6 +2310,247 @@ class SectionTitle extends StatelessWidget {
         fontWeight: FontWeight.w900,
         color: Color(0xFF111111),
         fontSize: 17,
+      ),
+    );
+  }
+}
+class BleConnectionCard extends StatefulWidget {
+  const BleConnectionCard({super.key});
+
+  @override
+  State<BleConnectionCard> createState() => _BleConnectionCardState();
+}
+
+class _BleConnectionCardState extends State<BleConnectionCard> {
+  static final Guid serviceUuid =
+      Guid("4fafc201-1fb5-459e-8fcc-c5c9c331914b");
+
+  static final Guid characteristicUuid =
+      Guid("beb5483e-36e1-4688-b7f5-ea07361b26a8");
+
+  BluetoothDevice? connectedDevice;
+  BluetoothCharacteristic? lensCharacteristic;
+  StreamSubscription<List<ScanResult>>? scanSubscription;
+  StreamSubscription<List<int>>? valueSubscription;
+
+  bool scanning = false;
+  bool connecting = false;
+
+  String status = "Not connected";
+  String latestReading = "Waiting for device";
+
+  Future<void> scanAndConnect() async {
+    setState(() {
+      scanning = true;
+      status = "Scanning for LensLife device...";
+    });
+
+    try {
+      await FlutterBluePlus.stopScan();
+      await scanSubscription?.cancel();
+
+      scanSubscription = FlutterBluePlus.scanResults.listen((results) async {
+        for (final result in results) {
+          final name = result.device.platformName;
+
+          if (name.contains("LensLife") || name.contains("XIAO")) {
+            await FlutterBluePlus.stopScan();
+            await scanSubscription?.cancel();
+            await connectToDevice(result.device);
+            return;
+          }
+        }
+      });
+
+      await FlutterBluePlus.startScan(
+        timeout: const Duration(seconds: 8),
+      );
+
+      await Future.delayed(const Duration(seconds: 8));
+
+      if (connectedDevice == null && mounted) {
+        setState(() {
+          scanning = false;
+          status = "No LensLife device found";
+        });
+      }
+    } catch (e) {
+      setState(() {
+        scanning = false;
+        status = "Scan failed: $e";
+      });
+    }
+  }
+
+  Future<void> connectToDevice(BluetoothDevice device) async {
+    setState(() {
+      scanning = false;
+      connecting = true;
+      status = "Connecting...";
+    });
+
+    try {
+      await device.connect(
+        timeout: const Duration(seconds: 10),
+        license: License.free,
+      );
+
+      final services = await device.discoverServices();
+
+      for (final service in services) {
+        if (service.uuid == serviceUuid) {
+          for (final characteristic in service.characteristics) {
+            if (characteristic.uuid == characteristicUuid) {
+              lensCharacteristic = characteristic;
+
+              if (characteristic.properties.notify) {
+                await characteristic.setNotifyValue(true);
+
+                await valueSubscription?.cancel();
+                valueSubscription = characteristic.lastValueStream.listen((value) {
+                  final text = utf8.decode(
+                    value,
+                    allowMalformed: true,
+                  );
+
+                  if (mounted) {
+                    setState(() {
+                      latestReading = text;
+                    });
+                  }
+                });
+              }
+
+              connectedDevice = device;
+
+              setState(() {
+                connecting = false;
+                status = "Connected to ${device.platformName}";
+              });
+
+              return;
+            }
+          }
+        }
+      }
+
+      setState(() {
+        connecting = false;
+        status = "LensLife BLE service not found";
+      });
+    } catch (e) {
+      setState(() {
+        connecting = false;
+        status = "Connection failed: $e";
+      });
+    }
+  }
+
+  Future<void> disconnect() async {
+    try {
+      await valueSubscription?.cancel();
+      await connectedDevice?.disconnect();
+    } catch (_) {}
+
+    setState(() {
+      connectedDevice = null;
+      lensCharacteristic = null;
+      latestReading = "Waiting for device";
+      status = "Disconnected";
+    });
+  }
+
+  @override
+  void dispose() {
+    scanSubscription?.cancel();
+    valueSubscription?.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final connected = connectedDevice != null;
+
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(18),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(
+          color: const Color(0xFFE5DED3),
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'DEVICE CONNECTION',
+            style: TextStyle(
+              fontSize: 12,
+              color: Color(0xFF555555),
+              fontWeight: FontWeight.w900,
+              letterSpacing: 1.5,
+            ),
+          ),
+          const SizedBox(height: 12),
+          Row(
+            children: [
+              Icon(
+                connected
+                    ? Icons.bluetooth_connected
+                    : Icons.bluetooth_disabled,
+                color: connected ? Colors.green : Colors.orange,
+              ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Text(
+                  status,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w800,
+                    fontSize: 15,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 14),
+          Text(
+            latestReading,
+            style: const TextStyle(
+              fontSize: 14,
+              color: Color(0xFF444444),
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          const SizedBox(height: 18),
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton.icon(
+              onPressed: scanning || connecting
+                  ? null
+                  : connected
+                      ? disconnect
+                      : scanAndConnect,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF151515),
+                foregroundColor: Colors.white,
+              ),
+              icon: Icon(
+                connected ? Icons.link_off : Icons.bluetooth_searching,
+              ),
+              label: Text(
+                scanning
+                    ? "Scanning..."
+                    : connecting
+                        ? "Connecting..."
+                        : connected
+                            ? "Disconnect"
+                            : "Scan & Connect",
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
