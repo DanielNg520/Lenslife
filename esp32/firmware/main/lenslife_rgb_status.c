@@ -67,6 +67,10 @@ void lenslife_rgb_show_phase0(lenslife_phase0_state_t state)
         ESP_LOGI(TAG, "RGB signal: RED (replace soon / fouling)");
         set_rgb(255, 0, 0);
         break;
+    case LENSELIFE_PHASE0_ANOMALY:
+        ESP_LOGI(TAG, "RGB signal: ORANGE (anomaly detected)");
+        set_rgb(255, 128, 0);
+        break;
     case LENSELIFE_PHASE0_PH_RISK:
     default:
         ESP_LOGI(TAG, "RGB signal: YELLOW (pH risk)");

@@ -43,38 +43,42 @@ uint8_t lenslife_sensor_build_status_byte(const lenslife_sensor_frame_t *frame)
     return status;
 }
 
-void lenslife_sensor_pack_payload(const lenslife_sensor_values_t *values, uint8_t out[20])
+void lenslife_sensor_pack_ble_payload(const lenslife_sensor_frame_t *frame, uint8_t out[21])
 {
-    memcpy(&out[0], &values->deltaT_fouling, 4);
-    memcpy(&out[4], &values->deltaT_residual, 4);
-    memcpy(&out[8], &values->ph_corrected, 4);
-    memcpy(&out[12], &values->temp_celsius, 4);
-    memcpy(&out[16], &values->t_blank, 4);
+    ble_payload_t payload = {
+        .delta_T_fouling = frame->values.deltaT_fouling,
+        .delta_T_residual = frame->values.deltaT_residual,
+        .pH_corrected = frame->values.ph_corrected,
+        .temp_c = frame->values.temp_celsius,
+        .anomaly_score = frame->anomaly_score,
+        .classify_result = frame->classify_result,
+    };
+    memcpy(out, &payload, sizeof(payload));
 }
 
 lenslife_phase0_state_t lenslife_sensor_phase0_state(const lenslife_sensor_frame_t *frame)
 {
-    if (frame->ph_risk) {
-        return LENSELIFE_PHASE0_PH_RISK;
-    }
     if (frame->kill_condition) {
         return LENSELIFE_PHASE0_REPLACE_SOON;
     }
-    if (frame->values.deltaT_fouling <= LENSELIFE_DELTAT_KILL &&
-        frame->values.ph_corrected >= LENSELIFE_PH_LOW &&
-        frame->values.ph_corrected <= LENSELIFE_PH_HIGH) {
-        return LENSELIFE_PHASE0_SAFE;
+    if (frame->ph_risk) {
+        return LENSELIFE_PHASE0_PH_RISK;
     }
-    return LENSELIFE_PHASE0_PH_RISK;
+    if (frame->anomaly_score > 2.5f) {
+        return LENSELIFE_PHASE0_ANOMALY;
+    }
+    return LENSELIFE_PHASE0_SAFE;
 }
 
 const char *lenslife_phase0_label(lenslife_phase0_state_t state)
 {
     switch (state) {
     case LENSELIFE_PHASE0_SAFE:
-        return "Safe";
+        return "Safe to wear";
     case LENSELIFE_PHASE0_REPLACE_SOON:
         return "Replace soon";
+    case LENSELIFE_PHASE0_ANOMALY:
+        return "Anomaly detected";
     case LENSELIFE_PHASE0_PH_RISK:
     default:
         return "pH risk";

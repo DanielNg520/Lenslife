@@ -10,6 +10,8 @@
 #include "lenslife_nvs.h"
 #include "lenslife_pins.h"
 #include "lenslife_rgb_status.h"
+#include "ml/lenslife_classify.h"
+#include "ml/lenslife_ml.h"
 
 #include "esp_log.h"
 #include "freertos/FreeRTOS.h"
@@ -52,6 +54,7 @@ bool lenslife_measure_init_hardware(void)
     lenslife_nvs_read_float("t_blank", &s_t_blank, 1.0f);
     lenslife_nvs_read_u32("blank_timestamp", &s_blank_timestamp, 0);
     lenslife_nvs_read_u32("session_count", &s_session_count, 0);
+    lenslife_welford_load();
 
     ESP_LOGI(TAG, "NVS t_blank=%.4f blank_ts=%lu session_count=%lu",
              s_t_blank, (unsigned long)s_blank_timestamp, (unsigned long)s_session_count);
@@ -112,6 +115,21 @@ bool lenslife_measure_run_cycle(lenslife_sensor_frame_t *frame_out)
     frame_out->ph_risk = frame_out->values.ph_corrected < LENSELIFE_PH_LOW ||
                          frame_out->values.ph_corrected > LENSELIFE_PH_HIGH;
     frame_out->temp_valid = temp_valid;
+
+    frame_out->anomaly_score = lenslife_anomaly_score(
+        frame_out->values.deltaT_fouling,
+        frame_out->values.ph_corrected,
+        frame_out->values.temp_celsius);
+
+    lenslife_welford_update_session(
+        frame_out->values.deltaT_fouling,
+        frame_out->values.ph_corrected,
+        frame_out->values.temp_celsius);
+    frame_out->classify_result = (uint8_t)lenslife_classify(
+        frame_out->values.deltaT_fouling,
+        frame_out->values.ph_corrected,
+        frame_out->values.temp_celsius,
+        (int)s_session_count);
 
     uint32_t now = (uint32_t)time(NULL);
     if (s_blank_timestamp == 0 || now < s_blank_timestamp) {

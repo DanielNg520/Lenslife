@@ -50,9 +50,9 @@ class _Esp32BleConnectionCardState extends State<Esp32BleConnectionCard> {
       latestReading = payload.summary;
       deviceStatusText = statusByte?.summary ?? '';
       if (result != null) {
-        lastHealthScore = result.healthScore;
+        lastHealthScore = result.healthScore.round();
         healthSummary =
-            'Health ${result.healthScore}%'
+            'Health ${result.healthScore.round()}%'
             '${result.isAnomaly ? ' · anomaly' : ''}'
             '${result.killTriggered ? ' · replace soon' : ''}'
             '${result.phRisk ? ' · pH risk' : ''}';

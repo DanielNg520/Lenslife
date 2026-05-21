@@ -31,7 +31,7 @@ static uint16_t s_sensor_val_handle;
 static uint16_t s_status_val_handle;
 static uint16_t s_command_val_handle;
 
-static uint8_t s_sensor_payload[20];
+static uint8_t s_sensor_payload[21];
 static uint8_t s_status_byte;
 static lenslife_sensor_frame_t s_last_frame;
 
@@ -121,7 +121,7 @@ static int gatt_access_cb(uint16_t conn_handle, uint16_t attr_handle,
 static void publish_status_from_frame(const lenslife_sensor_frame_t *frame)
 {
     s_last_frame = *frame;
-    lenslife_sensor_pack_payload(&frame->values, s_sensor_payload);
+    lenslife_sensor_pack_ble_payload(frame, s_sensor_payload);
     s_status_byte = lenslife_sensor_build_status_byte(frame);
 }
 

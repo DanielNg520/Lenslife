@@ -6,7 +6,7 @@ class SessionDatabase {
   SessionDatabase._();
 
   static const _dbName = 'lenslife.db';
-  static const _dbVersion = 2;
+  static const _dbVersion = 3;
   static const statsRowId = 1;
 
   static Database? _database;
@@ -39,14 +39,35 @@ class SessionDatabase {
           )
         ''');
         await db.insert('sessions', {'id': statsRowId});
+        await _createWelfordStateTable(db);
       },
       onUpgrade: (db, oldVersion, newVersion) async {
         if (oldVersion < 2) {
           await _addColumnIfMissing(db, 'prior_mean', 'REAL');
           await _addColumnIfMissing(db, 'prior_std', 'REAL');
         }
+        if (oldVersion < 3) {
+          await _createWelfordStateTable(db);
+        }
       },
     );
+  }
+
+  static Future<void> _createWelfordStateTable(Database db) async {
+    await db.execute('''
+      CREATE TABLE IF NOT EXISTS welford_state (
+        feature TEXT PRIMARY KEY,
+        mean    REAL NOT NULL DEFAULT 0.0,
+        m2      REAL NOT NULL DEFAULT 0.0,
+        count   INTEGER NOT NULL DEFAULT 0
+      )
+    ''');
+    await db.execute('''
+      INSERT OR IGNORE INTO welford_state (feature, mean, m2, count)
+      VALUES ('delta_T', 0.0, 0.0, 0),
+             ('pH',      0.0, 0.0, 0),
+             ('temp_c',  0.0, 0.0, 0)
+    ''');
   }
 
   static Future<void> _addColumnIfMissing(

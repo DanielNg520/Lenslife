@@ -7,6 +7,8 @@ idf_component_register(
         "lenslife_ds18b20.c"
         "lenslife_actuators.c"
         "lenslife_sensor.c"
+        "ml/lenslife_ml.c"
+        "ml/lenslife_classify.c"
         "lenslife_measure.c"
         "lenslife_ble.c"
         "lenslife_rgb_status.c"
