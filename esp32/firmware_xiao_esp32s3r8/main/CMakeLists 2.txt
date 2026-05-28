@@ -1,0 +1,27 @@
+idf_component_register(
+    SRCS
+        "../../main/app_main.c"
+        "../../main/lenslife_nvs.c"
+        "../../main/lenslife_hw.c"
+        "../../main/lenslife_i2c.c"
+        "../../main/lenslife_ads1115.c"
+        "../../main/lenslife_ds18b20.c"
+        "../../main/lenslife_battery.c"
+        "../../main/lenslife_actuators.c"
+        "../../main/lenslife_sensor.c"
+        "../../main/ml/lenslife_ml.c"
+        "../../main/ml/lenslife_classify.c"
+        "../../main/lenslife_measure.c"
+        "../../main/lenslife_ble.c"
+        "../../main/lenslife_rgb_status.c"
+        "../../main/lenslife_power.c"
+    INCLUDE_DIRS
+        "../../main"
+    REQUIRES
+        nvs_flash
+        driver
+        esp_adc
+        esp_timer
+        bt
+        led_strip
+)
