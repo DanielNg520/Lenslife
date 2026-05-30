@@ -43,8 +43,9 @@ bool lenslife_i2c_init(void)
     }
 
     s_ready = true;
-    ESP_LOGI(TAG, "I2C ready SDA=%d SCL=%d (ADS1115 @ 0x%02X)",
-             LENSELIFE_PIN_I2C_SDA, LENSELIFE_PIN_I2C_SCL, LENSELIFE_ADS1115_ADDR);
+    ESP_LOGI(TAG, "I2C ready D4/SDA=%d D5/SCL=%d @ %lu Hz (ADS1115 0x%02X)",
+             LENSELIFE_PIN_I2C_SDA, LENSELIFE_PIN_I2C_SCL,
+             (unsigned long)LENSELIFE_I2C_FREQ_HZ, LENSELIFE_ADS1115_ADDR);
     return true;
 }
 

@@ -39,6 +39,9 @@ static SemaphoreHandle_t s_sync_sem;
 static uint16_t s_conn_handle = BLE_HS_CONN_HANDLE_NONE;
 static bool s_notify_enabled;
 static uint8_t s_own_addr_type;
+static bool s_initialized;
+static bool s_should_advertise;
+static bool s_is_advertising;
 
 static int gatt_access_cb(uint16_t conn_handle, uint16_t attr_handle,
                           struct ble_gatt_access_ctxt *ctxt, void *arg);
@@ -132,12 +135,15 @@ static int gap_event(struct ble_gap_event *event, void *arg)
 
     switch (event->type) {
     case BLE_GAP_EVENT_CONNECT:
+        s_is_advertising = false;
         if (event->connect.status == 0) {
             s_conn_handle = event->connect.conn_handle;
             ESP_LOGI(TAG, "connected handle=%d", s_conn_handle);
         } else {
             ESP_LOGW(TAG, "connect failed status=%d", event->connect.status);
-            lenslife_ble_start_advertising();
+            if (s_should_advertise) {
+                lenslife_ble_start_advertising();
+            }
         }
         break;
 
@@ -145,7 +151,10 @@ static int gap_event(struct ble_gap_event *event, void *arg)
         ESP_LOGI(TAG, "disconnected reason=%d", event->disconnect.reason);
         s_conn_handle = BLE_HS_CONN_HANDLE_NONE;
         s_notify_enabled = false;
-        lenslife_ble_start_advertising();
+        s_is_advertising = false;
+        if (s_should_advertise) {
+            lenslife_ble_start_advertising();
+        }
         break;
 
     case BLE_GAP_EVENT_SUBSCRIBE:
@@ -158,7 +167,10 @@ static int gap_event(struct ble_gap_event *event, void *arg)
         break;
 
     case BLE_GAP_EVENT_ADV_COMPLETE:
-        lenslife_ble_start_advertising();
+        s_is_advertising = false;
+        if (s_should_advertise) {
+            lenslife_ble_start_advertising();
+        }
         break;
 
     default:
@@ -183,6 +195,10 @@ static void on_reset(int reason)
 
 bool lenslife_ble_init(void)
 {
+    if (s_initialized) {
+        return true;
+    }
+
     esp_err_t err = nimble_port_init();
     if (err != ESP_OK) {
         ESP_LOGE(TAG, "nimble_port_init failed");
@@ -207,6 +223,7 @@ bool lenslife_ble_init(void)
 
     s_sync_sem = xSemaphoreCreateBinary();
     nimble_port_freertos_init(lenslife_ble_host_task);
+    s_initialized = true;
     return true;
 }
 
@@ -219,6 +236,12 @@ void lenslife_ble_host_task(void *param)
 
 bool lenslife_ble_start_advertising(void)
 {
+    s_should_advertise = true;
+
+    if (s_conn_handle != BLE_HS_CONN_HANDLE_NONE || s_is_advertising) {
+        return true;
+    }
+
     struct ble_hs_adv_fields fields = {0};
     fields.flags = BLE_HS_ADV_F_DISC_GEN | BLE_HS_ADV_F_BREDR_UNSUP;
     fields.name = (uint8_t *)LENSELIFE_BLE_DEVICE_NAME;
@@ -245,6 +268,7 @@ bool lenslife_ble_start_advertising(void)
         ESP_LOGE(TAG, "adv_start rc=%d", rc);
         return false;
     }
+    s_is_advertising = true;
     ESP_LOGI(TAG, "advertising as %s", LENSELIFE_BLE_DEVICE_NAME);
     return true;
 }
@@ -291,8 +315,13 @@ bool lenslife_ble_wait_and_notify(const lenslife_sensor_frame_t *frame, uint32_t
 
 void lenslife_ble_stop(void)
 {
+    s_should_advertise = false;
+
     if (s_conn_handle != BLE_HS_CONN_HANDLE_NONE) {
         ble_gap_terminate(s_conn_handle, BLE_ERR_REM_USER_CONN_TERM);
     }
-    ble_gap_adv_stop();
+    if (s_is_advertising) {
+        ble_gap_adv_stop();
+        s_is_advertising = false;
+    }
 }

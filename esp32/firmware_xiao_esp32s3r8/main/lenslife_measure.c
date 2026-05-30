@@ -7,7 +7,6 @@
 #include "lenslife_i2c.h"
 #include "lenslife_actuators.h"
 #include "lenslife_ads1115.h"
-#include "lenslife_ds18b20.h"
 #include "lenslife_nvs.h"
 #include "lenslife_pins.h"
 #include "lenslife_rgb_status.h"
@@ -37,8 +36,8 @@ static void wait_ph_settle(void)
 {
     const TickType_t deadline = xTaskGetTickCount() + pdMS_TO_TICKS(LENSELIFE_PH_SETTLE_MS);
     while (xTaskGetTickCount() < deadline) {
-        if (!lenslife_reed_is_closed()) {
-            ESP_LOGI(TAG, "pH settle done (lid opened)");
+        if (!lenslife_button_is_pressed()) {
+            ESP_LOGI(TAG, "pH settle done (button released)");
             return;
         }
         vTaskDelay(pdMS_TO_TICKS(100));
@@ -141,9 +140,6 @@ bool lenslife_measure_run_cycle(lenslife_sensor_frame_t *frame_out)
     }
     ir_valid = true;
 
-    if (caps->temp_hw) {
-        temp_valid = lenslife_ds18b20_read_celsius(&temp_c);
-    }
     if (!temp_valid) {
         temp_c = 25.0f;
     }

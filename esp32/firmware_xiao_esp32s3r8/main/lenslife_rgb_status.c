@@ -2,13 +2,19 @@
 
 #include "lenslife_pins.h"
 
+#include "driver/gpio.h"
 #include "esp_log.h"
-#include "led_strip.h"
 
 static const char *TAG = "lenslife_rgb";
 
-static led_strip_handle_t s_strip;
 static bool s_ready;
+
+static void drive_rgb(bool r, bool g, bool b)
+{
+    gpio_set_level(LENSELIFE_PIN_RGB_RED, r ? 1 : 0);
+    gpio_set_level(LENSELIFE_PIN_RGB_GREEN, g ? 1 : 0);
+    gpio_set_level(LENSELIFE_PIN_RGB_BLUE, b ? 1 : 0);
+}
 
 bool lenslife_rgb_init(void)
 {
@@ -16,40 +22,26 @@ bool lenslife_rgb_init(void)
         return true;
     }
 
-    led_strip_config_t strip_config = {
-        .strip_gpio_num = LENSELIFE_PIN_RGB_WS2812,
-        .max_leds = 1,
-        .led_pixel_format = LED_PIXEL_FORMAT_GRB,
-        .led_model = LED_MODEL_WS2812,
-        .flags.invert_out = false,
-    };
+    uint64_t mask = (1ULL << LENSELIFE_PIN_RGB_RED) | (1ULL << LENSELIFE_PIN_RGB_GREEN) |
+                    (1ULL << LENSELIFE_PIN_RGB_BLUE);
 
-    led_strip_rmt_config_t rmt_config = {
-        .clk_src = RMT_CLK_SRC_DEFAULT,
-        .resolution_hz = 10 * 1000 * 1000,
-        .flags.with_dma = false,
+    gpio_config_t cfg = {
+        .pin_bit_mask = mask,
+        .mode = GPIO_MODE_OUTPUT,
+        .pull_up_en = GPIO_PULLUP_DISABLE,
+        .pull_down_en = GPIO_PULLDOWN_DISABLE,
+        .intr_type = GPIO_INTR_DISABLE,
     };
-
-    esp_err_t err = led_strip_new_rmt_device(&strip_config, &rmt_config, &s_strip);
-    if (err != ESP_OK) {
-        ESP_LOGE(TAG, "led_strip init failed on GPIO%d: %s",
-                 LENSELIFE_PIN_RGB_WS2812, esp_err_to_name(err));
+    if (gpio_config(&cfg) != ESP_OK) {
+        ESP_LOGE(TAG, "RGB GPIO config failed");
         return false;
     }
 
-    lenslife_rgb_off();
     s_ready = true;
-    ESP_LOGI(TAG, "XIAO external WS2812 status LED on GPIO%d", LENSELIFE_PIN_RGB_WS2812);
+    lenslife_rgb_off();
+    ESP_LOGI(TAG, "common-cathode RGB on D1/D2/D3 (GPIO %d/%d/%d)",
+             LENSELIFE_PIN_RGB_RED, LENSELIFE_PIN_RGB_GREEN, LENSELIFE_PIN_RGB_BLUE);
     return true;
-}
-
-static void set_rgb(uint8_t r, uint8_t g, uint8_t b)
-{
-    if (!s_ready || !s_strip) {
-        return;
-    }
-    led_strip_set_pixel(s_strip, 0, r, g, b);
-    led_strip_refresh(s_strip);
 }
 
 void lenslife_rgb_show_phase0(lenslife_phase0_state_t state)
@@ -60,21 +52,21 @@ void lenslife_rgb_show_phase0(lenslife_phase0_state_t state)
 
     switch (state) {
     case LENSELIFE_PHASE0_SAFE:
-        ESP_LOGI(TAG, "RGB signal: GREEN (safe)");
-        set_rgb(0, 255, 0);
+        ESP_LOGI(TAG, "RGB: GREEN (safe)");
+        drive_rgb(false, true, false);
         break;
     case LENSELIFE_PHASE0_REPLACE_SOON:
-        ESP_LOGI(TAG, "RGB signal: RED (replace soon / fouling)");
-        set_rgb(255, 0, 0);
+        ESP_LOGI(TAG, "RGB: RED (replace soon / fouling)");
+        drive_rgb(true, false, false);
         break;
     case LENSELIFE_PHASE0_ANOMALY:
-        ESP_LOGI(TAG, "RGB signal: ORANGE (anomaly detected)");
-        set_rgb(255, 128, 0);
+        ESP_LOGI(TAG, "RGB: ORANGE (anomaly — red+green)");
+        drive_rgb(true, true, false);
         break;
     case LENSELIFE_PHASE0_PH_RISK:
     default:
-        ESP_LOGI(TAG, "RGB signal: YELLOW (pH risk)");
-        set_rgb(255, 200, 0);
+        ESP_LOGI(TAG, "RGB: YELLOW (pH risk — red+green)");
+        drive_rgb(true, true, false);
         break;
     }
 }
@@ -84,15 +76,14 @@ void lenslife_rgb_show_connecting(void)
     if (!s_ready && !lenslife_rgb_init()) {
         return;
     }
-    ESP_LOGI(TAG, "RGB signal: BLUE (BLE advertising)");
-    set_rgb(0, 0, 255);
+    ESP_LOGI(TAG, "RGB: BLUE (BLE advertising)");
+    drive_rgb(false, false, true);
 }
 
 void lenslife_rgb_off(void)
 {
-    if (!s_strip) {
+    if (!s_ready) {
         return;
     }
-    led_strip_clear(s_strip);
-    led_strip_refresh(s_strip);
+    drive_rgb(false, false, false);
 }

@@ -5,7 +5,6 @@ idf_component_register(
         "lenslife_hw.c"
         "lenslife_i2c.c"
         "lenslife_ads1115.c"
-        "lenslife_ds18b20.c"
         "lenslife_battery.c"
         "lenslife_actuators.c"
         "lenslife_sensor.c"
@@ -22,5 +21,4 @@ idf_component_register(
         esp_adc
         esp_timer
         bt
-        led_strip
 )

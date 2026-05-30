@@ -9,8 +9,14 @@
 
 static const char *TAG = "lenslife_actuators";
 
+static bool s_ready;
+
 bool lenslife_actuators_init(void)
 {
+    if (s_ready) {
+        return true;
+    }
+
     uint64_t out_mask = (1ULL << LENSELIFE_PIN_IR_LED);
 #if LENSELIFE_USE_VIBRATION
     out_mask |= (1ULL << LENSELIFE_PIN_VIBRATION);
@@ -27,14 +33,14 @@ bool lenslife_actuators_init(void)
         return false;
     }
 
-    gpio_config_t reed_cfg = {
-        .pin_bit_mask = 1ULL << LENSELIFE_PIN_REED_SWITCH,
+    gpio_config_t btn_cfg = {
+        .pin_bit_mask = 1ULL << LENSELIFE_PIN_BUTTON,
         .mode = GPIO_MODE_INPUT,
         .pull_up_en = GPIO_PULLUP_ENABLE,
         .pull_down_en = GPIO_PULLDOWN_DISABLE,
         .intr_type = GPIO_INTR_DISABLE,
     };
-    if (gpio_config(&reed_cfg) != ESP_OK) {
+    if (gpio_config(&btn_cfg) != ESP_OK) {
         return false;
     }
 
@@ -42,9 +48,9 @@ bool lenslife_actuators_init(void)
 #if LENSELIFE_USE_VIBRATION
     lenslife_vibration_set(false);
 #endif
-    ESP_LOGI(TAG, "GPIO IR=%d MOTOR=%d REED=%d RGB_WS2812=%d",
-             LENSELIFE_PIN_IR_LED, LENSELIFE_PIN_VIBRATION, LENSELIFE_PIN_REED_SWITCH,
-             LENSELIFE_PIN_RGB_WS2812);
+    ESP_LOGI(TAG, "IR=D9(GPIO%d) motor=D10(GPIO%d) button=D7(GPIO%d)",
+             LENSELIFE_PIN_IR_LED, LENSELIFE_PIN_VIBRATION, LENSELIFE_PIN_BUTTON);
+    s_ready = true;
     return true;
 }
 
@@ -69,7 +75,12 @@ void lenslife_vibration_run_ms(uint32_t duration_ms)
     lenslife_vibration_set(false);
 }
 
+bool lenslife_button_is_pressed(void)
+{
+    return gpio_get_level(LENSELIFE_PIN_BUTTON) == 0;
+}
+
 bool lenslife_reed_is_closed(void)
 {
-    return gpio_get_level(LENSELIFE_PIN_REED_SWITCH) == 0;
+    return lenslife_button_is_pressed();
 }

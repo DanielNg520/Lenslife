@@ -8,7 +8,7 @@
 extern "C" {
 #endif
 
-/** WS2812 onboard RGB — case signal (green / yellow / red). */
+/** Common-cathode RGB on D1/D2/D3 — case status (green / yellow / red / blue). */
 bool lenslife_rgb_init(void);
 void lenslife_rgb_show_phase0(lenslife_phase0_state_t state);
 void lenslife_rgb_show_connecting(void);

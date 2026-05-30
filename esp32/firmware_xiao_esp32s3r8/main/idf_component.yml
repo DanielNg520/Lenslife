@@ -1,2 +1,1 @@
-dependencies:
-  espressif/led_strip: "^2.5.5"
+## XIAO profile: discrete RGB GPIOs only (no WS2812 / led_strip).
