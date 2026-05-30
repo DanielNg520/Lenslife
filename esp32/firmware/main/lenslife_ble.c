@@ -170,7 +170,7 @@ static void on_sync(void)
 {
     uint8_t addr_type;
     if (ble_hs_id_infer_auto(0, &addr_type) == 0) {
-        ble_hs_id_set_rnd_addr_type(addr_type);
+       // ble_hs_id_set_rnd_addr_type(addr_type);
     }
     lenslife_ble_start_advertising();
 }
@@ -219,6 +219,7 @@ void lenslife_ble_host_task(void *param)
 bool lenslife_ble_start_advertising(void)
 {
     struct ble_hs_adv_fields fields = {0};
+
     fields.flags = BLE_HS_ADV_F_DISC_GEN | BLE_HS_ADV_F_BREDR_UNSUP;
     fields.name = (uint8_t *)LENSELIFE_BLE_DEVICE_NAME;
     fields.name_len = strlen(LENSELIFE_BLE_DEVICE_NAME);
@@ -239,11 +240,31 @@ bool lenslife_ble_start_advertising(void)
     adv_params.conn_mode = BLE_GAP_CONN_MODE_UND;
     adv_params.disc_mode = BLE_GAP_DISC_MODE_GEN;
 
-    rc = ble_gap_adv_start(BLE_OWN_ADDR_PUBLIC, NULL, BLE_HS_FOREVER, &adv_params, gap_event, NULL);
+    uint8_t addr_type = 0;
+    rc = ble_hs_id_infer_auto(0, &addr_type);
+
+    ESP_LOGI(TAG,
+             "ble_hs_id_infer_auto rc=%d addr_type=%d",
+             rc,
+             addr_type);
+
+    if (rc != 0) {
+        return false;
+    }
+
+    rc = ble_gap_adv_start(
+        addr_type,
+        NULL,
+        BLE_HS_FOREVER,
+        &adv_params,
+        gap_event,
+        NULL);
+
     if (rc != 0) {
         ESP_LOGE(TAG, "adv_start rc=%d", rc);
         return false;
     }
+
     ESP_LOGI(TAG, "advertising as %s", LENSELIFE_BLE_DEVICE_NAME);
     return true;
 }

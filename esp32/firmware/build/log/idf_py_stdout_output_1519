@@ -1,0 +1,27 @@
+Command: ninja all
+[1/9] Performing build step for 'bootloader'
+[1/1] cd /Users/aramzarate/Lenslife/esp32/firmware/build/bootloader && /Users/aramzarate/.espressif/python_env/idf6.2_py3.12_env/bin/python /Users/aramzarate/esp/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 bootloader 0x0 /Users/aramzarate/Lenslife/esp32/firmware/build/bootloader/bootloader.bin
+Bootloader binary size 0x5280 bytes. 0x2d80 bytes (36%) free.
+[2/9] No install step for 'bootloader'
+[3/9] Completed 'bootloader'
+[4/9] Building C object esp-idf/main/CMakeFiles/__idf_main.dir/app_main.c.obj
+/Users/aramzarate/Lenslife/esp32/firmware/main/app_main.c: In function 'app_main':
+/Users/aramzarate/Lenslife/esp32/firmware/main/app_main.c:38:5: warning: 'esp_sleep_get_wakeup_cause' is deprecated: use esp_sleep_get_wakeup_causes instead [-Wdeprecated-declarations]
+   38 |     esp_sleep_wakeup_cause_t wake = esp_sleep_get_wakeup_cause();
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /Users/aramzarate/Lenslife/esp32/firmware/main/app_main.c:11:
+/Users/aramzarate/esp/esp-idf/components/esp_hw_support/include/esp_sleep.h:761:26: note: declared here
+  761 | esp_sleep_wakeup_cause_t esp_sleep_get_wakeup_cause(void)
+      |                          ^~~~~~~~~~~~~~~~~~~~~~~~~~
+[5/9] Linking C static library esp-idf/main/libmain.a
+[6/9] Generating esp-idf/esp_system/ld/sections.ld
+Skipping linker script generation, section names unchanged
+[7/9] Linking CXX executable lenslife_case.elf
+[8/9] Generating binary image from built executable
+esptool v5.3.dev3
+Creating ESP32-S3 image...
+Merged 4 ELF sections.
+Successfully created ESP32-S3 image.
+Generated /Users/aramzarate/Lenslife/esp32/firmware/build/lenslife_case.bin
+[9/9] cd /Users/aramzarate/Lenslife/esp32/firmware/build && /Users/aramzarate/.espressif/python_env/idf6.2_py3.12_env/bin/python /Users/aramzarate/esp/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 partition --type app /Users/aramzarate/Lenslife/esp32/firmware/build/partition_table/partition-table.bin /Users/aramzarate/Lenslife/esp32/firmware/build/lenslife_case.bin
+lenslife_case.bin binary size 0x86730 bytes. Smallest app partition is 0x100000 bytes. 0x798d0 bytes (47%) free.

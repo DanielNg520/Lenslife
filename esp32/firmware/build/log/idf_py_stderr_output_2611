@@ -1,0 +1,7 @@
+Command: /Users/aramzarate/.espressif/python_env/idf6.2_py3.12_env/bin/python /Users/aramzarate/esp/esp-idf/tools/idf_monitor.py -p /dev/cu.usbmodem1101 -b 115200 --toolchain-prefix xtensa-esp32s3-elf- --target esp32s3 --revision 0 /Users/aramzarate/Lenslife/esp32/firmware/build/lenslife_case.elf /Users/aramzarate/Lenslife/esp32/firmware/build/bootloader/bootloader.elf -m '/Users/aramzarate/.espressif/python_env/idf6.2_py3.12_env/bin/python' '/Users/aramzarate/esp/esp-idf/tools/idf.py' '-p' '/dev/cu.usbmodem1101'
+[0;33m--- esp-idf-monitor 1.9.0 on /dev/cu.usbmodem1101 115200[0m
+[0;33m--- Quit: Ctrl+] | Menu: Ctrl+T | Help: Ctrl+T followed by Ctrl+H[0m
+[0m--- 0x420098bf: [0;33ms_test_psram[0m[0m at [0;32m/Users/aramzarate/esp/esp-idf/components/esp_psram/system_layer/esp_psram.c[0m[0m:[1;31m708[0m
+[0m--- 0x403c8700: [0;33m_stext[0m[0m at [0;32m??[0m[0m:[1;31m?[0m
+[0m--- 0x403c8904: [0;33mcall_start_cpu0[0m[0m at [0;32m/Users/aramzarate/esp/esp-idf/components/bootloader/subproject/main/bootloader_start.c[0m[0m:[1;31m27[0m
+[0m

@@ -1,0 +1,2256 @@
+Command: /Users/aramzarate/.espressif/python_env/idf6.2_py3.12_env/bin/python /Users/aramzarate/esp/esp-idf/tools/idf_monitor.py -p /dev/cu.usbmodem1101 -b 115200 --toolchain-prefix xtensa-esp32s3-elf- --target esp32s3 --revision 0 /Users/aramzarate/Lenslife/esp32/firmware/build/lenslife_case.elf /Users/aramzarate/Lenslife/esp32/firmware/build/bootloader/bootloader.elf -m '/Users/aramzarate/.espressif/python_env/idf6.2_py3.12_env/bin/python' '/Users/aramzarate/esp/esp-idf/tools/idf.py' '-p' '/dev/cu.usbmodem1101'
+ESP-ROM:esp32s3-20210327
+Build:Mar 27 2021
+rst:0x15 (USB_UART_CHIP_RESET),boot:0x0 (DOWNLOAD(USB/UART0))
+Saved PC:0x40041a79
+waiting for download
+[0;32mI (706) esp_psram: SPI SRAM memory test OK[0m
+[0;32mI (714) cpu_start: GPIO 44 and 43 are used as console UART I/O pins[0m
+[0;32mI (715) cpu_start: Pro cpu start user code[0m
+[0;32mI (715) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (717) app_init: Application information:[0m
+[0;32mI (720) app_init: Project name:     lenslife_case[0m
+[0;32mI (725) app_init: App version:      39538e2-dirty[0m
+[0;32mI (729) app_init: Compile time:     May 29 2026 19:35:45[0m
+[0;32mI (734) app_init: ELF file SHA256:  f8249bf58...[0m
+[0;32mI (739) app_init: ESP-IDF:          v6.1-dev-5213-g7812a5df33[0m
+[0;32mI (744) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (748) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (752) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (756) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (762) heap_init: At 3FCA1740 len 00047FD0 (287 KiB): RAM[0m
+[0;32mI (767) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (772) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (777) heap_init: At 600FE06C len 00001F7C (7 KiB): RTCRAM[0m
+[0;32mI (783) esp_psram: Adding pool of 8192K of PSRAM memory to heap allocator[0m
+[0;32mI (790) spi_flash: detected chip: boya[0m
+[0;32mI (793) spi_flash: flash io: dio[0m
+[0;32mI (796) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (802) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (815) main_task: Started on CPU0[0m
+[0;32mI (818) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (826) main_task: Calling app_main()[0m
+[0;32mI (829) lenslife_main: LensLife ESP32-S3 boot, wake cause=0[0m
+[0;32mI (851) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (852) lenslife_main: TEST MODE: bypassing reed switch only, real sensor readings still required[0m
+[0;32mI (855) lenslife_measure: NVS t_blank=1.0000 blank_ts=0 session_count=0[0m
+[0;32mI (862) lenslife_i2c: I2C ready SDA=8 SCL=9 (ADS1115 @ 0x48)[0m
+[0;33mW (867) gpio: conflict found for GPIO[5][0m
+[0;33mW (870) gpio: conflict found for GPIO[6][0m
+[0;32mI (874) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (881) lenslife_rgb: WS2812 status LED on GPIO38[0m
+[1;31mE (889) lenslife_ads1115: config write failed ch=1[0m
+[1;31mE (889) lenslife_measure: T_pre read failed[0m
+[1;31mE (892) lenslife_main: measurement cycle failed[0m
+[0;32mI (898) lenslife_power: deep sleep — next wake on reed GPIO7 (lid close)[0m
+[0;32mI (714) esp_psram: SPI SRAM memory test OK[0m
+[0;32mI (722) cpu_start: GPIO 44 and 43 are used as console UART I/O pins[0m
+[0;32mI (723) cpu_start: Pro cpu start user code[0m
+[0;32mI (723) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (724) app_init: Application information:[0m
+[0;32mI (728) app_init: Project name:     lenslife_case[0m
+[0;32mI (732) app_init: App version:      39538e2-dirty[0m
+[0;32mI (737) app_init: Compile time:     May 29 2026 19:35:45[0m
+[0;32mI (742) app_init: ELF file SHA256:  f8249bf58...[0m
+[0;32mI (746) app_init: ESP-IDF:          v6.1-dev-5213-g7812a5df33[0m
+[0;32mI (752) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (756) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (760) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (763) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (770) heap_init: At 3FCA1740 len 00047FD0 (287 KiB): RAM[0m
+[0;32mI (775) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (780) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (785) heap_init: At 600FE06C len 00001F7C (7 KiB): RTCRAM[0m
+[0;32mI (791) esp_psram: Adding pool of 8192K of PSRAM memory to heap allocator[0m
+[0;32mI (798) spi_flash: detected chip: boya[0m
+[0;32mI (800) spi_flash: flash io: dio[0m
+[0;32mI (804) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (810) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (822) main_task: Started on CPU0[0m
+[0;32mI (825) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (833) main_task: Calling app_main()[0m
+[0;32mI (836) lenslife_main: LensLife ESP32-S3 boot, wake cause=7[0m
+[0;32mI (858) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (859) lenslife_main: TEST MODE: bypassing reed switch only, real sensor readings still required[0m
+[0;32mI (862) lenslife_measure: NVS t_blank=1.0000 blank_ts=0 session_count=0[0m
+[0;32mI (869) lenslife_i2c: I2C ready SDA=8 SCL=9 (ADS1115 @ 0x48)[0m
+[0;33mW (874) gpio: conflict found for GPIO[5][0m
+[0;33mW (877) gpio: conflict found for GPIO[6][0m
+[0;32mI (881) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (888) lenslife_rgb: WS2812 status LED on GPIO38[0m
+[1;31mE (896) lenslife_ads1115: config write failed ch=1[0m
+[1;31mE (896) lenslife_measure: T_pre read failed[0m
+[1;31mE (899) lenslife_main: measurement cycle failed[0m
+[0;32mI (905) lenslife_power: deep sleep — next wake on reed GPIO7 (lid close)[0m
+[0;32mI (820) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (828) main_task: Calling app_main()[0m
+[0;32mI (831) lenslife_main: LensLife ESP32-S3 boot, wake cause=7[0m
+[0;32mI (853) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (854) lenslife_main: TEST MODE: bypassing reed switch only, real sensor readings still required[0m
+[0;32mI (857) lenslife_measure: NVS t_blank=1.0000 blank_ts=0 session_count=0[0m
+[0;32mI (864) lenslife_i2c: I2C ready SDA=8 SCL=9 (ADS1115 @ 0x48)[0m
+[0;33mW (869) gpio: conflict found for GPIO[5][0m
+[0;33mW (872) gpio: conflict found for GPIO[6][0m
+[0;32mI (876) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (883) lenslife_rgb: WS2812 status LED on GPIO38[0m
+[1;31mE (891) lenslife_ads1115: config write failed ch=1[0m
+[1;31mE (891) lenslife_measure: T_pre read failed[0m
+[1;31mE (894) lenslife_main: measurement cycle failed[0m
+[0;32mI (900) lenslife_power: deep sleep — next wake on reed GPIO7 (lid close)[0m
+[0;32mI (714) esp_psram: SPI SRAM memory test OK[0m
+[0;32mI (722) cpu_start: GPIO 44 and 43 are used as console UART I/O pins[0m
+[0;32mI (723) cpu_start: Pro cpu start user code[0m
+[0;32mI (723) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (724) app_init: Application information:[0m
+[0;32mI (728) app_init: Project name:     lenslife_case[0m
+[0;32mI (732) app_init: App version:      39538e2-dirty[0m
+[0;32mI (737) app_init: Compile time:     May 29 2026 19:35:45[0m
+[0;32mI (742) app_init: ELF file SHA256:  f8249bf58...[0m
+[0;32mI (746) app_init: ESP-IDF:          v6.1-dev-5213-g7812a5df33[0m
+[0;32mI (752) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (756) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (760) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (763) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (770) heap_init: At 3FCA1740 len 00047FD0 (287 KiB): RAM[0m
+[0;32mI (775) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (780) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (785) heap_init: At 600FE06C len 00001F7C (7 KiB): RTCRAM[0m
+[0;32mI (791) esp_psram: Adding pool of 8192K of PSRAM memory to heap allocator[0m
+[0;32mI (798) spi_flash: detected chip: boya[0m
+[0;32mI (800) spi_flash: flash io: dio[0m
+[0;32mI (804) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (810) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (822) main_task: Started on CPU0[0m
+[0;32mI (825) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (833) main_task: Calling app_main()[0m
+[0;32mI (836) lenslife_main: LensLife ESP32-S3 boot, wake cause=7[0m
+[0;32mI (858) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (858) lenslife_main: TEST MODE: bypassing reed switch only, real sensor readings still required[0m
+[0;32mI (862) lenslife_measure: NVS t_blank=1.0000 blank_ts=0 session_count=0[0m
+[0;32mI (869) lenslife_i2c: I2C ready SDA=8 SCL=9 (ADS1115 @ 0x48)[0m
+[0;33mW (874) gpio: conflict found for GPIO[5][0m
+[0;33mW (877) gpio: conflict found for GPIO[6][0m
+[0;32mI (881) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (888) lenslife_rgb: WS2812 status LED on GPIO38[0m
+[1;31mE (896) lenslife_ads1115: config write failed ch=1[0m
+[1;31mE (896) lenslife_measure: T_pre read failed[0m
+[1;31mE (899) lenslife_main: measurement cycle failed[0m
+[0;32mI (905) lenslife_power: deep sleep — next wake on reed GPIO7 (lid close)[0m
+[0;32mI (799) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (805) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (817) main_task: Started on CPU0[0m
+[0;32mI (820) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (828) main_task: Calling app_main()[0m
+[0;32mI (831) lenslife_main: LensLife ESP32-S3 boot, wake cause=7[0m
+[0;32mI (853) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (853) lenslife_main: TEST MODE: bypassing reed switch only, real sensor readings still required[0m
+[0;32mI (857) lenslife_measure: NVS t_blank=1.0000 blank_ts=0 session_count=0[0m
+[0;32mI (864) lenslife_i2c: I2C ready SDA=8 SCL=9 (ADS1115 @ 0x48)[0m
+[0;33mW (869) gpio: conflict found for GPIO[5][0m
+[0;33mW (872) gpio: conflict found for GPIO[6][0m
+[0;32mI (876) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (883) lenslife_rgb: WS2812 status LED on GPIO38[0m
+[1;31mE (891) lenslife_ads1115: config write failed ch=1[0m
+[1;31mE (891) lenslife_measure: T_pre read failed[0m
+[1;31mE (894) lenslife_main: measurement cycle failed[0m
+[0;32mI (900) lenslife_power: deep sleep — next wake on reed GPIO7 (lid close)[0m
+state
+[0;32mI (805) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (817) main_task: Started on CPU0[0m
+[0;32mI (820) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (828) main_task: Calling app_main()[0m
+[0;32mI (831) lenslife_main: LensLife ESP32-S3 boot, wake cause=7[0m
+[0;32mI (853) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (854) lenslife_main: TEST MODE: bypassing reed switch only, real sensor readings still required[0m
+[0;32mI (857) lenslife_measure: NVS t_blank=1.0000 blank_ts=0 session_count=0[0m
+[0;32mI (864) lenslife_i2c: I2C ready SDA=8 SCL=9 (ADS1115 @ 0x48)[0m
+[0;33mW (869) gpio: conflict found for GPIO[5][0m
+[0;33mW (872) gpio: conflict found for GPIO[6][0m
+[0;32mI (876) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (883) lenslife_rgb: WS2812 status LED on GPIO38[0m
+[1;31mE (891) lenslife_ads1115: config write failed ch=1[0m
+[1;31mE (891) lenslife_measure: T_pre read failed[0m
+[1;31mE (894) lenslife_main: measurement cycle failed[0m
+[0;32mI (900) lenslife_power: deep sleep — next wake on reed GPIO7 (lid close)[0m
+[0;32mI (715) cpu_start: GPIO 44 and 43 are used as console UART I/O pins[0m
+[0;32mI (716) cpu_start: Pro cpu start user code[0m
+[0;32mI (716) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (718) app_init: Application information:[0m
+[0;32mI (722) app_init: Project name:     lenslife_case[0m
+[0;32mI (726) app_init: App version:      39538e2-dirty[0m
+[0;32mI (730) app_init: Compile time:     May 29 2026 19:35:45[0m
+[0;32mI (735) app_init: ELF file SHA256:  f8249bf58...[0m
+[0;32mI (740) app_init: ESP-IDF:          v6.1-dev-5213-g7812a5df33[0m
+[0;32mI (745) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (749) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (753) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (757) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (763) heap_init: At 3FCA1740 len 00047FD0 (287 KiB): RAM[0m
+[0;32mI (768) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (773) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (779) heap_init: At 600FE06C len 00001F7C (7 KiB): RTCRAM[0m
+[0;32mI (784) esp_psram: Adding pool of 8192K of PSRAM memory to heap allocator[0m
+[0;32mI (791) spi_flash: detected chip: boya[0m
+[0;32mI (794) spi_flash: flash io: dio[0m
+[0;32mI (798) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (803) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (816) main_task: Started on CPU0[0m
+[0;32mI (819) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (827) main_task: Calling app_main()[0m
+[0;32mI (830) lenslife_main: LensLife ESP32-S3 boot, wake cause=7[0m
+[0;32mI (852) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (853) lenslife_main: TEST MODE: bypassing reed switch only, real sensor readings still required[0m
+[0;32mI (856) lenslife_measure: NVS t_blank=1.0000 blank_ts=0 session_count=0[0m
+[0;32mI (863) lenslife_i2c: I2C ready SDA=8 SCL=9 (ADS1115 @ 0x48)[0m
+[0;33mW (868) gpio: conflict found for GPIO[5][0m
+[0;33mW (871) gpio: conflict found for GPIO[6][0m
+[0;32mI (875) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (882) lenslife_rgb: WS2812 status LED on GPIO38[0m
+[1;31mE (890) lenslife_ads1115: config write failed ch=1[0m
+[1;31mE (890) lenslife_measure: T_pre read failed[0m
+[1;31mE (893) lenslife_main: measurement cycle failed[0m
+[0;32mI (899) lenslife_power: deep sleep — next wake on reed GPIO7 (lid close)[0m
+[0;32mI (715) cpu_start: GPIO 44 and 43 are used as console UART I/O pins[0m
+[0;32mI (716) cpu_start: Pro cpu start user code[0m
+[0;32mI (716) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (718) app_init: Application information:[0m
+[0;32mI (722) app_init: Project name:     lenslife_case[0m
+[0;32mI (726) app_init: App version:      39538e2-dirty[0m
+[0;32mI (730) app_init: Compile time:     May 29 2026 19:35:45[0m
+[0;32mI (735) app_init: ELF file SHA256:  f8249bf58...[0m
+[0;32mI (740) app_init: ESP-IDF:          v6.1-dev-5213-g7812a5df33[0m
+[0;32mI (745) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (749) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (753) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (757) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (763) heap_init: At 3FCA1740 len 00047FD0 (287 KiB): RAM[0m
+[0;32mI (768) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (773) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (779) heap_init: At 600FE06C len 00001F7C (7 KiB): RTCRAM[0m
+[0;32mI (784) esp_psram: Adding pool of 8192K of PSRAM memory to heap allocator[0m
+[0;32mI (791) spi_flash: detected chip: boya[0m
+[0;32mI (794) spi_flash: flash io: dio[0m
+[0;32mI (798) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (803) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (816) main_task: Started on CPU0[0m
+[0;32mI (819) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (827) main_task: Calling app_main()[0m
+[0;32mI (830) lenslife_main: LensLife ESP32-S3 boot, wake cause=7[0m
+[0;32mI (852) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (853) lenslife_main: TEST MODE: bypassing reed switch only, real sensor readings still required[0m
+[0;32mI (856) lenslife_measure: NVS t_blank=1.0000 blank_ts=0 session_count=0[0m
+[0;32mI (863) lenslife_i2c: I2C ready SDA=8 SCL=9 (ADS1115 @ 0x48)[0m
+[0;33mW (868) gpio: conflict found for GPIO[5][0m
+[0;33mW (871) gpio: conflict found for GPIO[6][0m
+[0;32mI (875) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (882) lenslife_rgb: WS2812 status LED on GPIO38[0m
+[1;31mE (890) lenslife_ads1115: config write failed ch=1[0m
+[1;31mE (890) lenslife_measure: T_pre read failed[0m
+[1;31mE (893) lenslife_main: measurement cycle failed[0m
+[0;32mI (899) lenslife_power: deep sleep — next wake on reed GPIO7 (lid close)[0m
+[0;32mI (714) esp_psram: SPI SRAM memory test OK[0m
+[0;32mI (722) cpu_start: GPIO 44 and 43 are used as console UART I/O pins[0m
+[0;32mI (723) cpu_start: Pro cpu start user code[0m
+[0;32mI (723) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (724) app_init: Application information:[0m
+[0;32mI (728) app_init: Project name:     lenslife_case[0m
+[0;32mI (732) app_init: App version:      39538e2-dirty[0m
+[0;32mI (737) app_init: Compile time:     May 29 2026 19:35:45[0m
+[0;32mI (742) app_init: ELF file SHA256:  f8249bf58...[0m
+[0;32mI (746) app_init: ESP-IDF:          v6.1-dev-5213-g7812a5df33[0m
+[0;32mI (752) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (756) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (760) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (763) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (770) heap_init: At 3FCA1740 len 00047FD0 (287 KiB): RAM[0m
+[0;32mI (775) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (780) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (785) heap_init: At 600FE06C len 00001F7C (7 KiB): RTCRAM[0m
+[0;32mI (791) esp_psram: Adding pool of 8192K of PSRAM memory to heap allocator[0m
+[0;32mI (798) spi_flash: detected chip: boya[0m
+[0;32mI (800) spi_flash: flash io: dio[0m
+[0;32mI (804) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (810) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (822) main_task: Started on CPU0[0m
+[0;32mI (825) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (833) main_task: Calling app_main()[0m
+[0;32mI (836) lenslife_main: LensLife ESP32-S3 boot, wake cause=7[0m
+[0;32mI (858) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (859) lenslife_main: TEST MODE: bypassing reed switch only, real sensor readings still required[0m
+[0;32mI (862) lenslife_measure: NVS t_blank=1.0000 blank_ts=0 session_count=0[0m
+[0;32mI (869) lenslife_i2c: I2C ready SDA=8 SCL=9 (ADS1115 @ 0x48)[0m
+[0;33mW (874) gpio: conflict found for GPIO[5][0m
+[0;33mW (877) gpio: conflict found for GPIO[6][0m
+[0;32mI (881) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (888) lenslife_rgb: WS2812 status LED on GPIO38[0m
+[1;31mE (896) lenslife_ads1115: config write failed ch=1[0m
+[1;31mE (896) lenslife_measure: T_pre read failed[0m
+[1;31mE (899) lenslife_main: measurement cycle failed[0m
+[0;32mI (905) lenslife_power: deep sleep — next wake on reed GPIO7 (lid close)[0m
+[0;32mI (792) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (798) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (811) main_task: Started on CPU0[0m
+[0;32mI (814) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (822) main_task: Calling app_main()[0m
+[0;32mI (825) lenslife_main: LensLife ESP32-S3 boot, wake cause=7[0m
+[0;32mI (847) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (848) lenslife_main: TEST MODE: bypassing reed switch only, real sensor readings still required[0m
+[0;32mI (851) lenslife_measure: NVS t_blank=1.0000 blank_ts=0 session_count=0[0m
+[0;32mI (858) lenslife_i2c: I2C ready SDA=8 SCL=9 (ADS1115 @ 0x48)[0m
+[0;33mW (863) gpio: conflict found for GPIO[5][0m
+[0;33mW (866) gpio: conflict found for GPIO[6][0m
+[0;32mI (870) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (877) lenslife_rgb: WS2812 status LED on GPIO38[0m
+[1;31mE (885) lenslife_ads1115: config write failed ch=1[0m
+[1;31mE (885) lenslife_measure: T_pre read failed[0m
+[1;31mE (888) lenslife_main: measurement cycle failed[0m
+[0;32mI (894) lenslife_power: deep sleep — next wake on reed GPIO7 (lid close)[0m
+[0;32mI (714) esp_psram: SPI SRAM memory test OK[0m
+[0;32mI (722) cpu_start: GPIO 44 and 43 are used as console UART I/O pins[0m
+[0;32mI (723) cpu_start: Pro cpu start user code[0m
+[0;32mI (723) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (724) app_init: Application information:[0m
+[0;32mI (728) app_init: Project name:     lenslife_case[0m
+[0;32mI (732) app_init: App version:      39538e2-dirty[0m
+[0;32mI (737) app_init: Compile time:     May 29 2026 19:35:45[0m
+[0;32mI (742) app_init: ELF file SHA256:  f8249bf58...[0m
+[0;32mI (746) app_init: ESP-IDF:          v6.1-dev-5213-g7812a5df33[0m
+[0;32mI (752) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (756) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (760) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (763) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (770) heap_init: At 3FCA1740 len 00047FD0 (287 KiB): RAM[0m
+[0;32mI (775) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (780) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (785) heap_init: At 600FE06C len 00001F7C (7 KiB): RTCRAM[0m
+[0;32mI (791) esp_psram: Adding pool of 8192K of PSRAM memory to heap allocator[0m
+[0;32mI (798) spi_flash: detected chip: boya[0m
+[0;32mI (800) spi_flash: flash io: dio[0m
+[0;32mI (804) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (810) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (822) main_task: Started on CPU0[0m
+[0;32mI (825) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (833) main_task: Calling app_main()[0m
+[0;32mI (836) lenslife_main: LensLife ESP32-S3 boot, wake cause=7[0m
+[0;32mI (858) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (859) lenslife_main: TEST MODE: bypassing reed switch only, real sensor readings still required[0m
+[0;32mI (862) lenslife_measure: NVS t_blank=1.0000 blank_ts=0 session_count=0[0m
+[0;32mI (869) lenslife_i2c: I2C ready SDA=8 SCL=9 (ADS1115 @ 0x48)[0m
+[0;33mW (874) gpio: conflict found for GPIO[5][0m
+[0;33mW (877) gpio: conflict found for GPIO[6][0m
+[0;32mI (881) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (888) lenslife_rgb: WS2812 status LED on GPIO38[0m
+[1;31mE (896) lenslife_ads1115: config write failed ch=1[0m
+[1;31mE (897) lenslife_measure: T_pre read failed[0m
+[1;31mE (899) lenslife_main: measurement cycle failed[0m
+[0;32mI (905) lenslife_power: deep sleep — next wake on reed GPIO7 (lid close)[0m
+[0;32mI (775) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (780) heap_init: At 600FE06C len 00001F7C (7 KiB): RTCRAM[0m
+[0;32mI (786) esp_psram: Adding pool of 8192K of PSRAM memory to heap allocator[0m
+[0;32mI (793) spi_flash: detected chip: boya[0m
+[0;32mI (795) spi_flash: flash io: dio[0m
+[0;32mI (799) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (805) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (817) main_task: Started on CPU0[0m
+[0;32mI (820) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (828) main_task: Calling app_main()[0m
+[0;32mI (831) lenslife_main: LensLife ESP32-S3 boot, wake cause=7[0m
+[0;32mI (853) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (854) lenslife_main: TEST MODE: bypassing reed switch only, real sensor readings still required[0m
+[0;32mI (857) lenslife_measure: NVS t_blank=1.0000 blank_ts=0 session_count=0[0m
+[0;32mI (864) lenslife_i2c: I2C ready SDA=8 SCL=9 (ADS1115 @ 0x48)[0m
+[0;33mW (869) gpio: conflict found for GPIO[5][0m
+[0;33mW (872) gpio: conflict found for GPIO[6][0m
+[0;32mI (876) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (883) lenslife_rgb: WS2812 status LED on GPIO38[0m
+[1;31mE (891) lenslife_ads1115: config write failed ch=1[0m
+[1;31mE (891) lenslife_measure: T_pre read failed[0m
+[1;31mE (894) lenslife_main: measurement cycle failed[0m
+[0;32mI (900) lenslife_power: deep sleep — next wake on reed GPIO7 (lid close)[0m
+[0;32mI (707) esp_psram: SPI SRAM memory test OK[0m
+[0;32mI (715) cpu_start: GPIO 44 and 43 are used as console UART I/O pins[0m
+[0;32mI (716) cpu_start: Pro cpu start user code[0m
+[0;32mI (716) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (718) app_init: Application information:[0m
+[0;32mI (722) app_init: Project name:     lenslife_case[0m
+[0;32mI (726) app_init: App version:      39538e2-dirty[0m
+[0;32mI (730) app_init: Compile time:     May 29 2026 19:35:45[0m
+[0;32mI (735) app_init: ELF file SHA256:  f8249bf58...[0m
+[0;32mI (740) app_init: ESP-IDF:          v6.1-dev-5213-g7812a5df33[0m
+[0;32mI (745) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (749) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (753) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (757) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (763) heap_init: At 3FCA1740 len 00047FD0 (287 KiB): RAM[0m
+[0;32mI (768) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (773) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (779) heap_init: At 600FE06C len 00001F7C (7 KiB): RTCRAM[0m
+[0;32mI (784) esp_psram: Adding pool of 8192K of PSRAM memory to heap allocator[0m
+[0;32mI (791) spi_flash: detected chip: boya[0m
+[0;32mI (794) spi_flash: flash io: dio[0m
+[0;32mI (798) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (803) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (816) main_task: Started on CPU0[0m
+[0;32mI (819) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (827) main_task: Calling app_main()[0m
+[0;32mI (830) lenslife_main: LensLife ESP32-S3 boot, wake cause=7[0m
+[0;32mI (852) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (853) lenslife_main: TEST MODE: bypassing reed switch only, real sensor readings still required[0m
+[0;32mI (856) lenslife_measure: NVS t_blank=1.0000 blank_ts=0 session_count=0[0m
+[0;32mI (863) lenslife_i2c: I2C ready SDA=8 SCL=9 (ADS1115 @ 0x48)[0m
+[0;33mW (868) gpio: conflict found for GPIO[5][0m
+[0;33mW (871) gpio: conflict found for GPIO[6][0m
+[0;32mI (875) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (882) lenslife_rgb: WS2812 status LED on GPIO38[0m
+[1;31mE (890) lenslife_ads1115: config write failed ch=1[0m
+[1;31mE (890) lenslife_measure: T_pre read failed[0m
+[1;31mE (893) lenslife_main: measurement cycle failed[0m
+[0;32mI (899) lenslife_power: deep sleep — next wake on reed GPIO7 (lid close)[0m
+[0;32mI (715) cpu_start: GPIO 44 and 43 are used as console UART I/O pins[0m
+[0;32mI (716) cpu_start: Pro cpu start user code[0m
+[0;32mI (716) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (718) app_init: Application information:[0m
+[0;32mI (722) app_init: Project name:     lenslife_case[0m
+[0;32mI (726) app_init: App version:      39538e2-dirty[0m
+[0;32mI (730) app_init: Compile time:     May 29 2026 19:35:45[0m
+[0;32mI (735) app_init: ELF file SHA256:  f8249bf58...[0m
+[0;32mI (740) app_init: ESP-IDF:          v6.1-dev-5213-g7812a5df33[0m
+[0;32mI (745) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (749) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (753) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (757) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (763) heap_init: At 3FCA1740 len 00047FD0 (287 KiB): RAM[0m
+[0;32mI (768) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (773) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (779) heap_init: At 600FE06C len 00001F7C (7 KiB): RTCRAM[0m
+[0;32mI (784) esp_psram: Adding pool of 8192K of PSRAM memory to heap allocator[0m
+[0;32mI (791) spi_flash: detected chip: boya[0m
+[0;32mI (794) spi_flash: flash io: dio[0m
+[0;32mI (798) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (803) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (816) main_task: Started on CPU0[0m
+[0;32mI (819) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (827) main_task: Calling app_main()[0m
+[0;32mI (830) lenslife_main: LensLife ESP32-S3 boot, wake cause=7[0m
+[0;32mI (852) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (853) lenslife_main: TEST MODE: bypassing reed switch only, real sensor readings still required[0m
+[0;32mI (856) lenslife_measure: NVS t_blank=1.0000 blank_ts=0 session_count=0[0m
+[0;32mI (863) lenslife_i2c: I2C ready SDA=8 SCL=9 (ADS1115 @ 0x48)[0m
+[0;33mW (868) gpio: conflict found for GPIO[5][0m
+[0;33mW (871) gpio: conflict found for GPIO[6][0m
+[0;32mI (875) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (882) lenslife_rgb: WS2812 status LED on GPIO38[0m
+[1;31mE (890) lenslife_ads1115: config write failed ch=1[0m
+[1;31mE (890) lenslife_measure: T_pre read failed[0m
+[1;31mE (893) lenslife_main: measurement cycle failed[0m
+[0;32mI (899) lenslife_power: deep sleep — next wake on reed GPIO7 (lid close)[0m
+[0;32mI (714) esp_psram: SPI SRAM memory test OK[0m
+[0;32mI (722) cpu_start: GPIO 44 and 43 are used as console UART I/O pins[0m
+[0;32mI (723) cpu_start: Pro cpu start user code[0m
+[0;32mI (723) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (724) app_init: Application information:[0m
+[0;32mI (728) app_init: Project name:     lenslife_case[0m
+[0;32mI (732) app_init: App version:      39538e2-dirty[0m
+[0;32mI (737) app_init: Compile time:     May 29 2026 19:35:45[0m
+[0;32mI (742) app_init: ELF file SHA256:  f8249bf58...[0m
+[0;32mI (746) app_init: ESP-IDF:          v6.1-dev-5213-g7812a5df33[0m
+[0;32mI (752) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (756) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (760) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (763) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (770) heap_init: At 3FCA1740 len 00047FD0 (287 KiB): RAM[0m
+[0;32mI (775) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (780) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (785) heap_init: At 600FE06C len 00001F7C (7 KiB): RTCRAM[0m
+[0;32mI (791) esp_psram: Adding pool of 8192K of PSRAM memory to heap allocator[0m
+[0;32mI (798) spi_flash: detected chip: boya[0m
+[0;32mI (800) spi_flash: flash io: dio[0m
+[0;32mI (804) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (810) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (822) main_task: Started on CPU0[0m
+[0;32mI (825) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (833) main_task: Calling app_main()[0m
+[0;32mI (836) lenslife_main: LensLife ESP32-S3 boot, wake cause=7[0m
+[0;32mI (858) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (859) lenslife_main: TEST MODE: bypassing reed switch only, real sensor readings still required[0m
+[0;32mI (862) lenslife_measure: NVS t_blank=1.0000 blank_ts=0 session_count=0[0m
+[0;32mI (869) lenslife_i2c: I2C ready SDA=8 SCL=9 (ADS1115 @ 0x48)[0m
+[0;33mW (874) gpio: conflict found for GPIO[5][0m
+[0;33mW (877) gpio: conflict found for GPIO[6][0m
+[0;32mI (881) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (888) lenslife_rgb: WS2812 status LED on GPIO38[0m
+[1;31mE (896) lenslife_ads1115: config write failed ch=1[0m
+[1;31mE (896) lenslife_measure: T_pre read failed[0m
+[1;31mE (899) lenslife_main: measurement cycle failed[0m
+[0;32mI (905) lenslife_power: deep sleep — next wake on reed GPIO7 (lid close)[0m
+[0;32mI (715) cpu_start: GPIO 44 and 43 are used as console UART I/O pins[0m
+[0;32mI (716) cpu_start: Pro cpu start user code[0m
+[0;32mI (716) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (718) app_init: Application information:[0m
+[0;32mI (722) app_init: Project name:     lenslife_case[0m
+[0;32mI (726) app_init: App version:      39538e2-dirty[0m
+[0;32mI (730) app_init: Compile time:     May 29 2026 19:35:45[0m
+[0;32mI (735) app_init: ELF file SHA256:  f8249bf58...[0m
+[0;32mI (740) app_init: ESP-IDF:          v6.1-dev-5213-g7812a5df33[0m
+[0;32mI (745) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (749) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (753) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (757) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (763) heap_init: At 3FCA1740 len 00047FD0 (287 KiB): RAM[0m
+[0;32mI (768) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (773) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (779) heap_init: At 600FE06C len 00001F7C (7 KiB): RTCRAM[0m
+[0;32mI (784) esp_psram: Adding pool of 8192K of PSRAM memory to heap allocator[0m
+[0;32mI (791) spi_flash: detected chip: boya[0m
+[0;32mI (794) spi_flash: flash io: dio[0m
+[0;32mI (798) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (803) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (816) main_task: Started on CPU0[0m
+[0;32mI (819) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (827) main_task: Calling app_main()[0m
+[0;32mI (830) lenslife_main: LensLife ESP32-S3 boot, wake cause=7[0m
+[0;32mI (852) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (853) lenslife_main: TEST MODE: bypassing reed switch only, real sensor readings still required[0m
+[0;32mI (856) lenslife_measure: NVS t_blank=1.0000 blank_ts=0 session_count=0[0m
+[0;32mI (863) lenslife_i2c: I2C ready SDA=8 SCL=9 (ADS1115 @ 0x48)[0m
+[0;33mW (868) gpio: conflict found for GPIO[5][0m
+[0;33mW (871) gpio: conflict found for GPIO[6][0m
+[0;32mI (875) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (882) lenslife_rgb: WS2812 status LED on GPIO38[0m
+[1;31mE (890) lenslife_ads1115: config write failed ch=1[0m
+[1;31mE (890) lenslife_measure: T_pre read failed[0m
+[1;31mE (893) lenslife_main: measurement cycle failed[0m
+[0;32mI (899) lenslife_power: deep sleep — next wake on reed GPIO7 (lid close)[0m
+[0;32mI (722) cpu_start: GPIO 44 and 43 are used as console UART I/O pins[0m
+[0;32mI (723) cpu_start: Pro cpu start user code[0m
+[0;32mI (723) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (724) app_init: Application information:[0m
+[0;32mI (728) app_init: Project name:     lenslife_case[0m
+[0;32mI (732) app_init: App version:      39538e2-dirty[0m
+[0;32mI (737) app_init: Compile time:     May 29 2026 19:35:45[0m
+[0;32mI (742) app_init: ELF file SHA256:  f8249bf58...[0m
+[0;32mI (746) app_init: ESP-IDF:          v6.1-dev-5213-g7812a5df33[0m
+[0;32mI (752) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (756) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (760) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (763) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (770) heap_init: At 3FCA1740 len 00047FD0 (287 KiB): RAM[0m
+[0;32mI (775) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (780) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (785) heap_init: At 600FE06C len 00001F7C (7 KiB): RTCRAM[0m
+[0;32mI (791) esp_psram: Adding pool of 8192K of PSRAM memory to heap allocator[0m
+[0;32mI (798) spi_flash: detected chip: boya[0m
+[0;32mI (800) spi_flash: flash io: dio[0m
+[0;32mI (804) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (810) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (822) main_task: Started on CPU0[0m
+[0;32mI (825) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (833) main_task: Calling app_main()[0m
+[0;32mI (836) lenslife_main: LensLife ESP32-S3 boot, wake cause=7[0m
+[0;32mI (858) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (859) lenslife_main: TEST MODE: bypassing reed switch only, real sensor readings still required[0m
+[0;32mI (862) lenslife_measure: NVS t_blank=1.0000 blank_ts=0 session_count=0[0m
+[0;32mI (869) lenslife_i2c: I2C ready SDA=8 SCL=9 (ADS1115 @ 0x48)[0m
+[0;33mW (874) gpio: conflict found for GPIO[5][0m
+[0;33mW (877) gpio: conflict found for GPIO[6][0m
+[0;32mI (881) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (888) lenslife_rgb: WS2812 status LED on GPIO38[0m
+[1;31mE (896) lenslife_ads1115: config write failed ch=1[0m
+[1;31mE (896) lenslife_measure: T_pre read failed[0m
+[1;31mE (899) lenslife_main: measurement cycle failed[0m
+[0;32mI (905) lenslife_power: deep sleep — next wake on reed GPIO7 (lid close)[0m
+[0;32mI (714) esp_psram: SPI SRAM memory test OK[0m
+[0;32mI (722) cpu_start: GPIO 44 and 43 are used as console UART I/O pins[0m
+[0;32mI (723) cpu_start: Pro cpu start user code[0m
+[0;32mI (723) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (724) app_init: Application information:[0m
+[0;32mI (728) app_init: Project name:     lenslife_case[0m
+[0;32mI (732) app_init: App version:      39538e2-dirty[0m
+[0;32mI (737) app_init: Compile time:     May 29 2026 19:35:45[0m
+[0;32mI (742) app_init: ELF file SHA256:  f8249bf58...[0m
+[0;32mI (746) app_init: ESP-IDF:          v6.1-dev-5213-g7812a5df33[0m
+[0;32mI (752) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (756) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (760) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (763) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (770) heap_init: At 3FCA1740 len 00047FD0 (287 KiB): RAM[0m
+[0;32mI (775) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (780) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (785) heap_init: At 600FE06C len 00001F7C (7 KiB): RTCRAM[0m
+[0;32mI (791) esp_psram: Adding pool of 8192K of PSRAM memory to heap allocator[0m
+[0;32mI (798) spi_flash: detected chip: boya[0m
+[0;32mI (800) spi_flash: flash io: dio[0m
+[0;32mI (804) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (810) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (822) main_task: Started on CPU0[0m
+[0;32mI (825) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (833) main_task: Calling app_main()[0m
+[0;32mI (836) lenslife_main: LensLife ESP32-S3 boot, wake cause=7[0m
+[0;32mI (858) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (859) lenslife_main: TEST MODE: bypassing reed switch only, real sensor readings still required[0m
+[0;32mI (862) lenslife_measure: NVS t_blank=1.0000 blank_ts=0 session_count=0[0m
+[0;32mI (869) lenslife_i2c: I2C ready SDA=8 SCL=9 (ADS1115 @ 0x48)[0m
+[0;33mW (874) gpio: conflict found for GPIO[5][0m
+[0;33mW (877) gpio: conflict found for GPIO[6][0m
+[0;32mI (881) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (888) lenslife_rgb: WS2812 status LED on GPIO38[0m
+[1;31mE (896) lenslife_ads1115: config write failed ch=1[0m
+[1;31mE (896) lenslife_measure: T_pre read failed[0m
+[1;31mE (899) lenslife_main: measurement cycle failed[0m
+[0;32mI (905) lenslife_power: deep sleep — next wake on reed GPIO7 (lid close)[0m
+[0;32mI (798) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (811) main_task: Started on CPU0[0m
+[0;32mI (814) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (822) main_task: Calling app_main()[0m
+[0;32mI (825) lenslife_main: LensLife ESP32-S3 boot, wake cause=7[0m
+[0;32mI (847) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (848) lenslife_main: TEST MODE: bypassing reed switch only, real sensor readings still required[0m
+[0;32mI (851) lenslife_measure: NVS t_blank=1.0000 blank_ts=0 session_count=0[0m
+[0;32mI (858) lenslife_i2c: I2C ready SDA=8 SCL=9 (ADS1115 @ 0x48)[0m
+[0;33mW (863) gpio: conflict found for GPIO[5][0m
+[0;33mW (866) gpio: conflict found for GPIO[6][0m
+[0;32mI (870) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (877) lenslife_rgb: WS2812 status LED on GPIO38[0m
+[1;31mE (885) lenslife_ads1115: config write failed ch=1[0m
+[1;31mE (885) lenslife_measure: T_pre read failed[0m
+[1;31mE (888) lenslife_main: measurement cycle failed[0m
+[0;32mI (894) lenslife_power: deep sleep — next wake on reed GPIO7 (lid close)[0m
+[0;32mI (707) esp_psram: SPI SRAM memory test OK[0m
+[0;32mI (715) cpu_start: GPIO 44 and 43 are used as console UART I/O pins[0m
+[0;32mI (716) cpu_start: Pro cpu start user code[0m
+[0;32mI (716) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (718) app_init: Application information:[0m
+[0;32mI (722) app_init: Project name:     lenslife_case[0m
+[0;32mI (726) app_init: App version:      39538e2-dirty[0m
+[0;32mI (730) app_init: Compile time:     May 29 2026 19:35:45[0m
+[0;32mI (735) app_init: ELF file SHA256:  f8249bf58...[0m
+[0;32mI (740) app_init: ESP-IDF:          v6.1-dev-5213-g7812a5df33[0m
+[0;32mI (745) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (749) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (753) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (757) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (763) heap_init: At 3FCA1740 len 00047FD0 (287 KiB): RAM[0m
+[0;32mI (768) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (773) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (779) heap_init: At 600FE06C len 00001F7C (7 KiB): RTCRAM[0m
+[0;32mI (784) esp_psram: Adding pool of 8192K of PSRAM memory to heap allocator[0m
+[0;32mI (791) spi_flash: detected chip: boya[0m
+[0;32mI (794) spi_flash: flash io: dio[0m
+[0;32mI (798) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (803) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (816) main_task: Started on CPU0[0m
+[0;32mI (819) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (827) main_task: Calling app_main()[0m
+[0;32mI (830) lenslife_main: LensLife ESP32-S3 boot, wake cause=7[0m
+[0;32mI (852) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (853) lenslife_main: TEST MODE: bypassing reed switch only, real sensor readings still required[0m
+[0;32mI (856) lenslife_measure: NVS t_blank=1.0000 blank_ts=0 session_count=0[0m
+[0;32mI (863) lenslife_i2c: I2C ready SDA=8 SCL=9 (ADS1115 @ 0x48)[0m
+[0;33mW (868) gpio: conflict found for GPIO[5][0m
+[0;33mW (871) gpio: conflict found for GPIO[6][0m
+[0;32mI (875) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (882) lenslife_rgb: WS2812 status LED on GPIO38[0m
+[1;31mE (890) lenslife_ads1115: config write failed ch=1[0m
+[1;31mE (890) lenslife_measure: T_pre read failed[0m
+[1;31mE (893) lenslife_main: measurement cycle failed[0m
+[0;32mI (899) lenslife_power: deep sleep — next wake on reed GPIO7 (lid close)[0m
+[0;32mI (714) esp_psram: SPI SRAM memory test OK[0m
+[0;32mI (722) cpu_start: GPIO 44 and 43 are used as console UART I/O pins[0m
+[0;32mI (723) cpu_start: Pro cpu start user code[0m
+[0;32mI (723) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (724) app_init: Application information:[0m
+[0;32mI (728) app_init: Project name:     lenslife_case[0m
+[0;32mI (732) app_init: App version:      39538e2-dirty[0m
+[0;32mI (737) app_init: Compile time:     May 29 2026 19:35:45[0m
+[0;32mI (742) app_init: ELF file SHA256:  f8249bf58...[0m
+[0;32mI (746) app_init: ESP-IDF:          v6.1-dev-5213-g7812a5df33[0m
+[0;32mI (752) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (756) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (760) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (763) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (770) heap_init: At 3FCA1740 len 00047FD0 (287 KiB): RAM[0m
+[0;32mI (775) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (780) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (785) heap_init: At 600FE06C len 00001F7C (7 KiB): RTCRAM[0m
+[0;32mI (791) esp_psram: Adding pool of 8192K of PSRAM memory to heap allocator[0m
+[0;32mI (798) spi_flash: detected chip: boya[0m
+[0;32mI (800) spi_flash: flash io: dio[0m
+[0;32mI (804) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (810) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (822) main_task: Started on CPU0[0m
+[0;32mI (825) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (833) main_task: Calling app_main()[0m
+[0;32mI (836) lenslife_main: LensLife ESP32-S3 boot, wake cause=7[0m
+[0;32mI (858) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (859) lenslife_main: TEST MODE: bypassing reed switch only, real sensor readings still required[0m
+[0;32mI (862) lenslife_measure: NVS t_blank=1.0000 blank_ts=0 session_count=0[0m
+[0;32mI (869) lenslife_i2c: I2C ready SDA=8 SCL=9 (ADS1115 @ 0x48)[0m
+[0;33mW (874) gpio: conflict found for GPIO[5][0m
+[0;33mW (877) gpio: conflict found for GPIO[6][0m
+[0;32mI (881) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (888) lenslife_rgb: WS2812 status LED on GPIO38[0m
+[1;31mE (896) lenslife_ads1115: config write failed ch=1[0m
+[1;31mE (896) lenslife_measure: T_pre read failed[0m
+[1;31mE (899) lenslife_main: measurement cycle failed[0m
+[0;32mI (905) lenslife_power: deep sleep — next wake on reed GPIO7 (lid close)[0m
+[0;32mI (714) esp_psram: SPI SRAM memory test OK[0m
+[0;32mI (722) cpu_start: GPIO 44 and 43 are used as console UART I/O pins[0m
+[0;32mI (723) cpu_start: Pro cpu start user code[0m
+[0;32mI (723) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (724) app_init: Application information:[0m
+[0;32mI (728) app_init: Project name:     lenslife_case[0m
+[0;32mI (732) app_init: App version:      39538e2-dirty[0m
+[0;32mI (737) app_init: Compile time:     May 29 2026 19:35:45[0m
+[0;32mI (742) app_init: ELF file SHA256:  f8249bf58...[0m
+[0;32mI (746) app_init: ESP-IDF:          v6.1-dev-5213-g7812a5df33[0m
+[0;32mI (752) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (756) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (760) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (763) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (770) heap_init: At 3FCA1740 len 00047FD0 (287 KiB): RAM[0m
+[0;32mI (775) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (780) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (785) heap_init: At 600FE06C len 00001F7C (7 KiB): RTCRAM[0m
+[0;32mI (791) esp_psram: Adding pool of 8192K of PSRAM memory to heap allocator[0m
+[0;32mI (798) spi_flash: detected chip: boya[0m
+[0;32mI (800) spi_flash: flash io: dio[0m
+[0;32mI (804) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (810) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (822) main_task: Started on CPU0[0m
+[0;32mI (825) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (833) main_task: Calling app_main()[0m
+[0;32mI (836) lenslife_main: LensLife ESP32-S3 boot, wake cause=7[0m
+[0;32mI (858) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (859) lenslife_main: TEST MODE: bypassing reed switch only, real sensor readings still required[0m
+[0;32mI (862) lenslife_measure: NVS t_blank=1.0000 blank_ts=0 session_count=0[0m
+[0;32mI (869) lenslife_i2c: I2C ready SDA=8 SCL=9 (ADS1115 @ 0x48)[0m
+[0;33mW (874) gpio: conflict found for GPIO[5][0m
+[0;33mW (877) gpio: conflict found for GPIO[6][0m
+[0;32mI (881) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (888) lenslife_rgb: WS2812 status LED on GPIO38[0m
+[1;31mE (896) lenslife_ads1115: config write failed ch=1[0m
+[1;31mE (896) lenslife_measure: T_pre read failed[0m
+[1;31mE (899) lenslife_main: measurement cycle failed[0m
+[0;32mI (905) lenslife_power: deep sleep — next wake on reed GPIO7 (lid close)[0m
+[0;32mI (714) esp_psram: SPI SRAM memory test OK[0m
+[0;32mI (722) cpu_start: GPIO 44 and 43 are used as console UART I/O pins[0m
+[0;32mI (723) cpu_start: Pro cpu start user code[0m
+[0;32mI (723) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (724) app_init: Application information:[0m
+[0;32mI (728) app_init: Project name:     lenslife_case[0m
+[0;32mI (732) app_init: App version:      39538e2-dirty[0m
+[0;32mI (737) app_init: Compile time:     May 29 2026 19:35:45[0m
+[0;32mI (742) app_init: ELF file SHA256:  f8249bf58...[0m
+[0;32mI (746) app_init: ESP-IDF:          v6.1-dev-5213-g7812a5df33[0m
+[0;32mI (752) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (756) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (760) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (763) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (770) heap_init: At 3FCA1740 len 00047FD0 (287 KiB): RAM[0m
+[0;32mI (775) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (780) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (785) heap_init: At 600FE06C len 00001F7C (7 KiB): RTCRAM[0m
+[0;32mI (791) esp_psram: Adding pool of 8192K of PSRAM memory to heap allocator[0m
+[0;32mI (798) spi_flash: detected chip: boya[0m
+[0;32mI (800) spi_flash: flash io: dio[0m
+[0;32mI (804) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (810) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (822) main_task: Started on CPU0[0m
+[0;32mI (825) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (833) main_task: Calling app_main()[0m
+[0;32mI (836) lenslife_main: LensLife ESP32-S3 boot, wake cause=7[0m
+[0;32mI (858) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (859) lenslife_main: TEST MODE: bypassing reed switch only, real sensor readings still required[0m
+[0;32mI (862) lenslife_measure: NVS t_blank=1.0000 blank_ts=0 session_count=0[0m
+[0;32mI (869) lenslife_i2c: I2C ready SDA=8 SCL=9 (ADS1115 @ 0x48)[0m
+[0;33mW (874) gpio: conflict found for GPIO[5][0m
+[0;33mW (877) gpio: conflict found for GPIO[6][0m
+[0;32mI (881) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (888) lenslife_rgb: WS2812 status LED on GPIO38[0m
+[1;31mE (896) lenslife_ads1115: config write failed ch=1[0m
+[1;31mE (896) lenslife_measure: T_pre read failed[0m
+[1;31mE (899) lenslife_main: measurement cycle failed[0m
+[0;32mI (905) lenslife_power: deep sleep — next wake on reed GPIO7 (lid close)[0m
+[0;32mI (713) esp_psram: SPI SRAM memory test OK[0m
+[0;32mI (721) cpu_start: GPIO 44 and 43 are used as console UART I/O pins[0m
+[0;32mI (722) cpu_start: Pro cpu start user code[0m
+[0;32mI (722) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (723) app_init: Application information:[0m
+[0;32mI (727) app_init: Project name:     lenslife_case[0m
+[0;32mI (731) app_init: App version:      39538e2-dirty[0m
+[0;32mI (736) app_init: Compile time:     May 29 2026 19:35:45[0m
+[0;32mI (741) app_init: ELF file SHA256:  f8249bf58...[0m
+[0;32mI (745) app_init: ESP-IDF:          v6.1-dev-5213-g7812a5df33[0m
+[0;32mI (751) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (754) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (758) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (762) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (769) heap_init: At 3FCA1740 len 00047FD0 (287 KiB): RAM[0m
+[0;32mI (774) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (779) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (784) heap_init: At 600FE06C len 00001F7C (7 KiB): RTCRAM[0m
+[0;32mI (790) esp_psram: Adding pool of 8192K of PSRAM memory to heap allocator[0m
+[0;32mI (797) spi_flash: detected chip: boya[0m
+[0;32mI (799) spi_flash: flash io: dio[0m
+[0;32mI (803) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (809) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (821) main_task: Started on CPU0[0m
+[0;32mI (824) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (832) main_task: Calling app_main()[0m
+[0;32mI (835) lenslife_main: LensLife ESP32-S3 boot, wake cause=0[0m
+[0;32mI (857) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (858) lenslife_main: TEST MODE: bypassing reed switch only, real sensor readings still required[0m
+[0;32mI (861) lenslife_measure: NVS t_blank=1.0000 blank_ts=0 session_count=0[0m
+[0;32mI (868) lenslife_i2c: I2C ready SDA=8 SCL=9 (ADS1115 @ 0x48)[0m
+[0;33mW (873) gpio: conflict found for GPIO[5][0m
+[0;33mW (876) gpio: conflict found for GPIO[6][0m
+[0;32mI (880) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (887) lenslife_rgb: WS2812 status LED on GPIO38[0m
+[1;31mE (895) lenslife_ads1115: config write failed ch=1[0m
+[1;31mE (895) lenslife_measure: T_pre read failed[0m
+[1;31mE (898) lenslife_main: measurement cycle failed[0m
+[0;32mI (904) lenslife_power: deep sleep — next wake on reed GPIO7 (lid close)[0m
+[0;32mI (714) esp_psram: SPI SRAM memory test OK[0m
+[0;32mI (722) cpu_start: GPIO 44 and 43 are used as console UART I/O pins[0m
+[0;32mI (723) cpu_start: Pro cpu start user code[0m
+[0;32mI (723) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (724) app_init: Application information:[0m
+[0;32mI (728) app_init: Project name:     lenslife_case[0m
+[0;32mI (732) app_init: App version:      39538e2-dirty[0m
+[0;32mI (737) app_init: Compile time:     May 29 2026 19:35:45[0m
+[0;32mI (742) app_init: ELF file SHA256:  f8249bf58...[0m
+[0;32mI (746) app_init: ESP-IDF:          v6.1-dev-5213-g7812a5df33[0m
+[0;32mI (752) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (756) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (760) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (763) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (770) heap_init: At 3FCA1740 len 00047FD0 (287 KiB): RAM[0m
+[0;32mI (775) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (780) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (785) heap_init: At 600FE06C len 00001F7C (7 KiB): RTCRAM[0m
+[0;32mI (791) esp_psram: Adding pool of 8192K of PSRAM memory to heap allocator[0m
+[0;32mI (798) spi_flash: detected chip: boya[0m
+[0;32mI (800) spi_flash: flash io: dio[0m
+[0;32mI (804) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (810) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (822) main_task: Started on CPU0[0m
+[0;32mI (825) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (833) main_task: Calling app_main()[0m
+[0;32mI (836) lenslife_main: LensLife ESP32-S3 boot, wake cause=7[0m
+[0;32mI (858) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (859) lenslife_main: TEST MODE: bypassing reed switch only, real sensor readings still required[0m
+[0;32mI (862) lenslife_measure: NVS t_blank=1.0000 blank_ts=0 session_count=0[0m
+[0;32mI (869) lenslife_i2c: I2C ready SDA=8 SCL=9 (ADS1115 @ 0x48)[0m
+[0;33mW (874) gpio: conflict found for GPIO[5][0m
+[0;33mW (877) gpio: conflict found for GPIO[6][0m
+[0;32mI (881) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (888) lenslife_rgb: WS2812 status LED on GPIO38[0m
+[1;31mE (896) lenslife_ads1115: config write failed ch=1[0m
+[1;31mE (896) lenslife_measure: T_pre read failed[0m
+[1;31mE (899) lenslife_main: measurement cycle failed[0m
+[0;32mI (905) lenslife_power: deep sleep — next wake on reed GPIO7 (lid close)[0m
+[0;32mI (714) esp_psram: SPI SRAM memory test OK[0m
+[0;32mI (722) cpu_start: GPIO 44 and 43 are used as console UART I/O pins[0m
+[0;32mI (723) cpu_start: Pro cpu start user code[0m
+[0;32mI (723) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (724) app_init: Application information:[0m
+[0;32mI (728) app_init: Project name:     lenslife_case[0m
+[0;32mI (732) app_init: App version:      39538e2-dirty[0m
+[0;32mI (737) app_init: Compile time:     May 29 2026 19:35:45[0m
+[0;32mI (742) app_init: ELF file SHA256:  f8249bf58...[0m
+[0;32mI (746) app_init: ESP-IDF:          v6.1-dev-5213-g7812a5df33[0m
+[0;32mI (752) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (756) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (760) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (763) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (770) heap_init: At 3FCA1740 len 00047FD0 (287 KiB): RAM[0m
+[0;32mI (775) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (780) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (785) heap_init: At 600FE06C len 00001F7C (7 KiB): RTCRAM[0m
+[0;32mI (791) esp_psram: Adding pool of 8192K of PSRAM memory to heap allocator[0m
+[0;32mI (798) spi_flash: detected chip: boya[0m
+[0;32mI (800) spi_flash: flash io: dio[0m
+[0;32mI (804) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (810) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (822) main_task: Started on CPU0[0m
+[0;32mI (825) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (833) main_task: Calling app_main()[0m
+[0;32mI (836) lenslife_main: LensLife ESP32-S3 boot, wake cause=7[0m
+[0;32mI (858) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (859) lenslife_main: TEST MODE: bypassing reed switch only, real sensor readings still required[0m
+[0;32mI (862) lenslife_measure: NVS t_blank=1.0000 blank_ts=0 session_count=0[0m
+[0;32mI (869) lenslife_i2c: I2C ready SDA=8 SCL=9 (ADS1115 @ 0x48)[0m
+[0;33mW (874) gpio: conflict found for GPIO[5][0m
+[0;33mW (877) gpio: conflict found for GPIO[6][0m
+[0;32mI (881) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (888) lenslife_rgb: WS2812 status LED on GPIO38[0m
+[1;31mE (896) lenslife_ads1115: config write failed ch=1[0m
+[1;31mE (896) lenslife_measure: T_pre read failed[0m
+[1;31mE (899) lenslife_main: measurement cycle failed[0m
+[0;32mI (905) lenslife_power: deep sleep — next wake on reed GPIO7 (lid close)[0m
+[0;32mI (817) main_task: Started on CPU0[0m
+[0;32mI (820) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (828) main_task: Calling app_main()[0m
+[0;32mI (831) lenslife_main: LensLife ESP32-S3 boot, wake cause=7[0m
+[0;32mI (853) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (854) lenslife_main: TEST MODE: bypassing reed switch only, real sensor readings still required[0m
+[0;32mI (857) lenslife_measure: NVS t_blank=1.0000 blank_ts=0 session_count=0[0m
+[0;32mI (864) lenslife_i2c: I2C ready SDA=8 SCL=9 (ADS1115 @ 0x48)[0m
+[0;33mW (869) gpio: conflict found for GPIO[5][0m
+[0;33mW (872) gpio: conflict found for GPIO[6][0m
+[0;32mI (876) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (883) lenslife_rgb: WS2812 status LED on GPIO38[0m
+[1;31mE (891) lenslife_ads1115: config write failed ch=1[0m
+[1;31mE (891) lenslife_measure: T_pre read failed[0m
+[1;31mE (894) lenslife_main: measurement cycle failed[0m
+[0;32mI (900) lenslife_power: deep sleep — next wake on reed GPIO7 (lid close)[0m
+[0;32mI (820) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (828) main_task: Calling app_main()[0m
+[0;32mI (831) lenslife_main: LensLife ESP32-S3 boot, wake cause=7[0m
+[0;32mI (853) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (854) lenslife_main: TEST MODE: bypassing reed switch only, real sensor readings still required[0m
+[0;32mI (857) lenslife_measure: NVS t_blank=1.0000 blank_ts=0 session_count=0[0m
+[0;32mI (864) lenslife_i2c: I2C ready SDA=8 SCL=9 (ADS1115 @ 0x48)[0m
+[0;33mW (869) gpio: conflict found for GPIO[5][0m
+[0;33mW (872) gpio: conflict found for GPIO[6][0m
+[0;32mI (876) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (883) lenslife_rgb: WS2812 status LED on GPIO38[0m
+[1;31mE (891) lenslife_ads1115: config write failed ch=1[0m
+[1;31mE (891) lenslife_measure: T_pre read failed[0m
+[1;31mE (894) lenslife_main: measurement cycle failed[0m
+[0;32mI (900) lenslife_power: deep sleep — next wake on reed GPIO7 (lid close)[0m
+[0;32mI (722) cpu_start: GPIO 44 and 43 are used as console UART I/O pins[0m
+[0;32mI (723) cpu_start: Pro cpu start user code[0m
+[0;32mI (723) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (724) app_init: Application information:[0m
+[0;32mI (728) app_init: Project name:     lenslife_case[0m
+[0;32mI (732) app_init: App version:      39538e2-dirty[0m
+[0;32mI (737) app_init: Compile time:     May 29 2026 19:35:45[0m
+[0;32mI (742) app_init: ELF file SHA256:  f8249bf58...[0m
+[0;32mI (746) app_init: ESP-IDF:          v6.1-dev-5213-g7812a5df33[0m
+[0;32mI (752) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (756) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (760) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (763) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (770) heap_init: At 3FCA1740 len 00047FD0 (287 KiB): RAM[0m
+[0;32mI (775) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (780) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (785) heap_init: At 600FE06C len 00001F7C (7 KiB): RTCRAM[0m
+[0;32mI (791) esp_psram: Adding pool of 8192K of PSRAM memory to heap allocator[0m
+[0;32mI (798) spi_flash: detected chip: boya[0m
+[0;32mI (800) spi_flash: flash io: dio[0m
+[0;32mI (804) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (810) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (822) main_task: Started on CPU0[0m
+[0;32mI (825) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (833) main_task: Calling app_main()[0m
+[0;32mI (836) lenslife_main: LensLife ESP32-S3 boot, wake cause=7[0m
+[0;32mI (858) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (859) lenslife_main: TEST MODE: bypassing reed switch only, real sensor readings still required[0m
+[0;32mI (862) lenslife_measure: NVS t_blank=1.0000 blank_ts=0 session_count=0[0m
+[0;32mI (869) lenslife_i2c: I2C ready SDA=8 SCL=9 (ADS1115 @ 0x48)[0m
+[0;33mW (874) gpio: conflict found for GPIO[5][0m
+[0;33mW (877) gpio: conflict found for GPIO[6][0m
+[0;32mI (881) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (888) lenslife_rgb: WS2812 status LED on GPIO38[0m
+[1;31mE (896) lenslife_ads1115: config write failed ch=1[0m
+[1;31mE (896) lenslife_measure: T_pre read failed[0m
+[1;31mE (899) lenslife_main: measurement cycle failed[0m
+[0;32mI (905) lenslife_power: deep sleep — next wake on reed GPIO7 (lid close)[0m
+[0;32mI (817) main_task: Started on CPU0[0m
+[0;32mI (820) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (828) main_task: Calling app_main()[0m
+[0;32mI (831) lenslife_main: LensLife ESP32-S3 boot, wake cause=7[0m
+[0;32mI (853) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (854) lenslife_main: TEST MODE: bypassing reed switch only, real sensor readings still required[0m
+[0;32mI (857) lenslife_measure: NVS t_blank=1.0000 blank_ts=0 session_count=0[0m
+[0;32mI (864) lenslife_i2c: I2C ready SDA=8 SCL=9 (ADS1115 @ 0x48)[0m
+[0;33mW (869) gpio: conflict found for GPIO[5][0m
+[0;33mW (872) gpio: conflict found for GPIO[6][0m
+[0;32mI (876) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (883) lenslife_rgb: WS2812 status LED on GPIO38[0m
+[1;31mE (891) lenslife_ads1115: config write failed ch=1[0m
+[1;31mE (891) lenslife_measure: T_pre read failed[0m
+[1;31mE (894) lenslife_main: measurement cycle failed[0m
+[0;32mI (900) lenslife_power: deep sleep — next wake on reed GPIO7 (lid close)[0m
+[0;32mI (714) esp_psram: SPI SRAM memory test OK[0m
+[0;32mI (722) cpu_start: GPIO 44 and 43 are used as console UART I/O pins[0m
+[0;32mI (723) cpu_start: Pro cpu start user code[0m
+[0;32mI (723) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (724) app_init: Application information:[0m
+[0;32mI (728) app_init: Project name:     lenslife_case[0m
+[0;32mI (732) app_init: App version:      39538e2-dirty[0m
+[0;32mI (737) app_init: Compile time:     May 29 2026 19:35:45[0m
+[0;32mI (742) app_init: ELF file SHA256:  f8249bf58...[0m
+[0;32mI (746) app_init: ESP-IDF:          v6.1-dev-5213-g7812a5df33[0m
+[0;32mI (752) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (756) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (760) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (763) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (770) heap_init: At 3FCA1740 len 00047FD0 (287 KiB): RAM[0m
+[0;32mI (775) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (780) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (785) heap_init: At 600FE06C len 00001F7C (7 KiB): RTCRAM[0m
+[0;32mI (791) esp_psram: Adding pool of 8192K of PSRAM memory to heap allocator[0m
+[0;32mI (798) spi_flash: detected chip: boya[0m
+[0;32mI (800) spi_flash: flash io: dio[0m
+[0;32mI (804) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (810) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (822) main_task: Started on CPU0[0m
+[0;32mI (825) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (833) main_task: Calling app_main()[0m
+[0;32mI (836) lenslife_main: LensLife ESP32-S3 boot, wake cause=7[0m
+[0;32mI (858) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (859) lenslife_main: TEST MODE: bypassing reed switch only, real sensor readings still required[0m
+[0;32mI (862) lenslife_measure: NVS t_blank=1.0000 blank_ts=0 session_count=0[0m
+[0;32mI (869) lenslife_i2c: I2C ready SDA=8 SCL=9 (ADS1115 @ 0x48)[0m
+[0;33mW (874) gpio: conflict found for GPIO[5][0m
+[0;33mW (877) gpio: conflict found for GPIO[6][0m
+[0;32mI (881) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (888) lenslife_rgb: WS2812 status LED on GPIO38[0m
+[1;31mE (896) lenslife_ads1115: config write failed ch=1[0m
+[1;31mE (896) lenslife_measure: T_pre read failed[0m
+[1;31mE (899) lenslife_main: measurement cycle failed[0m
+[0;32mI (905) lenslife_power: deep sleep — next wake on reed GPIO7 (lid close)[0m
+[0;32mI (714) esp_psram: SPI SRAM memory test OK[0m
+[0;32mI (722) cpu_start: GPIO 44 and 43 are used as console UART I/O pins[0m
+[0;32mI (723) cpu_start: Pro cpu start user code[0m
+[0;32mI (723) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (724) app_init: Application information:[0m
+[0;32mI (728) app_init: Project name:     lenslife_case[0m
+[0;32mI (732) app_init: App version:      39538e2-dirty[0m
+[0;32mI (737) app_init: Compile time:     May 29 2026 19:35:45[0m
+[0;32mI (742) app_init: ELF file SHA256:  f8249bf58...[0m
+[0;32mI (746) app_init: ESP-IDF:          v6.1-dev-5213-g7812a5df33[0m
+[0;32mI (752) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (756) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (760) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (763) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (770) heap_init: At 3FCA1740 len 00047FD0 (287 KiB): RAM[0m
+[0;32mI (775) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (780) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (785) heap_init: At 600FE06C len 00001F7C (7 KiB): RTCRAM[0m
+[0;32mI (791) esp_psram: Adding pool of 8192K of PSRAM memory to heap allocator[0m
+[0;32mI (798) spi_flash: detected chip: boya[0m
+[0;32mI (800) spi_flash: flash io: dio[0m
+[0;32mI (804) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (810) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (822) main_task: Started on CPU0[0m
+[0;32mI (825) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (833) main_task: Calling app_main()[0m
+[0;32mI (836) lenslife_main: LensLife ESP32-S3 boot, wake cause=7[0m
+[0;32mI (858) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (859) lenslife_main: TEST MODE: bypassing reed switch only, real sensor readings still required[0m
+[0;32mI (862) lenslife_measure: NVS t_blank=1.0000 blank_ts=0 session_count=0[0m
+[0;32mI (869) lenslife_i2c: I2C ready SDA=8 SCL=9 (ADS1115 @ 0x48)[0m
+[0;33mW (874) gpio: conflict found for GPIO[5][0m
+[0;33mW (877) gpio: conflict found for GPIO[6][0m
+[0;32mI (881) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (888) lenslife_rgb: WS2812 status LED on GPIO38[0m
+[1;31mE (896) lenslife_ads1115: config write failed ch=1[0m
+[1;31mE (896) lenslife_measure: T_pre read failed[0m
+[1;31mE (899) lenslife_main: measurement cycle failed[0m
+[0;32mI (905) lenslife_power: deep sleep — next wake on reed GPIO7 (lid close)[0m
+[0;32mI (799) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (805) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (817) main_task: Started on CPU0[0m
+[0;32mI (820) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (828) main_task: Calling app_main()[0m
+[0;32mI (831) lenslife_main: LensLife ESP32-S3 boot, wake cause=7[0m
+[0;32mI (853) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (854) lenslife_main: TEST MODE: bypassing reed switch only, real sensor readings still required[0m
+[0;32mI (857) lenslife_measure: NVS t_blank=1.0000 blank_ts=0 session_count=0[0m
+[0;32mI (864) lenslife_i2c: I2C ready SDA=8 SCL=9 (ADS1115 @ 0x48)[0m
+[0;33mW (869) gpio: conflict found for GPIO[5][0m
+[0;33mW (872) gpio: conflict found for GPIO[6][0m
+[0;32mI (876) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (883) lenslife_rgb: WS2812 status LED on GPIO38[0m
+[1;31mE (891) lenslife_ads1115: config write failed ch=1[0m
+[1;31mE (891) lenslife_measure: T_pre read failed[0m
+[1;31mE (894) lenslife_main: measurement cycle failed[0m
+[0;32mI (900) lenslife_power: deep sleep — next wake on reed GPIO7 (lid close)[0m
+[0;32mI (714) esp_psram: SPI SRAM memory test OK[0m
+[0;32mI (722) cpu_start: GPIO 44 and 43 are used as console UART I/O pins[0m
+[0;32mI (723) cpu_start: Pro cpu start user code[0m
+[0;32mI (723) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (724) app_init: Application information:[0m
+[0;32mI (728) app_init: Project name:     lenslife_case[0m
+[0;32mI (732) app_init: App version:      39538e2-dirty[0m
+[0;32mI (737) app_init: Compile time:     May 29 2026 19:35:45[0m
+[0;32mI (742) app_init: ELF file SHA256:  f8249bf58...[0m
+[0;32mI (746) app_init: ESP-IDF:          v6.1-dev-5213-g7812a5df33[0m
+[0;32mI (752) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (756) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (760) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (763) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (770) heap_init: At 3FCA1740 len 00047FD0 (287 KiB): RAM[0m
+[0;32mI (775) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (780) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (785) heap_init: At 600FE06C len 00001F7C (7 KiB): RTCRAM[0m
+[0;32mI (791) esp_psram: Adding pool of 8192K of PSRAM memory to heap allocator[0m
+[0;32mI (798) spi_flash: detected chip: boya[0m
+[0;32mI (800) spi_flash: flash io: dio[0m
+[0;32mI (804) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (810) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (822) main_task: Started on CPU0[0m
+[0;32mI (825) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (833) main_task: Calling app_main()[0m
+[0;32mI (836) lenslife_main: LensLife ESP32-S3 boot, wake cause=7[0m
+[0;32mI (858) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (859) lenslife_main: TEST MODE: bypassing reed switch only, real sensor readings still required[0m
+[0;32mI (862) lenslife_measure: NVS t_blank=1.0000 blank_ts=0 session_count=0[0m
+[0;32mI (869) lenslife_i2c: I2C ready SDA=8 SCL=9 (ADS1115 @ 0x48)[0m
+[0;33mW (874) gpio: conflict found for GPIO[5][0m
+[0;33mW (877) gpio: conflict found for GPIO[6][0m
+[0;32mI (881) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (888) lenslife_rgb: WS2812 status LED on GPIO38[0m
+[1;31mE (896) lenslife_ads1115: config write failed ch=1[0m
+[1;31mE (896) lenslife_measure: T_pre read failed[0m
+[1;31mE (899) lenslife_main: measurement cycle failed[0m
+[0;32mI (905) lenslife_power: deep sleep — next wake on reed GPIO7 (lid close)[0m
+[0;32mI (795) spi_flash: flash io: dio[0m
+[0;32mI (799) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (805) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (817) main_task: Started on CPU0[0m
+[0;32mI (820) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (828) main_task: Calling app_main()[0m
+[0;32mI (831) lenslife_main: LensLife ESP32-S3 boot, wake cause=7[0m
+[0;32mI (853) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (854) lenslife_main: TEST MODE: bypassing reed switch only, real sensor readings still required[0m
+[0;32mI (857) lenslife_measure: NVS t_blank=1.0000 blank_ts=0 session_count=0[0m
+[0;32mI (864) lenslife_i2c: I2C ready SDA=8 SCL=9 (ADS1115 @ 0x48)[0m
+[0;33mW (869) gpio: conflict found for GPIO[5][0m
+[0;33mW (872) gpio: conflict found for GPIO[6][0m
+[0;32mI (876) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (883) lenslife_rgb: WS2812 status LED on GPIO38[0m
+[1;31mE (891) lenslife_ads1115: config write failed ch=1[0m
+[1;31mE (891) lenslife_measure: T_pre read failed[0m
+[1;31mE (894) lenslife_main: measurement cycle failed[0m
+[0;32mI (900) lenslife_power: deep sleep — next wake on reed GPIO7 (lid close)[0m
+[0;32mI (714) esp_psram: SPI SRAM memory test OK[0m
+[0;32mI (722) cpu_start: GPIO 44 and 43 are used as console UART I/O pins[0m
+[0;32mI (723) cpu_start: Pro cpu start user code[0m
+[0;32mI (723) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (724) app_init: Application information:[0m
+[0;32mI (728) app_init: Project name:     lenslife_case[0m
+[0;32mI (732) app_init: App version:      39538e2-dirty[0m
+[0;32mI (737) app_init: Compile time:     May 29 2026 19:35:45[0m
+[0;32mI (742) app_init: ELF file SHA256:  f8249bf58...[0m
+[0;32mI (746) app_init: ESP-IDF:          v6.1-dev-5213-g7812a5df33[0m
+[0;32mI (752) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (756) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (760) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (763) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (770) heap_init: At 3FCA1740 len 00047FD0 (287 KiB): RAM[0m
+[0;32mI (775) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (780) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (785) heap_init: At 600FE06C len 00001F7C (7 KiB): RTCRAM[0m
+[0;32mI (791) esp_psram: Adding pool of 8192K of PSRAM memory to heap allocator[0m
+[0;32mI (798) spi_flash: detected chip: boya[0m
+[0;32mI (800) spi_flash: flash io: dio[0m
+[0;32mI (804) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (810) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (822) main_task: Started on CPU0[0m
+[0;32mI (825) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (833) main_task: Calling app_main()[0m
+[0;32mI (836) lenslife_main: LensLife ESP32-S3 boot, wake cause=7[0m
+[0;32mI (858) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (859) lenslife_main: TEST MODE: bypassing reed switch only, real sensor readings still required[0m
+[0;32mI (862) lenslife_measure: NVS t_blank=1.0000 blank_ts=0 session_count=0[0m
+[0;32mI (869) lenslife_i2c: I2C ready SDA=8 SCL=9 (ADS1115 @ 0x48)[0m
+[0;33mW (874) gpio: conflict found for GPIO[5][0m
+[0;33mW (877) gpio: conflict found for GPIO[6][0m
+[0;32mI (881) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (888) lenslife_rgb: WS2812 status LED on GPIO38[0m
+[1;31mE (896) lenslife_ads1115: config write failed ch=1[0m
+[1;31mE (896) lenslife_measure: T_pre read failed[0m
+[1;31mE (899) lenslife_main: measurement cycle failed[0m
+[0;32mI (905) lenslife_power: deep sleep — next wake on reed GPIO7 (lid close)[0m
+[0;32mI (714) esp_psram: SPI SRAM memory test OK[0m
+[0;32mI (722) cpu_start: GPIO 44 and 43 are used as console UART I/O pins[0m
+[0;32mI (723) cpu_start: Pro cpu start user code[0m
+[0;32mI (723) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (724) app_init: Application information:[0m
+[0;32mI (728) app_init: Project name:     lenslife_case[0m
+[0;32mI (732) app_init: App version:      39538e2-dirty[0m
+[0;32mI (737) app_init: Compile time:     May 29 2026 19:35:45[0m
+[0;32mI (742) app_init: ELF file SHA256:  f8249bf58...[0m
+[0;32mI (746) app_init: ESP-IDF:          v6.1-dev-5213-g7812a5df33[0m
+[0;32mI (752) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (756) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (760) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (763) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (770) heap_init: At 3FCA1740 len 00047FD0 (287 KiB): RAM[0m
+[0;32mI (775) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (780) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (785) heap_init: At 600FE06C len 00001F7C (7 KiB): RTCRAM[0m
+[0;32mI (791) esp_psram: Adding pool of 8192K of PSRAM memory to heap allocator[0m
+[0;32mI (798) spi_flash: detected chip: boya[0m
+[0;32mI (800) spi_flash: flash io: dio[0m
+[0;32mI (804) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (810) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (822) main_task: Started on CPU0[0m
+[0;32mI (825) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (833) main_task: Calling app_main()[0m
+[0;32mI (836) lenslife_main: LensLife ESP32-S3 boot, wake cause=7[0m
+[0;32mI (858) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (859) lenslife_main: TEST MODE: bypassing reed switch only, real sensor readings still required[0m
+[0;32mI (862) lenslife_measure: NVS t_blank=1.0000 blank_ts=0 session_count=0[0m
+[0;32mI (869) lenslife_i2c: I2C ready SDA=8 SCL=9 (ADS1115 @ 0x48)[0m
+[0;33mW (874) gpio: conflict found for GPIO[5][0m
+[0;33mW (877) gpio: conflict found for GPIO[6][0m
+[0;32mI (881) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (888) lenslife_rgb: WS2812 status LED on GPIO38[0m
+[1;31mE (896) lenslife_ads1115: config write failed ch=1[0m
+[1;31mE (896) lenslife_measure: T_pre read failed[0m
+[1;31mE (899) lenslife_main: measurement cycle failed[0m
+[0;32mI (905) lenslife_power: deep sleep — next wake on reed GPIO7 (lid close)[0m
+[0;32mI (713) esp_psram: SPI SRAM memory test OK[0m
+[0;32mI (721) cpu_start: GPIO 44 and 43 are used as console UART I/O pins[0m
+[0;32mI (722) cpu_start: Pro cpu start user code[0m
+[0;32mI (722) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (723) app_init: Application information:[0m
+[0;32mI (727) app_init: Project name:     lenslife_case[0m
+[0;32mI (731) app_init: App version:      39538e2-dirty[0m
+[0;32mI (736) app_init: Compile time:     May 29 2026 19:35:45[0m
+[0;32mI (741) app_init: ELF file SHA256:  f8249bf58...[0m
+[0;32mI (745) app_init: ESP-IDF:          v6.1-dev-5213-g7812a5df33[0m
+[0;32mI (751) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (754) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (758) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (762) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (769) heap_init: At 3FCA1740 len 00047FD0 (287 KiB): RAM[0m
+[0;32mI (774) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (779) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (784) heap_init: At 600FE06C len 00001F7C (7 KiB): RTCRAM[0m
+[0;32mI (790) esp_psram: Adding pool of 8192K of PSRAM memory to heap allocator[0m
+[0;32mI (797) spi_flash: detected chip: boya[0m
+[0;32mI (799) spi_flash: flash io: dio[0m
+[0;32mI (803) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (809) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (821) main_task: Started on CPU0[0m
+[0;32mI (824) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (832) main_task: Calling app_main()[0m
+[0;32mI (835) lenslife_main: LensLife ESP32-S3 boot, wake cause=0[0m
+[0;32mI (857) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (858) lenslife_main: TEST MODE: bypassing reed switch only, real sensor readings still required[0m
+[0;32mI (861) lenslife_measure: NVS t_blank=1.0000 blank_ts=0 session_count=0[0m
+[0;32mI (868) lenslife_i2c: I2C ready SDA=8 SCL=9 (ADS1115 @ 0x48)[0m
+[0;33mW (873) gpio: conflict found for GPIO[5][0m
+[0;33mW (876) gpio: conflict found for GPIO[6][0m
+[0;32mI (880) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (887) lenslife_rgb: WS2812 status LED on GPIO38[0m
+[1;31mE (895) lenslife_ads1115: config write failed ch=1[0m
+[1;31mE (895) lenslife_measure: T_pre read failed[0m
+[1;31mE (898) lenslife_main: measurement cycle failed[0m
+[0;32mI (904) lenslife_power: deep sleep — next wake on reed GPIO7 (lid close)[0m
+[0;32mI (817) main_task: Started on CPU0[0m
+[0;32mI (820) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (828) main_task: Calling app_main()[0m
+[0;32mI (831) lenslife_main: LensLife ESP32-S3 boot, wake cause=7[0m
+[0;32mI (853) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (854) lenslife_main: TEST MODE: bypassing reed switch only, real sensor readings still required[0m
+[0;32mI (857) lenslife_measure: NVS t_blank=1.0000 blank_ts=0 session_count=0[0m
+[0;32mI (864) lenslife_i2c: I2C ready SDA=8 SCL=9 (ADS1115 @ 0x48)[0m
+[0;33mW (869) gpio: conflict found for GPIO[5][0m
+[0;33mW (872) gpio: conflict found for GPIO[6][0m
+[0;32mI (876) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (883) lenslife_rgb: WS2812 status LED on GPIO38[0m
+[1;31mE (891) lenslife_ads1115: config write failed ch=1[0m
+[1;31mE (891) lenslife_measure: T_pre read failed[0m
+[1;31mE (894) lenslife_main: measurement cycle failed[0m
+[0;32mI (900) lenslife_power: deep sleep — next wake on reed GPIO7 (lid close)[0m
+[0;32mI (805) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (817) main_task: Started on CPU0[0m
+[0;32mI (820) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (828) main_task: Calling app_main()[0m
+[0;32mI (831) lenslife_main: LensLife ESP32-S3 boot, wake cause=7[0m
+[0;32mI (853) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (854) lenslife_main: TEST MODE: bypassing reed switch only, real sensor readings still required[0m
+[0;32mI (857) lenslife_measure: NVS t_blank=1.0000 blank_ts=0 session_count=0[0m
+[0;32mI (864) lenslife_i2c: I2C ready SDA=8 SCL=9 (ADS1115 @ 0x48)[0m
+[0;33mW (869) gpio: conflict found for GPIO[5][0m
+[0;33mW (872) gpio: conflict found for GPIO[6][0m
+[0;32mI (876) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (883) lenslife_rgb: WS2812 status LED on GPIO38[0m
+[1;31mE (891) lenslife_ads1115: config write failed ch=1[0m
+[1;31mE (891) lenslife_measure: T_pre read failed[0m
+[1;31mE (894) lenslife_main: measurement cycle failed[0m
+[0;32mI (900) lenslife_power: deep sleep — next wake on reed GPIO7 (lid close)[0m
+[0;32mI (817) main_task: Started on CPU0[0m
+[0;32mI (820) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (828) main_task: Calling app_main()[0m
+[0;32mI (831) lenslife_main: LensLife ESP32-S3 boot, wake cause=7[0m
+[0;32mI (853) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (854) lenslife_main: TEST MODE: bypassing reed switch only, real sensor readings still required[0m
+[0;32mI (857) lenslife_measure: NVS t_blank=1.0000 blank_ts=0 session_count=0[0m
+[0;32mI (864) lenslife_i2c: I2C ready SDA=8 SCL=9 (ADS1115 @ 0x48)[0m
+[0;33mW (869) gpio: conflict found for GPIO[5][0m
+[0;33mW (872) gpio: conflict found for GPIO[6][0m
+[0;32mI (876) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (883) lenslife_rgb: WS2812 status LED on GPIO38[0m
+[1;31mE (891) lenslife_ads1115: config write failed ch=1[0m
+[1;31mE (891) lenslife_measure: T_pre read failed[0m
+[1;31mE (894) lenslife_main: measurement cycle failed[0m
+[0;32mI (900) lenslife_power: deep sleep — next wake on reed GPIO7 (lid close)[0m
+[0;32mI (792) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (798) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (811) main_task: Started on CPU0[0m
+[0;32mI (814) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (822) main_task: Calling app_main()[0m
+[0;32mI (825) lenslife_main: LensLife ESP32-S3 boot, wake cause=7[0m
+[0;32mI (847) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (848) lenslife_main: TEST MODE: bypassing reed switch only, real sensor readings still required[0m
+[0;32mI (851) lenslife_measure: NVS t_blank=1.0000 blank_ts=0 session_count=0[0m
+[0;32mI (858) lenslife_i2c: I2C ready SDA=8 SCL=9 (ADS1115 @ 0x48)[0m
+[0;33mW (863) gpio: conflict found for GPIO[5][0m
+[0;33mW (866) gpio: conflict found for GPIO[6][0m
+[0;32mI (870) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (877) lenslife_rgb: WS2812 status LED on GPIO38[0m
+[1;31mE (885) lenslife_ads1115: config write failed ch=1[0m
+[1;31mE (885) lenslife_measure: T_pre read failed[0m
+[1;31mE (888) lenslife_main: measurement cycle failed[0m
+[0;32mI (894) lenslife_power: deep sleep — next wake on reed GPIO7 (lid close)[0m
+[0;32mI (714) esp_psram: SPI SRAM memory test OK[0m
+[0;32mI (722) cpu_start: GPIO 44 and 43 are used as console UART I/O pins[0m
+[0;32mI (723) cpu_start: Pro cpu start user code[0m
+[0;32mI (723) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (724) app_init: Application information:[0m
+[0;32mI (728) app_init: Project name:     lenslife_case[0m
+[0;32mI (732) app_init: App version:      39538e2-dirty[0m
+[0;32mI (737) app_init: Compile time:     May 29 2026 19:35:45[0m
+[0;32mI (742) app_init: ELF file SHA256:  f8249bf58...[0m
+[0;32mI (746) app_init: ESP-IDF:          v6.1-dev-5213-g7812a5df33[0m
+[0;32mI (752) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (756) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (760) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (763) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (770) heap_init: At 3FCA1740 len 00047FD0 (287 KiB): RAM[0m
+[0;32mI (775) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (780) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (785) heap_init: At 600FE06C len 00001F7C (7 KiB): RTCRAM[0m
+[0;32mI (791) esp_psram: Adding pool of 8192K of PSRAM memory to heap allocator[0m
+[0;32mI (798) spi_flash: detected chip: boya[0m
+[0;32mI (800) spi_flash: flash io: dio[0m
+[0;32mI (804) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (810) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (822) main_task: Started on CPU0[0m
+[0;32mI (825) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (833) main_task: Calling app_main()[0m
+[0;32mI (836) lenslife_main: LensLife ESP32-S3 boot, wake cause=7[0m
+[0;32mI (858) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (859) lenslife_main: TEST MODE: bypassing reed switch only, real sensor readings still required[0m
+[0;32mI (862) lenslife_measure: NVS t_blank=1.0000 blank_ts=0 session_count=0[0m
+[0;32mI (869) lenslife_i2c: I2C ready SDA=8 SCL=9 (ADS1115 @ 0x48)[0m
+[0;33mW (874) gpio: conflict found for GPIO[5][0m
+[0;33mW (877) gpio: conflict found for GPIO[6][0m
+[0;32mI (881) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (888) lenslife_rgb: WS2812 status LED on GPIO38[0m
+[1;31mE (896) lenslife_ads1115: config write failed ch=1[0m
+[1;31mE (896) lenslife_measure: T_pre read failed[0m
+[1;31mE (899) lenslife_main: measurement cycle failed[0m
+[0;32mI (905) lenslife_power: deep sleep — next wake on reed GPIO7 (lid close)[0m
+[0;32mI (792) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (798) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (811) main_task: Started on CPU0[0m
+[0;32mI (814) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (822) main_task: Calling app_main()[0m
+[0;32mI (825) lenslife_main: LensLife ESP32-S3 boot, wake cause=7[0m
+[0;32mI (847) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (848) lenslife_main: TEST MODE: bypassing reed switch only, real sensor readings still required[0m
+[0;32mI (851) lenslife_measure: NVS t_blank=1.0000 blank_ts=0 session_count=0[0m
+[0;32mI (858) lenslife_i2c: I2C ready SDA=8 SCL=9 (ADS1115 @ 0x48)[0m
+[0;33mW (863) gpio: conflict found for GPIO[5][0m
+[0;33mW (866) gpio: conflict found for GPIO[6][0m
+[0;32mI (870) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (877) lenslife_rgb: WS2812 status LED on GPIO38[0m
+[1;31mE (885) lenslife_ads1115: config write failed ch=1[0m
+[1;31mE (885) lenslife_measure: T_pre read failed[0m
+[1;31mE (888) lenslife_main: measurement cycle failed[0m
+[0;32mI (894) lenslife_power: deep sleep — next wake on reed GPIO7 (lid close)[0m
+[0;32mI (714) esp_psram: SPI SRAM memory test OK[0m
+[0;32mI (722) cpu_start: GPIO 44 and 43 are used as console UART I/O pins[0m
+[0;32mI (723) cpu_start: Pro cpu start user code[0m
+[0;32mI (723) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (724) app_init: Application information:[0m
+[0;32mI (728) app_init: Project name:     lenslife_case[0m
+[0;32mI (732) app_init: App version:      39538e2-dirty[0m
+[0;32mI (737) app_init: Compile time:     May 29 2026 19:35:45[0m
+[0;32mI (742) app_init: ELF file SHA256:  f8249bf58...[0m
+[0;32mI (746) app_init: ESP-IDF:          v6.1-dev-5213-g7812a5df33[0m
+[0;32mI (752) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (756) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (760) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (763) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (770) heap_init: At 3FCA1740 len 00047FD0 (287 KiB): RAM[0m
+[0;32mI (775) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (780) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (785) heap_init: At 600FE06C len 00001F7C (7 KiB): RTCRAM[0m
+[0;32mI (791) esp_psram: Adding pool of 8192K of PSRAM memory to heap allocator[0m
+[0;32mI (798) spi_flash: detected chip: boya[0m
+[0;32mI (800) spi_flash: flash io: dio[0m
+[0;32mI (804) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (810) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (822) main_task: Started on CPU0[0m
+[0;32mI (825) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (833) main_task: Calling app_main()[0m
+[0;32mI (836) lenslife_main: LensLife ESP32-S3 boot, wake cause=7[0m
+[0;32mI (858) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (859) lenslife_main: TEST MODE: bypassing reed switch only, real sensor readings still required[0m
+[0;32mI (862) lenslife_measure: NVS t_blank=1.0000 blank_ts=0 session_count=0[0m
+[0;32mI (869) lenslife_i2c: I2C ready SDA=8 SCL=9 (ADS1115 @ 0x48)[0m
+[0;33mW (874) gpio: conflict found for GPIO[5][0m
+[0;33mW (877) gpio: conflict found for GPIO[6][0m
+[0;32mI (881) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (888) lenslife_rgb: WS2812 status LED on GPIO38[0m
+[1;31mE (896) lenslife_ads1115: config write failed ch=1[0m
+[1;31mE (896) lenslife_measure: T_pre read failed[0m
+[1;31mE (899) lenslife_main: measurement cycle failed[0m
+[0;32mI (905) lenslife_power: deep sleep — next wake on reed GPIO7 (lid close)[0m
+[0;32mI (715) cpu_start: GPIO 44 and 43 are used as console UART I/O pins[0m
+[0;32mI (716) cpu_start: Pro cpu start user code[0m
+[0;32mI (716) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (718) app_init: Application information:[0m
+[0;32mI (722) app_init: Project name:     lenslife_case[0m
+[0;32mI (726) app_init: App version:      39538e2-dirty[0m
+[0;32mI (730) app_init: Compile time:     May 29 2026 19:35:45[0m
+[0;32mI (735) app_init: ELF file SHA256:  f8249bf58...[0m
+[0;32mI (740) app_init: ESP-IDF:          v6.1-dev-5213-g7812a5df33[0m
+[0;32mI (745) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (749) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (753) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (757) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (763) heap_init: At 3FCA1740 len 00047FD0 (287 KiB): RAM[0m
+[0;32mI (768) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (773) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (779) heap_init: At 600FE06C len 00001F7C (7 KiB): RTCRAM[0m
+[0;32mI (784) esp_psram: Adding pool of 8192K of PSRAM memory to heap allocator[0m
+[0;32mI (791) spi_flash: detected chip: boya[0m
+[0;32mI (794) spi_flash: flash io: dio[0m
+[0;32mI (798) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (803) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (816) main_task: Started on CPU0[0m
+[0;32mI (819) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (827) main_task: Calling app_main()[0m
+[0;32mI (830) lenslife_main: LensLife ESP32-S3 boot, wake cause=7[0m
+[0;32mI (852) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (853) lenslife_main: TEST MODE: bypassing reed switch only, real sensor readings still required[0m
+[0;32mI (856) lenslife_measure: NVS t_blank=1.0000 blank_ts=0 session_count=0[0m
+[0;32mI (863) lenslife_i2c: I2C ready SDA=8 SCL=9 (ADS1115 @ 0x48)[0m
+[0;33mW (868) gpio: conflict found for GPIO[5][0m
+[0;33mW (871) gpio: conflict found for GPIO[6][0m
+[0;32mI (875) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (882) lenslife_rgb: WS2812 status LED on GPIO38[0m
+[1;31mE (890) lenslife_ads1115: config write failed ch=1[0m
+[1;31mE (890) lenslife_measure: T_pre read failed[0m
+[1;31mE (893) lenslife_main: measurement cycle failed[0m
+[0;32mI (899) lenslife_power: deep sleep — next wake on reed GPIO7 (lid close)[0m
+[0;32mI (714) esp_psram: SPI SRAM memory test OK[0m
+[0;32mI (722) cpu_start: GPIO 44 and 43 are used as console UART I/O pins[0m
+[0;32mI (723) cpu_start: Pro cpu start user code[0m
+[0;32mI (723) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (724) app_init: Application information:[0m
+[0;32mI (728) app_init: Project name:     lenslife_case[0m
+[0;32mI (732) app_init: App version:      39538e2-dirty[0m
+[0;32mI (737) app_init: Compile time:     May 29 2026 19:35:45[0m
+[0;32mI (742) app_init: ELF file SHA256:  f8249bf58...[0m
+[0;32mI (746) app_init: ESP-IDF:          v6.1-dev-5213-g7812a5df33[0m
+[0;32mI (752) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (756) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (760) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (763) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (770) heap_init: At 3FCA1740 len 00047FD0 (287 KiB): RAM[0m
+[0;32mI (775) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (780) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (785) heap_init: At 600FE06C len 00001F7C (7 KiB): RTCRAM[0m
+[0;32mI (791) esp_psram: Adding pool of 8192K of PSRAM memory to heap allocator[0m
+[0;32mI (798) spi_flash: detected chip: boya[0m
+[0;32mI (800) spi_flash: flash io: dio[0m
+[0;32mI (804) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (810) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (822) main_task: Started on CPU0[0m
+[0;32mI (825) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (833) main_task: Calling app_main()[0m
+[0;32mI (836) lenslife_main: LensLife ESP32-S3 boot, wake cause=7[0m
+[0;32mI (858) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (859) lenslife_main: TEST MODE: bypassing reed switch only, real sensor readings still required[0m
+[0;32mI (862) lenslife_measure: NVS t_blank=1.0000 blank_ts=0 session_count=0[0m
+[0;32mI (869) lenslife_i2c: I2C ready SDA=8 SCL=9 (ADS1115 @ 0x48)[0m
+[0;33mW (874) gpio: conflict found for GPIO[5][0m
+[0;33mW (877) gpio: conflict found for GPIO[6][0m
+[0;32mI (881) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (888) lenslife_rgb: WS2812 status LED on GPIO38[0m
+[1;31mE (896) lenslife_ads1115: config write failed ch=1[0m
+[1;31mE (896) lenslife_measure: T_pre read failed[0m
+[1;31mE (899) lenslife_main: measurement cycle failed[0m
+[0;32mI (905) lenslife_power: deep sleep — next wake on reed GPIO7 (lid close)[0m
+[0;32mI (714) esp_psram: SPI SRAM memory test OK[0m
+[0;32mI (722) cpu_start: GPIO 44 and 43 are used as console UART I/O pins[0m
+[0;32mI (723) cpu_start: Pro cpu start user code[0m
+[0;32mI (723) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (724) app_init: Application information:[0m
+[0;32mI (728) app_init: Project name:     lenslife_case[0m
+[0;32mI (732) app_init: App version:      39538e2-dirty[0m
+[0;32mI (737) app_init: Compile time:     May 29 2026 19:35:45[0m
+[0;32mI (742) app_init: ELF file SHA256:  f8249bf58...[0m
+[0;32mI (746) app_init: ESP-IDF:          v6.1-dev-5213-g7812a5df33[0m
+[0;32mI (752) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (756) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (760) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (763) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (770) heap_init: At 3FCA1740 len 00047FD0 (287 KiB): RAM[0m
+[0;32mI (775) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (780) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (785) heap_init: At 600FE06C len 00001F7C (7 KiB): RTCRAM[0m
+[0;32mI (791) esp_psram: Adding pool of 8192K of PSRAM memory to heap allocator[0m
+[0;32mI (798) spi_flash: detected chip: boya[0m
+[0;32mI (800) spi_flash: flash io: dio[0m
+[0;32mI (804) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (810) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (822) main_task: Started on CPU0[0m
+[0;32mI (825) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (833) main_task: Calling app_main()[0m
+[0;32mI (836) lenslife_main: LensLife ESP32-S3 boot, wake cause=7[0m
+[0;32mI (858) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (859) lenslife_main: TEST MODE: bypassing reed switch only, real sensor readings still required[0m
+[0;32mI (862) lenslife_measure: NVS t_blank=1.0000 blank_ts=0 session_count=0[0m
+[0;32mI (869) lenslife_i2c: I2C ready SDA=8 SCL=9 (ADS1115 @ 0x48)[0m
+[0;33mW (874) gpio: conflict found for GPIO[5][0m
+[0;33mW (877) gpio: conflict found for GPIO[6][0m
+[0;32mI (881) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (888) lenslife_rgb: WS2812 status LED on GPIO38[0m
+[1;31mE (896) lenslife_ads1115: config write failed ch=1[0m
+[1;31mE (896) lenslife_measure: T_pre read failed[0m
+[1;31mE (899) lenslife_main: measurement cycle failed[0m
+[0;32mI (905) lenslife_power: deep sleep — next wake on reed GPIO7 (lid close)[0m
+[0;32mI (714) esp_psram: SPI SRAM memory test OK[0m
+[0;32mI (722) cpu_start: GPIO 44 and 43 are used as console UART I/O pins[0m
+[0;32mI (723) cpu_start: Pro cpu start user code[0m
+[0;32mI (723) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (724) app_init: Application information:[0m
+[0;32mI (728) app_init: Project name:     lenslife_case[0m
+[0;32mI (732) app_init: App version:      39538e2-dirty[0m
+[0;32mI (737) app_init: Compile time:     May 29 2026 19:35:45[0m
+[0;32mI (742) app_init: ELF file SHA256:  f8249bf58...[0m
+[0;32mI (746) app_init: ESP-IDF:          v6.1-dev-5213-g7812a5df33[0m
+[0;32mI (752) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (756) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (760) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (763) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (770) heap_init: At 3FCA1740 len 00047FD0 (287 KiB): RAM[0m
+[0;32mI (775) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (780) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (785) heap_init: At 600FE06C len 00001F7C (7 KiB): RTCRAM[0m
+[0;32mI (791) esp_psram: Adding pool of 8192K of PSRAM memory to heap allocator[0m
+[0;32mI (798) spi_flash: detected chip: boya[0m
+[0;32mI (800) spi_flash: flash io: dio[0m
+[0;32mI (804) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (810) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (822) main_task: Started on CPU0[0m
+[0;32mI (825) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (833) main_task: Calling app_main()[0m
+[0;32mI (836) lenslife_main: LensLife ESP32-S3 boot, wake cause=7[0m
+[0;32mI (858) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (859) lenslife_main: TEST MODE: bypassing reed switch only, real sensor readings still required[0m
+[0;32mI (862) lenslife_measure: NVS t_blank=1.0000 blank_ts=0 session_count=0[0m
+[0;32mI (869) lenslife_i2c: I2C ready SDA=8 SCL=9 (ADS1115 @ 0x48)[0m
+[0;33mW (874) gpio: conflict found for GPIO[5][0m
+[0;33mW (877) gpio: conflict found for GPIO[6][0m
+[0;32mI (881) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (888) lenslife_rgb: WS2812 status LED on GPIO38[0m
+[1;31mE (896) lenslife_ads1115: config write failed ch=1[0m
+[1;31mE (896) lenslife_measure: T_pre read failed[0m
+[1;31mE (899) lenslife_main: measurement cycle failed[0m
+[0;32mI (905) lenslife_power: deep sleep — next wake on reed GPIO7 (lid close)[0m
+[0;32mI (714) esp_psram: SPI SRAM memory test OK[0m
+[0;32mI (722) cpu_start: GPIO 44 and 43 are used as console UART I/O pins[0m
+[0;32mI (723) cpu_start: Pro cpu start user code[0m
+[0;32mI (723) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (724) app_init: Application information:[0m
+[0;32mI (728) app_init: Project name:     lenslife_case[0m
+[0;32mI (732) app_init: App version:      39538e2-dirty[0m
+[0;32mI (737) app_init: Compile time:     May 29 2026 19:35:45[0m
+[0;32mI (742) app_init: ELF file SHA256:  f8249bf58...[0m
+[0;32mI (746) app_init: ESP-IDF:          v6.1-dev-5213-g7812a5df33[0m
+[0;32mI (752) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (756) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (760) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (763) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (770) heap_init: At 3FCA1740 len 00047FD0 (287 KiB): RAM[0m
+[0;32mI (775) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (780) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (785) heap_init: At 600FE06C len 00001F7C (7 KiB): RTCRAM[0m
+[0;32mI (791) esp_psram: Adding pool of 8192K of PSRAM memory to heap allocator[0m
+[0;32mI (798) spi_flash: detected chip: boya[0m
+[0;32mI (800) spi_flash: flash io: dio[0m
+[0;32mI (804) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (810) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (822) main_task: Started on CPU0[0m
+[0;32mI (825) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (833) main_task: Calling app_main()[0m
+[0;32mI (836) lenslife_main: LensLife ESP32-S3 boot, wake cause=7[0m
+[0;32mI (858) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (859) lenslife_main: TEST MODE: bypassing reed switch only, real sensor readings still required[0m
+[0;32mI (862) lenslife_measure: NVS t_blank=1.0000 blank_ts=0 session_count=0[0m
+[0;32mI (869) lenslife_i2c: I2C ready SDA=8 SCL=9 (ADS1115 @ 0x48)[0m
+[0;33mW (874) gpio: conflict found for GPIO[5][0m
+[0;33mW (877) gpio: conflict found for GPIO[6][0m
+[0;32mI (881) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (888) lenslife_rgb: WS2812 status LED on GPIO38[0m
+[1;31mE (896) lenslife_ads1115: config write failed ch=1[0m
+[1;31mE (896) lenslife_measure: T_pre read failed[0m
+[1;31mE (899) lenslife_main: measurement cycle failed[0m
+[0;32mI (905) lenslife_power: deep sleep — next wake on reed GPIO7 (lid close)[0m
+[0;32mI (714) esp_psram: SPI SRAM memory test OK[0m
+[0;32mI (722) cpu_start: GPIO 44 and 43 are used as console UART I/O pins[0m
+[0;32mI (723) cpu_start: Pro cpu start user code[0m
+[0;32mI (723) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (724) app_init: Application information:[0m
+[0;32mI (728) app_init: Project name:     lenslife_case[0m
+[0;32mI (732) app_init: App version:      39538e2-dirty[0m
+[0;32mI (737) app_init: Compile time:     May 29 2026 19:35:45[0m
+[0;32mI (742) app_init: ELF file SHA256:  f8249bf58...[0m
+[0;32mI (746) app_init: ESP-IDF:          v6.1-dev-5213-g7812a5df33[0m
+[0;32mI (752) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (756) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (760) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (763) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (770) heap_init: At 3FCA1740 len 00047FD0 (287 KiB): RAM[0m
+[0;32mI (775) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (780) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (785) heap_init: At 600FE06C len 00001F7C (7 KiB): RTCRAM[0m
+[0;32mI (791) esp_psram: Adding pool of 8192K of PSRAM memory to heap allocator[0m
+[0;32mI (798) spi_flash: detected chip: boya[0m
+[0;32mI (800) spi_flash: flash io: dio[0m
+[0;32mI (804) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (810) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (822) main_task: Started on CPU0[0m
+[0;32mI (825) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (833) main_task: Calling app_main()[0m
+[0;32mI (836) lenslife_main: LensLife ESP32-S3 boot, wake cause=7[0m
+[0;32mI (858) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (859) lenslife_main: TEST MODE: bypassing reed switch only, real sensor readings still required[0m
+[0;32mI (862) lenslife_measure: NVS t_blank=1.0000 blank_ts=0 session_count=0[0m
+[0;32mI (869) lenslife_i2c: I2C ready SDA=8 SCL=9 (ADS1115 @ 0x48)[0m
+[0;33mW (874) gpio: conflict found for GPIO[5][0m
+[0;33mW (877) gpio: conflict found for GPIO[6][0m
+[0;32mI (881) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (888) lenslife_rgb: WS2812 status LED on GPIO38[0m
+[1;31mE (896) lenslife_ads1115: config write failed ch=1[0m
+[1;31mE (896) lenslife_measure: T_pre read failed[0m
+[1;31mE (899) lenslife_main: measurement cycle failed[0m
+[0;32mI (905) lenslife_power: deep sleep — next wake on reed GPIO7 (lid close)[0m
+[0;32mI (715) cpu_start: GPIO 44 and 43 are used as console UART I/O pins[0m
+[0;32mI (716) cpu_start: Pro cpu start user code[0m
+[0;32mI (716) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (718) app_init: Application information:[0m
+[0;32mI (722) app_init: Project name:     lenslife_case[0m
+[0;32mI (726) app_init: App version:      39538e2-dirty[0m
+[0;32mI (730) app_init: Compile time:     May 29 2026 19:35:45[0m
+[0;32mI (735) app_init: ELF file SHA256:  f8249bf58...[0m
+[0;32mI (740) app_init: ESP-IDF:          v6.1-dev-5213-g7812a5df33[0m
+[0;32mI (745) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (749) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (753) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (757) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (763) heap_init: At 3FCA1740 len 00047FD0 (287 KiB): RAM[0m
+[0;32mI (768) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (773) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (779) heap_init: At 600FE06C len 00001F7C (7 KiB): RTCRAM[0m
+[0;32mI (784) esp_psram: Adding pool of 8192K of PSRAM memory to heap allocator[0m
+[0;32mI (791) spi_flash: detected chip: boya[0m
+[0;32mI (794) spi_flash: flash io: dio[0m
+[0;32mI (798) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (803) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (816) main_task: Started on CPU0[0m
+[0;32mI (819) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (827) main_task: Calling app_main()[0m
+[0;32mI (830) lenslife_main: LensLife ESP32-S3 boot, wake cause=7[0m
+[0;32mI (852) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (853) lenslife_main: TEST MODE: bypassing reed switch only, real sensor readings still required[0m
+[0;32mI (856) lenslife_measure: NVS t_blank=1.0000 blank_ts=0 session_count=0[0m
+[0;32mI (863) lenslife_i2c: I2C ready SDA=8 SCL=9 (ADS1115 @ 0x48)[0m
+[0;33mW (868) gpio: conflict found for GPIO[5][0m
+[0;33mW (871) gpio: conflict found for GPIO[6][0m
+[0;32mI (875) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (882) lenslife_rgb: WS2812 status LED on GPIO38[0m
+[1;31mE (890) lenslife_ads1115: config write failed ch=1[0m
+[1;31mE (890) lenslife_measure: T_pre read failed[0m
+[1;31mE (893) lenslife_main: measurement cycle failed[0m
+[0;32mI (899) lenslife_power: deep sleep — next wake on reed GPIO7 (lid close)[0m
+[0;32mI (792) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (798) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (811) main_task: Started on CPU0[0m
+[0;32mI (814) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (822) main_task: Calling app_main()[0m
+[0;32mI (825) lenslife_main: LensLife ESP32-S3 boot, wake cause=7[0m
+[0;32mI (847) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (848) lenslife_main: TEST MODE: bypassing reed switch only, real sensor readings still required[0m
+[0;32mI (851) lenslife_measure: NVS t_blank=1.0000 blank_ts=0 session_count=0[0m
+[0;32mI (858) lenslife_i2c: I2C ready SDA=8 SCL=9 (ADS1115 @ 0x48)[0m
+[0;33mW (863) gpio: conflict found for GPIO[5][0m
+[0;33mW (866) gpio: conflict found for GPIO[6][0m
+[0;32mI (870) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (877) lenslife_rgb: WS2812 status LED on GPIO38[0m
+[1;31mE (885) lenslife_ads1115: config write failed ch=1[0m
+[1;31mE (885) lenslife_measure: T_pre read failed[0m
+[1;31mE (888) lenslife_main: measurement cycle failed[0m
+[0;32mI (894) lenslife_power: deep sleep — next wake on reed GPIO7 (lid close)[0m
+[0;32mI (715) cpu_start: GPIO 44 and 43 are used as console UART I/O pins[0m
+[0;32mI (716) cpu_start: Pro cpu start user code[0m
+[0;32mI (716) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (718) app_init: Application information:[0m
+[0;32mI (722) app_init: Project name:     lenslife_case[0m
+[0;32mI (726) app_init: App version:      39538e2-dirty[0m
+[0;32mI (730) app_init: Compile time:     May 29 2026 19:35:45[0m
+[0;32mI (735) app_init: ELF file SHA256:  f8249bf58...[0m
+[0;32mI (740) app_init: ESP-IDF:          v6.1-dev-5213-g7812a5df33[0m
+[0;32mI (745) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (749) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (753) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (757) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (763) heap_init: At 3FCA1740 len 00047FD0 (287 KiB): RAM[0m
+[0;32mI (768) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (773) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (779) heap_init: At 600FE06C len 00001F7C (7 KiB): RTCRAM[0m
+[0;32mI (784) esp_psram: Adding pool of 8192K of PSRAM memory to heap allocator[0m
+[0;32mI (791) spi_flash: detected chip: boya[0m
+[0;32mI (794) spi_flash: flash io: dio[0m
+[0;32mI (798) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (803) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (816) main_task: Started on CPU0[0m
+[0;32mI (819) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (827) main_task: Calling app_main()[0m
+[0;32mI (830) lenslife_main: LensLife ESP32-S3 boot, wake cause=7[0m
+[0;32mI (852) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (853) lenslife_main: TEST MODE: bypassing reed switch only, real sensor readings still required[0m
+[0;32mI (856) lenslife_measure: NVS t_blank=1.0000 blank_ts=0 session_count=0[0m
+[0;32mI (863) lenslife_i2c: I2C ready SDA=8 SCL=9 (ADS1115 @ 0x48)[0m
+[0;33mW (868) gpio: conflict found for GPIO[5][0m
+[0;33mW (871) gpio: conflict found for GPIO[6][0m
+[0;32mI (875) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (882) lenslife_rgb: WS2812 status LED on GPIO38[0m
+[1;31mE (890) lenslife_ads1115: config write failed ch=1[0m
+[1;31mE (890) lenslife_measure: T_pre read failed[0m
+[1;31mE (893) lenslife_main: measurement cycle failed[0m
+[0;32mI (899) lenslife_power: deep sleep — next wake on reed GPIO7 (lid close)[0m
+[0;32mI (715) cpu_start: GPIO 44 and 43 are used as console UART I/O pins[0m
+[0;32mI (716) cpu_start: Pro cpu start user code[0m
+[0;32mI (716) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (718) app_init: Application information:[0m
+[0;32mI (722) app_init: Project name:     lenslife_case[0m
+[0;32mI (726) app_init: App version:      39538e2-dirty[0m
+[0;32mI (730) app_init: Compile time:     May 29 2026 19:35:45[0m
+[0;32mI (735) app_init: ELF file SHA256:  f8249bf58...[0m
+[0;32mI (740) app_init: ESP-IDF:          v6.1-dev-5213-g7812a5df33[0m
+[0;32mI (745) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (749) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (753) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (757) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (763) heap_init: At 3FCA1740 len 00047FD0 (287 KiB): RAM[0m
+[0;32mI (768) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (773) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (779) heap_init: At 600FE06C len 00001F7C (7 KiB): RTCRAM[0m
+[0;32mI (784) esp_psram: Adding pool of 8192K of PSRAM memory to heap allocator[0m
+[0;32mI (791) spi_flash: detected chip: boya[0m
+[0;32mI (794) spi_flash: flash io: dio[0m
+[0;32mI (798) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (803) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (816) main_task: Started on CPU0[0m
+[0;32mI (819) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (827) main_task: Calling app_main()[0m
+[0;32mI (830) lenslife_main: LensLife ESP32-S3 boot, wake cause=7[0m
+[0;32mI (852) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (853) lenslife_main: TEST MODE: bypassing reed switch only, real sensor readings still required[0m
+[0;32mI (856) lenslife_measure: NVS t_blank=1.0000 blank_ts=0 session_count=0[0m
+[0;32mI (863) lenslife_i2c: I2C ready SDA=8 SCL=9 (ADS1115 @ 0x48)[0m
+[0;33mW (868) gpio: conflict found for GPIO[5][0m
+[0;33mW (871) gpio: conflict found for GPIO[6][0m
+[0;32mI (875) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (882) lenslife_rgb: WS2812 status LED on GPIO38[0m
+[1;31mE (890) lenslife_ads1115: config write failed ch=1[0m
+[1;31mE (890) lenslife_measure: T_pre read failed[0m
+[1;31mE (893) lenslife_main: measurement cycle failed[0m
+[0;32mI (899) lenslife_power: deep sleep — next wake on reed GPIO7 (lid close)[0m
+[0;32mI (714) esp_psram: SPI SRAM memory test OK[0m
+[0;32mI (722) cpu_start: GPIO 44 and 43 are used as console UART I/O pins[0m
+[0;32mI (723) cpu_start: Pro cpu start user code[0m
+[0;32mI (723) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (724) app_init: Application information:[0m
+[0;32mI (728) app_init: Project name:     lenslife_case[0m
+[0;32mI (732) app_init: App version:      39538e2-dirty[0m
+[0;32mI (737) app_init: Compile time:     May 29 2026 19:35:45[0m
+[0;32mI (742) app_init: ELF file SHA256:  f8249bf58...[0m
+[0;32mI (746) app_init: ESP-IDF:          v6.1-dev-5213-g7812a5df33[0m
+[0;32mI (752) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (756) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (760) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (763) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (770) heap_init: At 3FCA1740 len 00047FD0 (287 KiB): RAM[0m
+[0;32mI (775) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (780) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (785) heap_init: At 600FE06C len 00001F7C (7 KiB): RTCRAM[0m
+[0;32mI (791) esp_psram: Adding pool of 8192K of PSRAM memory to heap allocator[0m
+[0;32mI (798) spi_flash: detected chip: boya[0m
+[0;32mI (800) spi_flash: flash io: dio[0m
+[0;32mI (804) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (810) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (822) main_task: Started on CPU0[0m
+[0;32mI (825) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (833) main_task: Calling app_main()[0m
+[0;32mI (836) lenslife_main: LensLife ESP32-S3 boot, wake cause=7[0m
+[0;32mI (858) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (859) lenslife_main: TEST MODE: bypassing reed switch only, real sensor readings still required[0m
+[0;32mI (862) lenslife_measure: NVS t_blank=1.0000 blank_ts=0 session_count=0[0m
+[0;32mI (869) lenslife_i2c: I2C ready SDA=8 SCL=9 (ADS1115 @ 0x48)[0m
+[0;33mW (874) gpio: conflict found for GPIO[5][0m
+[0;33mW (877) gpio: conflict found for GPIO[6][0m
+[0;32mI (881) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (888) lenslife_rgb: WS2812 status LED on GPIO38[0m
+[1;31mE (896) lenslife_ads1115: config write failed ch=1[0m
+[1;31mE (896) lenslife_measure: T_pre read failed[0m
+[1;31mE (899) lenslife_main: measurement cycle failed[0m
+[0;32mI (905) lenslife_power: deep sleep — next wake on reed GPIO7 (lid close)[0m
+[0;32mI (714) esp_psram: SPI SRAM memory test OK[0m
+[0;32mI (722) cpu_start: GPIO 44 and 43 are used as console UART I/O pins[0m
+[0;32mI (723) cpu_start: Pro cpu start user code[0m
+[0;32mI (723) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (724) app_init: Application information:[0m
+[0;32mI (728) app_init: Project name:     lenslife_case[0m
+[0;32mI (732) app_init: App version:      39538e2-dirty[0m
+[0;32mI (737) app_init: Compile time:     May 29 2026 19:35:45[0m
+[0;32mI (742) app_init: ELF file SHA256:  f8249bf58...[0m
+[0;32mI (746) app_init: ESP-IDF:          v6.1-dev-5213-g7812a5df33[0m
+[0;32mI (752) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (756) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (760) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (763) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (770) heap_init: At 3FCA1740 len 00047FD0 (287 KiB): RAM[0m
+[0;32mI (775) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (780) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (785) heap_init: At 600FE06C len 00001F7C (7 KiB): RTCRAM[0m
+[0;32mI (791) esp_psram: Adding pool of 8192K of PSRAM memory to heap allocator[0m
+[0;32mI (798) spi_flash: detected chip: boya[0m
+[0;32mI (800) spi_flash: flash io: dio[0m
+[0;32mI (804) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (810) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (822) main_task: Started on CPU0[0m
+[0;32mI (825) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (833) main_task: Calling app_main()[0m
+[0;32mI (836) lenslife_main: LensLife ESP32-S3 boot, wake cause=7[0m
+[0;32mI (858) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (859) lenslife_main: TEST MODE: bypassing reed switch only, real sensor readings still required[0m
+[0;32mI (862) lenslife_measure: NVS t_blank=1.0000 blank_ts=0 session_count=0[0m
+[0;32mI (869) lenslife_i2c: I2C ready SDA=8 SCL=9 (ADS1115 @ 0x48)[0m
+[0;33mW (874) gpio: conflict found for GPIO[5][0m
+[0;33mW (877) gpio: conflict found for GPIO[6][0m
+[0;32mI (881) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (888) lenslife_rgb: WS2812 status LED on GPIO38[0m
+[1;31mE (896) lenslife_ads1115: config write failed ch=1[0m
+[1;31mE (896) lenslife_measure: T_pre read failed[0m
+[1;31mE (899) lenslife_main: measurement cycle failed[0m
+[0;32mI (905) lenslife_power: deep sleep — next wake on reed GPIO7 (lid close)[0m
+[0;32mI (817) main_task: Started on CPU0[0m
+[0;32mI (820) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (828) main_task: Calling app_main()[0m
+[0;32mI (831) lenslife_main: LensLife ESP32-S3 boot, wake cause=7[0m
+[0;32mI (853) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (854) lenslife_main: TEST MODE: bypassing reed switch only, real sensor readings still required[0m
+[0;32mI (857) lenslife_measure: NVS t_blank=1.0000 blank_ts=0 session_count=0[0m
+[0;32mI (864) lenslife_i2c: I2C ready SDA=8 SCL=9 (ADS1115 @ 0x48)[0m
+[0;33mW (869) gpio: conflict found for GPIO[5][0m
+[0;33mW (872) gpio: conflict found for GPIO[6][0m
+[0;32mI (876) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (883) lenslife_rgb: WS2812 status LED on GPIO38[0m
+[1;31mE (891) lenslife_ads1115: config write failed ch=1[0m
+[1;31mE (891) lenslife_measure: T_pre read failed[0m
+[1;31mE (894) lenslife_main: measurement cycle failed[0m
+[0;32mI (900) lenslife_power: deep sleep — next wake on reed GPIO7 (lid close)[0m
+[0;32mI (714) esp_psram: SPI SRAM memory test OK[0m
+[0;32mI (722) cpu_start: GPIO 44 and 43 are used as console UART I/O pins[0m
+[0;32mI (723) cpu_start: Pro cpu start user code[0m
+[0;32mI (723) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (724) app_init: Application information:[0m
+[0;32mI (728) app_init: Project name:     lenslife_case[0m
+[0;32mI (732) app_init: App version:      39538e2-dirty[0m
+[0;32mI (737) app_init: Compile time:     May 29 2026 19:35:45[0m
+[0;32mI (742) app_init: ELF file SHA256:  f8249bf58...[0m
+[0;32mI (746) app_init: ESP-IDF:          v6.1-dev-5213-g7812a5df33[0m
+[0;32mI (752) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (756) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (760) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (763) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (770) heap_init: At 3FCA1740 len 00047FD0 (287 KiB): RAM[0m
+[0;32mI (775) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (780) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (785) heap_init: At 600FE06C len 00001F7C (7 KiB): RTCRAM[0m
+[0;32mI (791) esp_psram: Adding pool of 8192K of PSRAM memory to heap allocator[0m
+[0;32mI (798) spi_flash: detected chip: boya[0m
+[0;32mI (800) spi_flash: flash io: dio[0m
+[0;32mI (804) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (810) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (822) main_task: Started on CPU0[0m
+[0;32mI (825) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (833) main_task: Calling app_main()[0m
+[0;32mI (836) lenslife_main: LensLife ESP32-S3 boot, wake cause=7[0m
+[0;32mI (858) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (859) lenslife_main: TEST MODE: bypassing reed switch only, real sensor readings still required[0m
+[0;32mI (862) lenslife_measure: NVS t_blank=1.0000 blank_ts=0 session_count=0[0m
+[0;32mI (869) lenslife_i2c: I2C ready SDA=8 SCL=9 (ADS1115 @ 0x48)[0m
+[0;33mW (874) gpio: conflict found for GPIO[5][0m
+[0;33mW (877) gpio: conflict found for GPIO[6][0m
+[0;32mI (881) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (888) lenslife_rgb: WS2812 status LED on GPIO38[0m
+[1;31mE (896) lenslife_ads1115: config write failed ch=1[0m
+[1;31mE (896) lenslife_measure: T_pre read failed[0m
+[1;31mE (899) lenslife_main: measurement cycle failed[0m
+[0;32mI (905) lenslife_power: deep sleep — next wake on reed GPIO7 (lid close)[0m
+[0;32mI (714) esp_psram: SPI SRAM memory test OK[0m
+[0;32mI (722) cpu_start: GPIO 44 and 43 are used as console UART I/O pins[0m
+[0;32mI (723) cpu_start: Pro cpu start user code[0m
+[0;32mI (723) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (724) app_init: Application information:[0m
+[0;32mI (728) app_init: Project name:     lenslife_case[0m
+[0;32mI (732) app_init: App version:      39538e2-dirty[0m
+[0;32mI (737) app_init: Compile time:     May 29 2026 19:35:45[0m
+[0;32mI (742) app_init: ELF file SHA256:  f8249bf58...[0m
+[0;32mI (746) app_init: ESP-IDF:          v6.1-dev-5213-g7812a5df33[0m
+[0;32mI (752) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (756) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (760) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (763) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (770) heap_init: At 3FCA1740 len 00047FD0 (287 KiB): RAM[0m
+[0;32mI (775) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (780) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (785) heap_init: At 600FE06C len 00001F7C (7 KiB): RTCRAM[0m
+[0;32mI (791) esp_psram: Adding pool of 8192K of PSRAM memory to heap allocator[0m
+[0;32mI (798) spi_flash: detected chip: boya[0m
+[0;32mI (800) spi_flash: flash io: dio[0m
+[0;32mI (804) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (810) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (822) main_task: Started on CPU0[0m
+[0;32mI (825) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (833) main_task: Calling app_main()[0m
+[0;32mI (836) lenslife_main: LensLife ESP32-S3 boot, wake cause=7[0m
+[0;32mI (858) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (859) lenslife_main: TEST MODE: bypassing reed switch only, real sensor readings still required[0m
+[0;32mI (862) lenslife_measure: NVS t_blank=1.0000 blank_ts=0 session_count=0[0m
+[0;32mI (869) lenslife_i2c: I2C ready SDA=8 SCL=9 (ADS1115 @ 0x48)[0m
+[0;33mW (874) gpio: conflict found for GPIO[5][0m
+[0;33mW (877) gpio: conflict found for GPIO[6][0m
+[0;32mI (881) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (888) lenslife_rgb: WS2812 status LED on GPIO38[0m
+[1;31mE (896) lenslife_ads1115: config write failed ch=1[0m
+[1;31mE (896) lenslife_measure: T_pre read failed[0m
+[1;31mE (899) lenslife_main: measurement cycle failed[0m
+[0;32mI (905) lenslife_power: deep sleep — next wake on reed GPIO7 (lid close)[0m
+[0;32mI (799) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (805) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (817) main_task: Started on CPU0[0m
+[0;32mI (820) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (828) main_task: Calling app_main()[0m
+[0;32mI (831) lenslife_main: LensLife ESP32-S3 boot, wake cause=7[0m
+[0;32mI (853) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (854) lenslife_main: TEST MODE: bypassing reed switch only, real sensor readings still required[0m
+[0;32mI (857) lenslife_measure: NVS t_blank=1.0000 blank_ts=0 session_count=0[0m
+[0;32mI (864) lenslife_i2c: I2C ready SDA=8 SCL=9 (ADS1115 @ 0x48)[0m
+[0;33mW (869) gpio: conflict found for GPIO[5][0m
+[0;33mW (872) gpio: conflict found for GPIO[6][0m
+[0;32mI (876) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (883) lenslife_rgb: WS2812 status LED on GPIO38[0m
+[1;31mE (891) lenslife_ads1115: config write failed ch=1[0m
+[1;31mE (891) lenslife_measure: T_pre read failed[0m
+[1;31mE (894) lenslife_main: measurement cycle failed[0m
+[0;32mI (900) lenslife_power: deep sleep — next wake on reed GPIO7 (lid close)[0m
+[0;32mI (786) esp_psram: Adding pool of 8192K of PSRAM memory to heap allocator[0m
+[0;32mI (793) spi_flash: detected chip: boya[0m
+[0;32mI (795) spi_flash: flash io: dio[0m
+[0;32mI (799) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (805) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (817) main_task: Started on CPU0[0m
+[0;32mI (820) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (828) main_task: Calling app_main()[0m
+[0;32mI (831) lenslife_main: LensLife ESP32-S3 boot, wake cause=7[0m
+[0;32mI (853) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (854) lenslife_main: TEST MODE: bypassing reed switch only, real sensor readings still required[0m
+[0;32mI (857) lenslife_measure: NVS t_blank=1.0000 blank_ts=0 session_count=0[0m
+[0;32mI (864) lenslife_i2c: I2C ready SDA=8 SCL=9 (ADS1115 @ 0x48)[0m
+[0;33mW (869) gpio: conflict found for GPIO[5][0m
+[0;33mW (872) gpio: conflict found for GPIO[6][0m
+[0;32mI (876) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (883) lenslife_rgb: WS2812 status LED on GPIO38[0m
+[1;31mE (891) lenslife_ads1115: config write failed ch=1[0m
+[1;31mE (891) lenslife_measure: T_pre read failed[0m
+[1;31mE (894) lenslife_main: measurement cycle failed[0m
+[0;32mI (900) lenslife_power: deep sleep — next wake on reed GPIO7 (lid close)[0m
+[0;32mI (714) esp_psram: SPI SRAM memory test OK[0m
+[0;32mI (722) cpu_start: GPIO 44 and 43 are used as console UART I/O pins[0m
+[0;32mI (723) cpu_start: Pro cpu start user code[0m
+[0;32mI (723) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (724) app_init: Application information:[0m
+[0;32mI (728) app_init: Project name:     lenslife_case[0m
+[0;32mI (732) app_init: App version:      39538e2-dirty[0m
+[0;32mI (737) app_init: Compile time:     May 29 2026 19:35:45[0m
+[0;32mI (742) app_init: ELF file SHA256:  f8249bf58...[0m
+[0;32mI (746) app_init: ESP-IDF:          v6.1-dev-5213-g7812a5df33[0m
+[0;32mI (752) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (756) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (760) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (763) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (770) heap_init: At 3FCA1740 len 00047FD0 (287 KiB): RAM[0m
+[0;32mI (775) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (780) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (785) heap_init: At 600FE06C len 00001F7C (7 KiB): RTCRAM[0m
+[0;32mI (791) esp_psram: Adding pool of 8192K of PSRAM memory to heap allocator[0m
+[0;32mI (798) spi_flash: detected chip: boya[0m
+[0;32mI (800) spi_flash: flash io: dio[0m
+[0;32mI (804) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (810) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (822) main_task: Started on CPU0[0m
+[0;32mI (825) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (833) main_task: Calling app_main()[0m
+[0;32mI (836) lenslife_main: LensLife ESP32-S3 boot, wake cause=7[0m
+[0;32mI (858) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (859) lenslife_main: TEST MODE: bypassing reed switch only, real sensor readings still required[0m
+[0;32mI (862) lenslife_measure: NVS t_blank=1.0000 blank_ts=0 session_count=0[0m
+[0;32mI (869) lenslife_i2c: I2C ready SDA=8 SCL=9 (ADS1115 @ 0x48)[0m
+[0;33mW (874) gpio: conflict found for GPIO[5][0m
+[0;33mW (877) gpio: conflict found for GPIO[6][0m
+[0;32mI (881) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (888) lenslife_rgb: WS2812 status LED on GPIO38[0m
+[1;31mE (896) lenslife_ads1115: config write failed ch=1[0m
+[1;31mE (896) lenslife_measure: T_pre read failed[0m
+[1;31mE (899) lenslife_main: measurement cycle failed[0m
+[0;32mI (905) lenslife_power: deep sleep — next wake on reed GPIO7 (lid close)[0m
+[0;32mI (723) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (724) app_init: Application information:[0m
+[0;32mI (728) app_init: Project name:     lenslife_case[0m
+[0;32mI (732) app_init: App version:      39538e2-dirty[0m
+[0;32mI (737) app_init: Compile time:     May 29 2026 19:35:45[0m
+[0;32mI (742) app_init: ELF file SHA256:  f8249bf58...[0m
+[0;32mI (746) app_init: ESP-IDF:          v6.1-dev-5213-g7812a5df33[0m
+[0;32mI (752) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (756) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (760) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (763) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (770) heap_init: At 3FCA1740 len 00047FD0 (287 KiB): RAM[0m
+[0;32mI (775) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (780) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (785) heap_init: At 600FE06C len 00001F7C (7 KiB): RTCRAM[0m
+[0;32mI (791) esp_psram: Adding pool of 8192K of PSRAM memory to heap allocator[0m
+[0;32mI (798) spi_flash: detected chip: boya[0m
+[0;32mI (800) spi_flash: flash io: dio[0m
+[0;32mI (804) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (810) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (713) esp_psram: SPI SRAM memory test OK[0m
+[0;32mI (721) cpu_start: GPIO 44 and 43 are used as console UART I/O pins[0m
+[0;32mI (722) cpu_start: Pro cpu start user code[0m
+[0;32mI (722) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (723) app_init: Application information:[0m
+[0;32mI (727) app_init: Project name:     lenslife_case[0m
+[0;32mI (731) app_init: App version:      39538e2-dirty[0m
+[0;32mI (736) app_init: Compile time:     May 29 2026 19:35:45[0m
+[0;32mI (741) app_init: ELF file SHA256:  f8249bf58...[0m
+[0;32mI (745) app_init: ESP-IDF:          v6.1-dev-5213-g7812a5df33[0m
+[0;32mI (751) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (754) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (758) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (762) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (769) heap_init: At 3FCA1740 len 00047FD0 (287 KiB): RAM[0m
+[0;32mI (774) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (779) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (784) heap_init: At 600FE06C len 00001F7C (7 KiB): RTCRAM[0m
+[0;32mI (790) esp_psram: Adding pool of 8192K of PSRAM memory to heap allocator[0m
+[0;32mI (797) spi_flash: detected chip: boya[0m
+[0;32mI (799) spi_flash: flash io: dio[0m
+[0;32mI (803) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (809) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (821) main_task: Started on CPU0[0m
+[0;32mI (824) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (832) main_task: Calling app_main()[0m
+[0;32mI (835) lenslife_main: LensLife ESP32-S3 boot, wake cause=0[0m
+[0;32mI (857) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (858) lenslife_main: TEST MODE: bypassing reed switch only, real sensor readings still required[0m
+[0;32mI (861) lenslife_measure: NVS t_blank=1.0000 blank_ts=0 session_count=0[0m
+[0;32mI (868) lenslife_i2c: I2C ready SDA=8 SCL=9 (ADS1115 @ 0x48)[0m
+[0;33mW (873) gpio: conflict found for GPIO[5][0m
+[0;33mW (876) gpio: conflict found for GPIO[6][0m
+[0;32mI (880) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (887) lenslife_rgb: WS2812 status LED on GPIO38[0m
+[1;31mE (895) lenslife_ads1115: config write failed ch=1[0m
+[1;31mE (895) lenslife_measure: T_pre read failed[0m
+[1;31mE (898) lenslife_main: measurement cycle failed[0m
+[0;32mI (904) lenslife_power: deep sleep — next wake on reed GPIO7 (lid close)[0m
+[0;32mI (714) esp_psram: SPI SRAM memory test OK[0m
+[0;32mI (722) cpu_start: GPIO 44 and 43 are used as console UART I/O pins[0m
+[0;32mI (723) cpu_start: Pro cpu start user code[0m
+[0;32mI (723) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (724) app_init: Application information:[0m
+[0;32mI (728) app_init: Project name:     lenslife_case[0m
+[0;32mI (732) app_init: App version:      39538e2-dirty[0m
+[0;32mI (737) app_init: Compile time:     May 29 2026 19:35:45[0m
+[0;32mI (742) app_init: ELF file SHA256:  f8249bf58...[0m
+[0;32mI (746) app_init: ESP-IDF:          v6.1-dev-5213-g7812a5df33[0m
+[0;32mI (752) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (756) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (760) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (763) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (770) heap_init: At 3FCA1740 len 00047FD0 (287 KiB): RAM[0m
+[0;32mI (775) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (780) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (785) heap_init: At 600FE06C len 00001F7C (7 KiB): RTCRAM[0m
+[0;32mI (791) esp_psram: Adding pool of 8192K of PSRAM memory to heap allocator[0m
+[0;32mI (798) spi_flash: detected chip: boya[0m
+[0;32mI (800) spi_flash: flash io: dio[0m
+[0;32mI (804) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (810) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (822) main_task: Started on CPU0[0m
+[0;32mI (825) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (833) main_task: Calling app_main()[0m
+[0;32mI (836) lenslife_main: LensLife ESP32-S3 boot, wake cause=7[0m
+[0;32mI (858) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (859) lenslife_main: TEST MODE: bypassing reed switch only, real sensor readings still required[0m
+[0;32mI (862) lenslife_measure: NVS t_blank=1.0000 blank_ts=0 session_count=0[0m
+[0;32mI (869) lenslife_i2c: I2C ready SDA=8 SCL=9 (ADS1115 @ 0x48)[0m
+[0;33mW (874) gpio: conflict found for GPIO[5][0m
+[0;33mW (877) gpio: conflict found for GPIO[6][0m
+[0;32mI (881) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (888) lenslife_rgb: WS2812 status LED on GPIO38[0m
+[1;31mE (896) lenslife_ads1115: config write failed ch=1[0m
+[1;31mE (896) lenslife_measure: T_pre read failed[0m
+[1;31mE (899) lenslife_main: measurement cycle failed[0m
+[0;32mI (905) lenslife_power: deep sleep — next wake on reed GPIO7 (lid close)[0m
+[0;32mI (709) esp_psram: SPI SRAM memory test OK[0m
+[0;32mI (717) cpu_start: GPIO 44 and 43 are used as console UART I/O pins[0m
+[0;32mI (718) cpu_start: Pro cpu start user code[0m
+[0;32mI (718) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (719) app_init: Application information:[0m
+[0;32mI (723) app_init: Project name:     lenslife_case[0m
+[0;32mI (727) app_init: App version:      39538e2-dirty[0m
+[0;32mI (732) app_init: Compile time:     May 29 2026 19:35:45[0m
+[0;32mI (737) app_init: ELF file SHA256:  f8249bf58...[0m
+[0;32mI (741) app_init: ESP-IDF:          v6.1-dev-5213-g7812a5df33[0m
+[0;32mI (747) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (751) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (755) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (758) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (765) heap_init: At 3FCA1740 len 00047FD0 (287 KiB): RAM[0m
+[0;32mI (770) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (775) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (780) heap_init: At 600FE06C len 00001F7C (7 KiB): RTCRAM[0m
+[0;32mI (786) esp_psram: Adding pool of 8192K of PSRAM memory to heap allocator[0m
+[0;32mI (793) spi_flash: detected chip: boya[0m
+[0;32mI (795) spi_flash: flash io: dio[0m
+[0;32mI (799) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (805) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (817) main_task: Started on CPU0[0m
+[0;32mI (820) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (828) main_task: Calling app_main()[0m
+[0;32mI (831) lenslife_main: LensLife ESP32-S3 boot, wake cause=7[0m
+[0;32mI (853) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (854) lenslife_main: TEST MODE: bypassing reed switch only, real sensor readings still required[0m
+[0;32mI (857) lenslife_measure: NVS t_blank=1.0000 blank_ts=0 session_count=0[0m
+[0;32mI (864) lenslife_i2c: I2C ready SDA=8 SCL=9 (ADS1115 @ 0x48)[0m
+[0;33mW (869) gpio: conflict found for GPIO[5][0m
+[0;33mW (872) gpio: conflict found for GPIO[6][0m
+[0;32mI (876) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (883) lenslife_rgb: WS2812 status LED on GPIO38[0m
+[1;31mE (891) lenslife_ads1115: config write failed ch=1[0m
+[1;31mE (891) lenslife_measure: T_pre read failed[0m
+[1;31mE (894) lenslife_main: measurement cycle failed[0m
+[0;32mI (900) lenslife_power: deep sleep — next wake on reed GPIO7 (lid close)[0m
+[0;32mI (714) esp_psram: SPI SRAM memory test OK[0m
+[0;32mI (722) cpu_start: GPIO 44 and 43 are used as console UART I/O pins[0m
+[0;32mI (723) cpu_start: Pro cpu start user code[0m
+[0;32mI (723) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (724) app_init: Application information:[0m
+[0;32mI (728) app_init: Project name:     lenslife_case[0m
+[0;32mI (732) app_init: App version:      39538e2-dirty[0m
+[0;32mI (737) app_init: Compile time:     May 29 2026 19:35:45[0m
+[0;32mI (742) app_init: ELF file SHA256:  f8249bf58...[0m
+[0;32mI (746) app_init: ESP-IDF:          v6.1-dev-5213-g7812a5df33[0m
+[0;32mI (752) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (756) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (760) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (763) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (770) heap_init: At 3FCA1740 len 00047FD0 (287 KiB): RAM[0m
+[0;32mI (775) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (780) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (785) heap_init: At 600FE06C len 00001F7C (7 KiB): RTCRAM[0m
+[0;32mI (791) esp_psram: Adding pool of 8192K of PSRAM memory to heap allocator[0m
+[0;32mI (798) spi_flash: detected chip: boya[0m
+[0;32mI (800) spi_flash: flash io: dio[0m
+[0;32mI (804) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (810) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (822) main_task: Started on CPU0[0m
+[0;32mI (825) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (833) main_task: Calling app_main()[0m
+[0;32mI (836) lenslife_main: LensLife ESP32-S3 boot, wake cause=7[0m
+[0;32mI (858) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (859) lenslife_main: TEST MODE: bypassing reed switch only, real sensor readings still required[0m
+[0;32mI (862) lenslife_measure: NVS t_blank=1.0000 blank_ts=0 session_count=0[0m
+[0;32mI (869) lenslife_i2c: I2C ready SDA=8 SCL=9 (ADS1115 @ 0x48)[0m
+[0;33mW (874) gpio: conflict found for GPIO[5][0m
+[0;33mW (877) gpio: conflict found for GPIO[6][0m
+[0;32mI (881) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (888) lenslife_rgb: WS2812 status LED on GPIO38[0m
+[1;31mE (896) lenslife_ads1115: config write failed ch=1[0m
+[1;31mE (896) lenslife_measure: T_pre read failed[0m
+[1;31mE (899) lenslife_main: measurement cycle failed[0m
+[0;32mI (905) lenslife_power: deep sleep — next wake on reed GPIO7 (lid close)[0m
+[0;32mI (714) esp_psram: SPI SRAM memory test OK[0m
+[0;32mI (722) cpu_start: GPIO 44 and 43 are used as console UART I/O pins[0m
+[0;32mI (723) cpu_start: Pro cpu start user code[0m
+[0;32mI (723) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (724) app_init: Application information:[0m
+[0;32mI (728) app_init: Project name:     lenslife_case[0m
+[0;32mI (732) app_init: App version:      39538e2-dirty[0m
+[0;32mI (737) app_init: Compile time:     May 29 2026 19:35:45[0m
+[0;32mI (742) app_init: ELF file SHA256:  f8249bf58...[0m
+[0;32mI (746) app_init: ESP-IDF:          v6.1-dev-5213-g7812a5df33[0m
+[0;32mI (752) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (756) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (760) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (763) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (770) heap_init: At 3FCA1740 len 00047FD0 (287 KiB): RAM[0m
+[0;32mI (775) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (780) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (785) heap_init: At 600FE06C len 00001F7C (7 KiB): RTCRAM[0m
+[0;32mI (791) esp_psram: Adding pool of 8192K of PSRAM memory to heap allocator[0m
+[0;32mI (798) spi_flash: detected chip: boya[0m
+[0;32mI (800) spi_flash: flash io: dio[0m
+[0;32mI (804) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (810) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (822) main_task: Started on CPU0[0m
+[0;32mI (825) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (833) main_task: Calling app_main()[0m
+[0;32mI (836) lenslife_main: LensLife ESP32-S3 boot, wake cause=7[0m
+[0;32mI (858) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (859) lenslife_main: TEST MODE: bypassing reed switch only, real sensor readings still required[0m
+[0;32mI (862) lenslife_measure: NVS t_blank=1.0000 blank_ts=0 session_count=0[0m
+[0;32mI (869) lenslife_i2c: I2C ready SDA=8 SCL=9 (ADS1115 @ 0x48)[0m
+[0;33mW (874) gpio: conflict found for GPIO[5][0m
+[0;33mW (877) gpio: conflict found for GPIO[6][0m
+[0;32mI (881) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (888) lenslife_rgb: WS2812 status LED on GPIO38[0m
+[1;31mE (896) lenslife_ads1115: config write failed ch=1[0m
+[1;31mE (896) lenslife_measure: T_pre read failed[0m
+[1;31mE (899) lenslife_main: measurement cycle failed[0m
+[0;32mI (905) lenslife_power: deep sleep — next wake on reed GPIO7 (lid close)[0m
+[0;32mI (709) esp_psram: SPI SRAM memory test OK[0m
+[0;32mI (717) cpu_start: GPIO 44 and 43 are used as console UART I/O pins[0m
+[0;32mI (718) cpu_start: Pro cpu start user code[0m
+[0;32mI (718) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (719) app_init: Application information:[0m
+[0;32mI (723) app_init: Project name:     lenslife_case[0m
+[0;32mI (727) app_init: App version:      39538e2-dirty[0m
+[0;32mI (732) app_init: Compile time:     May 29 2026 19:35:45[0m
+[0;32mI (737) app_init: ELF file SHA256:  f8249bf58...[0m
+[0;32mI (741) app_init: ESP-IDF:          v6.1-dev-5213-g7812a5df33[0m
+[0;32mI (747) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (751) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (755) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (758) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (765) heap_init: At 3FCA1740 len 00047FD0 (287 KiB): RAM[0m
+[0;32mI (770) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (775) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m

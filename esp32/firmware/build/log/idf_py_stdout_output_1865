@@ -1,0 +1,89 @@
+Command: /Users/aramzarate/.espressif/python_env/idf6.2_py3.12_env/bin/python /Users/aramzarate/esp/esp-idf/tools/idf_monitor.py -p /dev/cu.usbmodem1101 -b 115200 --toolchain-prefix xtensa-esp32s3-elf- --target esp32s3 --revision 0 /Users/aramzarate/Lenslife/esp32/firmware/build/lenslife_case.elf /Users/aramzarate/Lenslife/esp32/firmware/build/bootloader/bootloader.elf -m '/Users/aramzarate/.espressif/python_env/idf6.2_py3.12_env/bin/python' '/Users/aramzarate/esp/esp-idf/tools/idf.py' '-p' '/dev/cu.usbmodem1101'
+ESP-ROM:esp32s3-20210327
+Build:Mar 27 2021
+rst:0x15 (USB_UART_CHIP_RESET),boot:0x8 (SPI_FAST_FLASH_BOOT)
+Saved PC:0x4200a833
+SPIWP:0xee
+mode:DIO, clock div:1
+load:0x3fce2820,len:0x14f0
+load:0x403c8700,len:0xde4
+load:0x403cb700,len:0x2f54
+entry 0x403c8904
+[0;32mI (24) boot: ESP-IDF v6.1-dev-5213-g7812a5df33 2nd stage bootloader[0m
+[0;32mI (25) boot: compile time May 29 2026 19:38:55[0m
+[0;32mI (25) boot: Multicore bootloader[0m
+[0;32mI (26) boot: chip revision: v0.2[0m
+[0;32mI (29) boot: efuse block revision: v1.4[0m
+[0;32mI (33) boot.esp32s3: Boot SPI Speed : 80MHz[0m
+[0;32mI (37) boot.esp32s3: SPI Mode       : DIO[0m
+[0;32mI (40) boot.esp32s3: SPI Flash Size : 16MB[0m
+[0;32mI (44) boot: Enabling RNG early entropy source...[0m
+[0;32mI (49) boot: Partition Table:[0m
+[0;32mI (51) boot: ## Label            Usage          Type ST Offset   Length[0m
+[0;32mI (58) boot:  0 nvs              WiFi data        01 02 00009000 00006000[0m
+[0;32mI (64) boot:  1 phy_init         RF data          01 01 0000f000 00001000[0m
+[0;32mI (71) boot:  2 factory          factory app      00 00 00010000 00100000[0m
+[0;32mI (77) boot: End of partition table[0m
+[0;32mI (81) esp_image: segment 0: paddr=00010020 vaddr=3c060020 size=16e80h ( 93824) map[0m
+[0;32mI (105) esp_image: segment 1: paddr=00026ea8 vaddr=3fc9ba00 size=04c68h ( 19560) load[0m
+[0;32mI (110) esp_image: segment 2: paddr=0002bb18 vaddr=40374000 size=04500h ( 17664) load[0m
+[0;32mI (114) esp_image: segment 3: paddr=00030020 vaddr=42000020 size=53220h (340512) map[0m
+[0;32mI (179) esp_image: segment 4: paddr=00083248 vaddr=40378500 size=1341ch ( 78876) load[0m
+[0;32mI (197) esp_image: segment 5: paddr=0009666c vaddr=50000000 size=00024h (    36) load[0m
+[0;32mI (197) esp_image: segment 6: paddr=00096698 vaddr=600fe000 size=0006ch (   108) load[0m
+[0;32mI (211) boot: Loaded app from partition at offset 0x10000[0m
+[0;32mI (211) boot: Disabling RNG early entropy source...[0m
+[0;32mI (222) octal_psram: vendor id    : 0x0d (AP)[0m
+[0;32mI (222) octal_psram: dev id       : 0x02 (generation 3)[0m
+[0;32mI (223) octal_psram: density      : 0x03 (64 Mbit)[0m
+[0;32mI (225) octal_psram: good-die     : 0x01 (Pass)[0m
+[0;32mI (229) octal_psram: Latency      : 0x01 (Fixed)[0m
+[0;32mI (233) octal_psram: VCC          : 0x01 (3V)[0m
+[0;32mI (237) octal_psram: SRF          : 0x01 (Fast Refresh)[0m
+[0;32mI (242) octal_psram: BurstType    : 0x01 (Hybrid Wrap)[0m
+[0;32mI (247) octal_psram: BurstLen     : 0x01 (32 Byte)[0m
+[0;32mI (252) octal_psram: Readlatency  : 0x02 (10 cycles@Fixed)[0m
+[0;32mI (257) octal_psram: DriveStrength: 0x00 (1/1)[0m
+[0;32mI (261) MSPI Timing: Enter psram timing tuning[0m
+[0;32mI (266) esp_psram: Found 8MB PSRAM device[0m
+[0;32mI (269) esp_psram: Speed: 80MHz[0m
+[0;32mI (272) cpu_start: Multicore app[0m
+[0;32mI (707) esp_psram: SPI SRAM memory test OK[0m
+[0;32mI (716) cpu_start: GPIO 44 and 43 are used as console UART I/O pins[0m
+[0;32mI (717) cpu_start: Pro cpu start user code[0m
+[0;32mI (717) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (718) app_init: Application information:[0m
+[0;32mI (722) app_init: Project name:     lenslife_case[0m
+[0;32mI (726) app_init: App version:      39538e2-dirty[0m
+[0;32mI (731) app_init: Compile time:     May 29 2026 19:35:45[0m
+[0;32mI (736) app_init: ELF file SHA256:  201b26c90...[0m
+[0;32mI (740) app_init: ESP-IDF:          v6.1-dev-5213-g7812a5df33[0m
+[0;32mI (745) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (749) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (753) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (757) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (764) heap_init: At 3FCA1740 len 00047FD0 (287 KiB): RAM[0m
+[0;32mI (769) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (774) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (779) heap_init: At 600FE06C len 00001F7C (7 KiB): RTCRAM[0m
+[0;32mI (785) esp_psram: Adding pool of 8192K of PSRAM memory to heap allocator[0m
+[0;32mI (792) spi_flash: detected chip: boya[0m
+[0;32mI (794) spi_flash: flash io: dio[0m
+[0;32mI (798) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (804) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (816) main_task: Started on CPU0[0m
+[0;32mI (819) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (827) main_task: Calling app_main()[0m
+[0;32mI (830) lenslife_main: LensLife ESP32-S3 boot, wake cause=0[0m
+[0;32mI (852) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (853) lenslife_main: TEST MODE: bypassing reed switch only, real sensor readings still required[0m
+[0;32mI (856) lenslife_measure: NVS t_blank=1.0000 blank_ts=0 session_count=0[0m
+[0;32mI (863) lenslife_i2c: I2C ready SDA=8 SCL=9 (ADS1115 @ 0x48)[0m
+[0;33mW (868) gpio: conflict found for GPIO[5][0m
+[0;33mW (871) gpio: conflict found for GPIO[6][0m
+[0;32mI (875) lenslife_actuators: GPIO IR=5 MOTOR=6 REED=7 RGB_WS2812=38[0m
+[0;32mI (882) lenslife_rgb: WS2812 status LED on GPIO38[0m
+[1;31mE (890) lenslife_ads1115: config write failed ch=1[0m
+[1;31mE (890) lenslife_measure: T_pre read failed[0m
+[1;31mE (893) lenslife_main: measurement cycle failed[0m
+[1;31mE (898) lenslife_main: TEST MODE: staying awake for debugging[0m

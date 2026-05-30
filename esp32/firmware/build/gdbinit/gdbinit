@@ -1,0 +1,2 @@
+source /Users/aramzarate/Lenslife/esp32/firmware/build/gdbinit/symbols
+source /Users/aramzarate/Lenslife/esp32/firmware/build/gdbinit/connect

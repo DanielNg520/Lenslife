@@ -31,8 +31,8 @@ void lenslife_power_enter_deep_sleep(void)
     lenslife_power_configure_reed_wake();
 
 #if CONFIG_IDF_TARGET_ESP32S3
-    esp_deep_sleep_enable_gpio_wakeup(
-        1ULL << LENSELIFE_PIN_REED_SWITCH, ESP_GPIO_WAKEUP_GPIO_LOW);
+    gpio_wakeup_enable(LENSELIFE_PIN_REED_SWITCH, GPIO_INTR_LOW_LEVEL);
+    esp_sleep_enable_gpio_wakeup();
 #else
     esp_sleep_enable_ext0_wakeup(LENSELIFE_PIN_REED_SWITCH, 0);
 #endif
