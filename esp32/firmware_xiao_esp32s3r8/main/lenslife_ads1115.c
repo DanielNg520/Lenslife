@@ -7,6 +7,7 @@
 
 #include "esp_log.h"
 #include "freertos/FreeRTOS.h"
+#include "freertos/semphr.h"
 #include "freertos/task.h"
 
 static const char *TAG = "lenslife_ads1115";
@@ -23,6 +24,15 @@ static const char *TAG = "lenslife_ads1115";
 #define ADS1115_COMP_DISABLE   0x0003
 
 static i2c_master_dev_handle_t s_dev;
+static SemaphoreHandle_t s_ads_lock;
+
+static bool ensure_ads_lock(void)
+{
+    if (!s_ads_lock) {
+        s_ads_lock = xSemaphoreCreateMutex();
+    }
+    return s_ads_lock != NULL;
+}
 
 static bool write_reg16(uint8_t reg, uint16_t value)
 {
@@ -52,12 +62,22 @@ bool lenslife_ads1115_init(void)
 
 bool lenslife_ads1115_read_volts(lenslife_ads_channel_t channel, float *volts_out)
 {
+    if (!ensure_ads_lock()) {
+        return false;
+    }
+
+    if (xSemaphoreTake(s_ads_lock, pdMS_TO_TICKS(1000)) != pdTRUE) {
+        ESP_LOGW(TAG, "ADS1115 lock timeout ch=%d", channel);
+        return false;
+    }
+
     uint16_t mux = (channel == LENSELIFE_ADS_CH_A0) ? ADS1115_MUX_AIN0_GND : ADS1115_MUX_AIN1_GND;
     uint16_t cfg = ADS1115_OS_SINGLE | mux | ADS1115_PGA_4_096V | ADS1115_MODE_SINGLE |
                    ADS1115_DR_128SPS | ADS1115_COMP_DISABLE;
 
     if (!write_reg16(ADS1115_REG_CONFIG, cfg)) {
         ESP_LOGE(TAG, "config write failed ch=%d", channel);
+        xSemaphoreGive(s_ads_lock);
         return false;
     }
 
@@ -66,9 +86,11 @@ bool lenslife_ads1115_read_volts(lenslife_ads_channel_t channel, float *volts_ou
     int16_t raw = 0;
     if (!read_reg16(ADS1115_REG_CONVERSION, &raw)) {
         ESP_LOGE(TAG, "conversion read failed ch=%d", channel);
+        xSemaphoreGive(s_ads_lock);
         return false;
     }
 
     *volts_out = (float)raw * (4.096f / 32768.0f);
+    xSemaphoreGive(s_ads_lock);
     return true;
 }

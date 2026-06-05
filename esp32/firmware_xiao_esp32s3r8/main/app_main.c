@@ -19,10 +19,11 @@ static const char *TAG = "lenslife_main";
 /*
  * WiFi disabled by design. FL sync is Flutter's responsibility via phone WiFi.
  *
- * XIAO perfboard: common-cathode RGB on D1–D3, button D7, IR D9, motor D10.
- * USB Serial/JTAG for logs. GPIO44 uses light-sleep wake (not deep-sleep EXT1).
+ * XIAO perfboard: common-cathode RGB on D1–D3, IR D9, motor D10.
+ * USB Serial/JTAG for logs. No-button build starts measurements automatically.
  */
 
+#if LENSELIFE_USE_BUTTON
 static bool wait_for_button_press(uint32_t timeout_ms)
 {
     const TickType_t deadline = xTaskGetTickCount() + pdMS_TO_TICKS(timeout_ms);
@@ -34,6 +35,7 @@ static bool wait_for_button_press(uint32_t timeout_ms)
     }
     return false;
 }
+#endif
 
 static bool wait_ble_host_sync(uint32_t timeout_ms)
 {
@@ -94,6 +96,7 @@ void app_main(void)
     lenslife_actuators_init();
 
     for (;;) {
+#if LENSELIFE_USE_BUTTON
         esp_sleep_wakeup_cause_t cause = esp_sleep_get_wakeup_cause();
 
         if (cause == ESP_SLEEP_WAKEUP_GPIO) {
@@ -121,6 +124,9 @@ void app_main(void)
                 continue;
             }
         }
+#else
+        ESP_LOGI(TAG, "no-button auto-run — starting measurement");
+#endif
 
         if (!run_measurement_cycle()) {
             lenslife_power_enter_deep_sleep();

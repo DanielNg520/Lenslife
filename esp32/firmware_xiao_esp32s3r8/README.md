@@ -18,7 +18,7 @@ Monitor/flashing: **USB-C** (USB Serial/JTAG). D6/D7 are not used for UART conso
 | D3 | 4 | RGB blue |
 | D4 | 5 | I2C SDA (ADS1115) |
 | D5 | 6 | I2C SCL |
-| D7 | 44 | Push button (INPUT_PULLUP → GND) |
+| D7 | 44 | Unused in no-button build |
 | D9 | 8 | IR emitter |
 | D10 | 9 | Vibration MOSFET gate |
 | 3V3 | — | ADS1115 VDD, photodiode pull-up |
@@ -26,13 +26,20 @@ Monitor/flashing: **USB-C** (USB Serial/JTAG). D6/D7 are not used for UART conso
 
 ## Behavior
 
-1. **Cold boot** — waits up to 2 min for a button press on D7.
+1. **Cold boot** — starts a measurement automatically; no button is required.
 2. **Measurement** — I2C ADS1115 @ 0x48, IR on A1, emitter on D9; optional 10 s vibration on D10.
-3. **BLE** — advertises as `LensLife`, notifies the app; RGB **blue** while connecting.
-4. **Status RGB** — green / yellow (R+G) / red / orange (R+G) from Phase 0 result.
-5. **Sleep** — **light sleep** until button pressed again (GPIO44 is not RTC-capable for deep-sleep EXT1).
+3. **Serial monitor** — prints live IR voltage every 500 ms as `IR_MONITOR A1=... V`.
+4. **BLE** — advertises as `LensLife`, notifies the app; RGB **blue** while connecting.
+5. **Status RGB** — green / yellow (R+G) / red / orange (R+G) from Phase 0 result.
+6. **Repeat** — idles for 30 s after BLE, then starts the next auto cycle.
 
 IR photodiode path is probed at boot (emitter on → read A1). pH on A0 is auto-detected only if a module is wired; this guide leaves A0 unused.
+
+To watch the live IR stream:
+
+```bash
+pio device monitor -b 115200
+```
 
 ## Not in this wiring build
 
@@ -41,7 +48,7 @@ IR photodiode path is probed at boot (emitter on → read A1). pH on A0 is auto-
 | WS2812 | Removed — discrete RGB only |
 | DS18B20 | Disabled (D3 is blue LED) |
 | Battery ADC | Disabled (no sense pin in guide) |
-| Reed switch | Replaced by push button on D7 |
+| Button / reed switch | Disabled; firmware auto-runs |
 
 ## Status colors (common cathode)
 

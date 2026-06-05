@@ -33,6 +33,7 @@ bool lenslife_actuators_init(void)
         return false;
     }
 
+#if LENSELIFE_USE_BUTTON
     gpio_config_t btn_cfg = {
         .pin_bit_mask = 1ULL << LENSELIFE_PIN_BUTTON,
         .mode = GPIO_MODE_INPUT,
@@ -43,13 +44,19 @@ bool lenslife_actuators_init(void)
     if (gpio_config(&btn_cfg) != ESP_OK) {
         return false;
     }
+#endif
 
     lenslife_ir_led_set(false);
 #if LENSELIFE_USE_VIBRATION
     lenslife_vibration_set(false);
 #endif
+#if LENSELIFE_USE_BUTTON
     ESP_LOGI(TAG, "IR=D9(GPIO%d) motor=D10(GPIO%d) button=D7(GPIO%d)",
              LENSELIFE_PIN_IR_LED, LENSELIFE_PIN_VIBRATION, LENSELIFE_PIN_BUTTON);
+#else
+    ESP_LOGI(TAG, "IR=D9(GPIO%d) motor=D10(GPIO%d) no-button auto-run",
+             LENSELIFE_PIN_IR_LED, LENSELIFE_PIN_VIBRATION);
+#endif
     s_ready = true;
     return true;
 }
@@ -77,7 +84,11 @@ void lenslife_vibration_run_ms(uint32_t duration_ms)
 
 bool lenslife_button_is_pressed(void)
 {
+#if LENSELIFE_USE_BUTTON
     return gpio_get_level(LENSELIFE_PIN_BUTTON) == 0;
+#else
+    return false;
+#endif
 }
 
 bool lenslife_reed_is_closed(void)

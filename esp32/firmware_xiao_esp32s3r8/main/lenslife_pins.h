@@ -8,7 +8,7 @@
  *  D3 / GPIO4  → RGB blue (220 Ω)   common cathode → GND
  *  D4 / GPIO5  → ADS1115 SDA
  *  D5 / GPIO6  → ADS1115 SCL
- *  D7 / GPIO44 → push button (INPUT_PULLUP, other side GND)
+ *  D7 / GPIO44 → optional push button (not used in this no-button build)
  *  D9 / GPIO8  → IR emitter (100 Ω)
  *  D10 / GPIO9 → vibration MOSFET gate (100 Ω + 100 kΩ pulldown)
  *
@@ -27,7 +27,12 @@
 
 #define LENSELIFE_PIN_IR_LED         8
 #define LENSELIFE_PIN_VIBRATION      9
-/** Push button: LOW when pressed (internal pull-up enabled). */
+/** No-button bench build: start automatically on boot and repeat on a timer. */
+#ifndef LENSELIFE_USE_BUTTON
+#define LENSELIFE_USE_BUTTON         0
+#endif
+
+/** Optional push button: LOW when pressed (internal pull-up enabled). */
 #define LENSELIFE_PIN_BUTTON         44
 
 /** GPIO44 is not an RTC pin — use light-sleep GPIO wake, not EXT1 deep sleep. */
@@ -49,7 +54,7 @@
 #error "XIAO ESP32-S3 D4/D5 are GPIO5/GPIO6 for SDA/SCL in this profile"
 #endif
 
-#if LENSELIFE_PIN_BUTTON != 44
+#if LENSELIFE_USE_BUTTON && LENSELIFE_PIN_BUTTON != 44
 #error "XIAO ESP32-S3 D7 is GPIO44; keep button wake on GPIO44 or update sleep handling"
 #endif
 
@@ -66,10 +71,14 @@
     LENSELIFE_PIN_RGB_RED == LENSELIFE_PIN_I2C_SCL || \
     LENSELIFE_PIN_RGB_GREEN == LENSELIFE_PIN_I2C_SCL || \
     LENSELIFE_PIN_RGB_BLUE == LENSELIFE_PIN_I2C_SCL || \
-    LENSELIFE_PIN_IR_LED == LENSELIFE_PIN_VIBRATION || \
+    LENSELIFE_PIN_IR_LED == LENSELIFE_PIN_VIBRATION
+#error "LensLife XIAO pin conflict: RGB, I2C, IR, and motor pins must be unique"
+#endif
+
+#if LENSELIFE_USE_BUTTON && ( \
     LENSELIFE_PIN_IR_LED == LENSELIFE_PIN_BUTTON || \
-    LENSELIFE_PIN_VIBRATION == LENSELIFE_PIN_BUTTON
-#error "LensLife XIAO pin conflict: RGB, I2C, IR, motor, and button pins must be unique"
+    LENSELIFE_PIN_VIBRATION == LENSELIFE_PIN_BUTTON)
+#error "LensLife XIAO pin conflict: button must not share IR or motor pins"
 #endif
 
 #if LENSELIFE_USE_BATTERY && !defined(LENSELIFE_PIN_BATTERY_ADC)
@@ -94,6 +103,12 @@
 #define LENSELIFE_BUTTON_WAIT_MS     120000
 #define LENSELIFE_RGB_DISPLAY_MS     10000
 #define LENSELIFE_BLE_WAIT_MS        90000
+#define LENSELIFE_AUTO_CYCLE_IDLE_MS 30000
+#define LENSELIFE_IR_MONITOR_MS      500
+
+#ifndef LENSELIFE_USE_IR_MONITOR
+#define LENSELIFE_USE_IR_MONITOR     1
+#endif
 
 #define LENSELIFE_BLE_DEVICE_NAME    "LensLife"
 

@@ -7,11 +7,14 @@
 #include "driver/gpio.h"
 #include "esp_log.h"
 #include "esp_sleep.h"
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
 
 static const char *TAG = "lenslife_power";
 
 void lenslife_power_configure_button_wake(void)
 {
+#if LENSELIFE_USE_BUTTON
     gpio_config_t cfg = {
         .pin_bit_mask = 1ULL << LENSELIFE_PIN_BUTTON,
         .mode = GPIO_MODE_INPUT,
@@ -20,6 +23,7 @@ void lenslife_power_configure_button_wake(void)
         .intr_type = GPIO_INTR_DISABLE,
     };
     gpio_config(&cfg);
+#endif
 }
 
 void lenslife_power_configure_reed_wake(void)
@@ -33,6 +37,12 @@ void lenslife_power_enter_deep_sleep(void)
     lenslife_vibration_set(false);
     lenslife_rgb_off();
 
+#if !LENSELIFE_USE_BUTTON
+    ESP_LOGI(TAG, "no button configured — idle %d ms before next auto cycle",
+             LENSELIFE_AUTO_CYCLE_IDLE_MS);
+    vTaskDelay(pdMS_TO_TICKS(LENSELIFE_AUTO_CYCLE_IDLE_MS));
+    return;
+#else
     lenslife_power_configure_button_wake();
 
 #if LENSELIFE_BUTTON_USE_LIGHT_SLEEP_WAKE
@@ -55,5 +65,6 @@ void lenslife_power_enter_deep_sleep(void)
 #endif
     ESP_LOGI(TAG, "deep sleep — next wake on button GPIO%d", LENSELIFE_PIN_BUTTON);
     esp_deep_sleep_start();
+#endif
 #endif
 }

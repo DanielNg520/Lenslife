@@ -7,6 +7,7 @@
 #include "lenslife_i2c.h"
 #include "lenslife_actuators.h"
 #include "lenslife_ads1115.h"
+#include "lenslife_ir_sensor.h"
 #include "lenslife_nvs.h"
 #include "lenslife_pins.h"
 #include "lenslife_rgb_status.h"
@@ -25,11 +26,7 @@ static uint32_t s_session_count;
 
 static bool read_ir_volts(float *volts)
 {
-    lenslife_ir_led_set(true);
-    vTaskDelay(pdMS_TO_TICKS(5));
-    bool ok = lenslife_ads1115_read_volts(LENSELIFE_ADS_CH_A1, volts);
-    lenslife_ir_led_set(false);
-    return ok;
+    return lenslife_ir_sensor_read_volts(volts);
 }
 
 static void wait_ph_settle(void)
@@ -66,6 +63,8 @@ bool lenslife_measure_init_hardware(void)
         ESP_LOGE(TAG, "IR path not available — cannot run fouling measurements");
         return false;
     }
+
+    lenslife_ir_monitor_start();
 
     if (!caps->motor_ok) {
         ESP_LOGW(TAG, "Vibration motor unavailable — cycle will skip cleaning vibration");

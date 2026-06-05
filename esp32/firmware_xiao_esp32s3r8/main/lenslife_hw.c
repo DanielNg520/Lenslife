@@ -4,6 +4,7 @@
 #include "lenslife_ads1115.h"
 #include "lenslife_battery.h"
 #include "lenslife_i2c.h"
+#include "lenslife_ir_sensor.h"
 #include "lenslife_nvs.h"
 #include "lenslife_pins.h"
 #include "lenslife_rgb_status.h"
@@ -24,10 +25,7 @@ const lenslife_hw_caps_t *lenslife_hw_caps(void)
 static bool probe_ir_channel(void)
 {
     float volts = 0.0f;
-    lenslife_ir_led_set(true);
-    vTaskDelay(pdMS_TO_TICKS(5));
-    bool ok = lenslife_ads1115_read_volts(LENSELIFE_ADS_CH_A1, &volts);
-    lenslife_ir_led_set(false);
+    bool ok = lenslife_ir_sensor_read_volts(&volts);
     if (ok) {
         ESP_LOGI(TAG, "IR channel probe A1=%.4f V", volts);
     } else {
