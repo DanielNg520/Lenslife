@@ -3,10 +3,191 @@
 #include <math.h>
 #include <Adafruit_NeoPixel.h>
 #include <LittleFS.h>
+#include <BLEDevice.h>
+#include <BLEServer.h>
+#include <BLEUtils.h>
+#include <BLE2902.h>
 
 Adafruit_ADS1115 ads;
 
 bool discardCurrentWindow = false;
+
+void resetCalibrationModel();
+
+// ---------------- LensLife BLE App Connection ----------------
+// Flutter app expects:
+// Service AB00, SENSOR_DATA AB01, DEVICE_STATUS AB02, COMMAND AB03.
+// SENSOR_DATA payload = 5 little-endian float32 values = 20 bytes total.
+const char* BLE_DEVICE_NAME = "LensLifeCase";
+
+#define SERVICE_UUID        "0000ab00-0000-1000-8000-00805f9b34fb"
+#define SENSOR_DATA_UUID    "0000ab01-0000-1000-8000-00805f9b34fb"
+#define DEVICE_STATUS_UUID  "0000ab02-0000-1000-8000-00805f9b34fb"
+#define COMMAND_UUID        "0000ab03-0000-1000-8000-00805f9b34fb"
+
+BLECharacteristic* sensorDataChar = nullptr;
+BLECharacteristic* deviceStatusChar = nullptr;
+BLECharacteristic* commandChar = nullptr;
+
+bool bleClientConnected = false;
+volatile bool bleAcquireBlankRequested = false;
+volatile bool bleReadRequested = false;
+volatile bool bleVibrationRequested = false;
+
+uint8_t bleStatusByte = 0x00;
+
+class LensLifeServerCallbacks : public BLEServerCallbacks {
+  void onConnect(BLEServer* server) {
+    (void)server;
+    bleClientConnected = true;
+    Serial.println("BLE app connected.");
+  }
+
+  void onDisconnect(BLEServer* server) {
+    (void)server;
+    bleClientConnected = false;
+    Serial.println("BLE app disconnected. Advertising restarted.");
+    BLEDevice::startAdvertising();
+  }
+};
+
+class LensLifeCommandCallbacks : public BLECharacteristicCallbacks {
+  void onWrite(BLECharacteristic* characteristic) {
+    auto value = characteristic->getValue();
+
+    if (value.length() == 0) {
+      return;
+    }
+
+    uint8_t command = value[0];
+
+    if (command == 0x01) {
+      bleAcquireBlankRequested = true;
+    }
+    else if (command == 0x02) {
+      bleVibrationRequested = true;
+    }
+    else if (command == 0x03) {
+      bleReadRequested = true;
+    }
+  }
+};
+
+void startLensLifeBLE() {
+  BLEDevice::init(BLE_DEVICE_NAME);
+
+  BLEServer* server = BLEDevice::createServer();
+  server->setCallbacks(new LensLifeServerCallbacks());
+
+  BLEService* service = server->createService(SERVICE_UUID);
+
+  sensorDataChar = service->createCharacteristic(
+    SENSOR_DATA_UUID,
+    BLECharacteristic::PROPERTY_READ | BLECharacteristic::PROPERTY_NOTIFY
+  );
+  sensorDataChar->addDescriptor(new BLE2902());
+
+  deviceStatusChar = service->createCharacteristic(
+    DEVICE_STATUS_UUID,
+    BLECharacteristic::PROPERTY_READ
+  );
+
+  commandChar = service->createCharacteristic(
+    COMMAND_UUID,
+    BLECharacteristic::PROPERTY_WRITE | BLECharacteristic::PROPERTY_WRITE_NR
+  );
+  commandChar->setCallbacks(new LensLifeCommandCallbacks());
+
+  uint8_t emptyPayload[20] = {0};
+  sensorDataChar->setValue(emptyPayload, 20);
+
+  deviceStatusChar->setValue(&bleStatusByte, 1);
+
+  service->start();
+
+  BLEAdvertising* advertising = BLEDevice::getAdvertising();
+  advertising->addServiceUUID(SERVICE_UUID);
+  advertising->setScanResponse(true);
+  advertising->setMinPreferred(0x06);
+  advertising->setMinPreferred(0x12);
+
+  BLEDevice::startAdvertising();
+
+  Serial.println("LensLife BLE started. Device name: LensLifeCase");
+}
+
+void updateBleStatus(
+  bool killTriggered,
+  bool phRisk,
+  bool tempReadValid,
+  bool blankIsStale
+) {
+  bleStatusByte = 0x00;
+
+  if (killTriggered)  bleStatusByte |= 0x01;
+  if (phRisk)         bleStatusByte |= 0x02;
+  if (tempReadValid)  bleStatusByte |= 0x04;
+  if (blankIsStale)   bleStatusByte |= 0x08;
+
+  if (deviceStatusChar != nullptr) {
+    deviceStatusChar->setValue(&bleStatusByte, 1);
+  }
+}
+
+void sendLensLifeReading(
+  float deltaTFouling,
+  float deltaTResidual,
+  float phCorrected,
+  float tempCelsius,
+  float tBlank,
+  bool killTriggered,
+  bool phRisk,
+  bool tempReadValid,
+  bool blankIsStale
+) {
+  if (sensorDataChar == nullptr) {
+    return;
+  }
+
+  updateBleStatus(
+    killTriggered,
+    phRisk,
+    tempReadValid,
+    blankIsStale
+  );
+
+  uint8_t payload[20];
+
+  memcpy(payload + 0,  &deltaTFouling,  4);
+  memcpy(payload + 4,  &deltaTResidual, 4);
+  memcpy(payload + 8,  &phCorrected,    4);
+  memcpy(payload + 12, &tempCelsius,    4);
+  memcpy(payload + 16, &tBlank,         4);
+
+  sensorDataChar->setValue(payload, 20);
+
+  if (bleClientConnected) {
+    sensorDataChar->notify();
+  }
+}
+
+void handleBleCommands() {
+  if (bleAcquireBlankRequested) {
+    bleAcquireBlankRequested = false;
+    Serial.println("BLE command: acquire blank / reset calibration.");
+    resetCalibrationModel();
+  }
+
+  if (bleVibrationRequested) {
+    bleVibrationRequested = false;
+    Serial.println("BLE command: trigger vibration received, but no vibration motor is defined.");
+  }
+
+  if (bleReadRequested) {
+    bleReadRequested = false;
+    Serial.println("BLE command: read requested. Next measurement payload will be sent.");
+  }
+}
 
 // ---------------- CSV Calibration Logging ----------------
 const char* CALIBRATION_CSV_PATH = "/calibration_clean.csv";
@@ -82,6 +263,10 @@ struct SignalStats {
   int peakToPeak;
 };
 
+SignalStats measureSignalStats(int samples);
+void updateCleanCalibrationModel(SignalStats stats);
+void appendCalibrationCsv(SignalStats stats);
+
 void setupCsvLogging();
 void resetCalibrationCsv();
 void appendCalibrationCsv(SignalStats stats);
@@ -97,15 +282,12 @@ const int MIN_CALIBRATION_WINDOWS = 10;
 
 int calibrationCount = 0;
 
-// Running calibration statistics for clean mean
 double cleanMeanRunningAvg = 0.0;
 double cleanMeanM2 = 0.0;
 
-// Running calibration statistics for clean CV
 double cleanCvRunningAvg = 0.0;
 double cleanCvM2 = 0.0;
 
-// Frozen calibration model used during measurement
 float calibratedCleanMean = 0.0;
 float calibratedCleanMeanSpread = 0.0;
 
@@ -128,26 +310,17 @@ unsigned long buttonPressStartTime = 0;
 void handleButton();
 void updateRGBLed();
 
-// Mean tracks overall IR transmission
-// Std Dev tracks absolute fluctuation in the IR signal
-// CV tracks normalized fluctuation and is useful for comparing clean vs dirty
-// Peak-to-Peak tracks the total range during that sample window
-
 int16_t readAmbientCorrectedIR() {
-  // LED ON reading
   digitalWrite(IR_LED_PIN, HIGH);
   delay(2);
   int16_t ledOnReading = ads.readADC_SingleEnded(0);
 
-  // LED OFF reading
   digitalWrite(IR_LED_PIN, LOW);
   delay(2);
   int16_t ledOffReading = ads.readADC_SingleEnded(0);
 
-  // Ambient-corrected IR signal
   int32_t corrected = (int32_t)ledOnReading - (int32_t)ledOffReading;
 
-  // Keep inside int16_t range
   if (corrected > 32767) corrected = 32767;
   if (corrected < -32768) corrected = -32768;
 
@@ -155,7 +328,7 @@ int16_t readAmbientCorrectedIR() {
 }
 
 // ---------------- Raw-Sample Statistics ----------------
-SignalStats measureSignalStats(int samples = 500) {
+SignalStats measureSignalStats(int samples) {
   SignalStats stats;
 
   double mean = 0.0;
@@ -167,7 +340,6 @@ SignalStats measureSignalStats(int samples = 500) {
   for (int i = 1; i <= samples; i++) {
     int16_t reading = readAmbientCorrectedIR();
 
-    // Welford's algorithm for mean and variance
     double delta = reading - mean;
     mean += delta / i;
     double delta2 = reading - mean;
@@ -183,6 +355,7 @@ SignalStats measureSignalStats(int samples = 500) {
 
     updateRGBLed();
     handleButton();
+    handleBleCommands();
   }
 
   double variance = 0.0;
@@ -217,13 +390,35 @@ float computeTurbidity(float transmission) {
   return 1.0 - transmission;
 }
 
+// ---------------- Teammate Model Parallel Test Logic ----------------
+int lenslifeClassify(float deltaT, float tempC, int wearDays) {
+  (void)tempC;
+
+  if (deltaT > 0.05f) {
+    return 2;
+  }
+
+  if (wearDays > 25) {
+    return 1;
+  }
+
+  return 0;
+}
+
+float lenslifeAnomalyScore(float meanDifferenceScore, float cvDifferenceScore) {
+  return sqrt(
+    meanDifferenceScore * meanDifferenceScore +
+    cvDifferenceScore * cvDifferenceScore
+  );
+}
+
+const float ML_ANOMALY_THRESHOLD = 3.0;
+
 void setRGB(bool red, bool green, bool blue) {
-  // ---------- External common-cathode RGB LED ----------
   digitalWrite(RGB_RED_PIN, red ? HIGH : LOW);
   digitalWrite(RGB_GREEN_PIN, green ? HIGH : LOW);
   digitalWrite(RGB_BLUE_PIN, blue ? HIGH : LOW);
 
-  // ---------- Onboard addressable RGB LED ----------
   uint8_t r = red ? 40 : 0;
   uint8_t g = green ? 40 : 0;
   uint8_t b = blue ? 40 : 0;
@@ -237,13 +432,13 @@ void updateRGBLed() {
   unsigned long blinkInterval = 1000;
 
   if (ledStatus == LED_CALIBRATING) {
-    blinkInterval = 1000;  // Slow blue blink
+    blinkInterval = 1000;
   }
   else if (ledStatus == LED_CLEAN) {
-    blinkInterval = 500;   // Green blink
+    blinkInterval = 500;
   }
   else if (ledStatus == LED_DIRTY) {
-    blinkInterval = 250;   // Faster red blink
+    blinkInterval = 250;
   }
 
   if (currentTime - lastLedBlinkTime >= blinkInterval) {
@@ -256,24 +451,24 @@ void updateRGBLed() {
   }
   else {
     if (ledStatus == LED_CALIBRATING) {
-      setRGB(false, false, true);   // Blue
+      setRGB(false, false, true);
     }
     else if (ledStatus == LED_CLEAN) {
-      setRGB(false, true, false);   // Green
+      setRGB(false, true, false);
     }
     else if (ledStatus == LED_DIRTY) {
-      setRGB(true, false, false);   // Red
+      setRGB(true, false, false);
     }
   }
 }
 
-// Keeps blinking active during waiting periods
 void waitWithLedUpdate(unsigned long waitTimeMs) {
   unsigned long startTime = millis();
 
   while (millis() - startTime < waitTimeMs) {
     updateRGBLed();
     handleButton();
+    handleBleCommands();
     delay(5);
   }
 }
@@ -314,13 +509,11 @@ void finalizeCalibrationModel() {
 void updateCleanCalibrationModel(SignalStats stats) {
   calibrationCount++;
 
-  // Track clean mean behavior
   double meanDelta = stats.mean - cleanMeanRunningAvg;
   cleanMeanRunningAvg += meanDelta / calibrationCount;
   double meanDelta2 = stats.mean - cleanMeanRunningAvg;
   cleanMeanM2 += meanDelta * meanDelta2;
 
-  // Track clean CV behavior
   double cvDelta = stats.cv - cleanCvRunningAvg;
   cleanCvRunningAvg += cvDelta / calibrationCount;
   double cvDelta2 = stats.cv - cleanCvRunningAvg;
@@ -397,14 +590,12 @@ void handleButton() {
     if (buttonReading != stableButtonState) {
       stableButtonState = buttonReading;
 
-      // Button just pressed
       if (stableButtonState == LOW) {
         buttonIsBeingHeld = true;
         longPressTriggered = false;
         buttonPressStartTime = millis();
       }
 
-      // Button just released
       else {
         if (buttonIsBeingHeld && !longPressTriggered) {
           if (mode == MODE_CALIBRATION) {
@@ -418,7 +609,6 @@ void handleButton() {
     }
   }
 
-  // Long press detection
   if (
     buttonIsBeingHeld &&
     !longPressTriggered &&
@@ -433,7 +623,6 @@ void handleButton() {
 }
 
 // ---------------- CSV Calibration Logging Functions ----------------
-
 void setupCsvLogging() {
   if (!LittleFS.begin(true)) {
     Serial.println("LittleFS mount failed. CSV logging disabled.");
@@ -606,17 +795,16 @@ void setup() {
   Serial.println("Place CLEAN solution in the chamber.");
   Serial.println("Let it stabilize, then short-press the button to enter MEASUREMENT.");
   Serial.println("Hold button for 1.5 s to reset calibration.");
+
+  startLensLifeBLE();
 }
 
 // ---------------- Main Loop ----------------
 void loop() {
 
   handleButton();
+  handleBleCommands();
 
-  // Keep IR LED ON
-  //digitalWrite(IR_LED_PIN, HIGH);
-
-  // Collect raw-sample statistics
   SignalStats currentStats = measureSignalStats(500);
 
   if (discardCurrentWindow) {
@@ -687,11 +875,6 @@ void loop() {
       cvRatio = sampleStats.cv / calibratedCleanCv;
     }
 
-    // ---------- Dynamic Clean-vs-Sample Difference Scoring ----------
-
-    // Minimum tolerance based on clean signal size.
-    // 0.02 = 2% tolerance floor.
-    // With threshold 3.0, this means roughly 6% signal change is needed.
     float meanSpreadUsed = calibratedCleanMeanSpread;
     float meanSpreadFloor = fabs(calibratedCleanMean) * 0.02;
 
@@ -699,19 +882,14 @@ void loop() {
       meanSpreadUsed = meanSpreadFloor;
     }
 
-    // CV spread floor
     float cvSpreadUsed = calibratedCleanCvSpread;
     if (cvSpreadUsed < 0.000001) {
       cvSpreadUsed = 0.000001;
     }
 
-    // Detect either direction of mean change.
-    // This handles both lower transmission and increased scattered light.
     float meanDifferenceScore =
       fabs(sampleStats.mean - calibratedCleanMean) / meanSpreadUsed;
 
-    // Only count CV increase as dirty.
-    // Lower noise should not trigger dirty.
     float cvDifferenceScore =
       (sampleStats.cv - calibratedCleanCv) / cvSpreadUsed;
 
@@ -719,14 +897,38 @@ void loop() {
       cvDifferenceScore = 0;
     }
 
-    // Use 3.0 instead of 5.0 for better sensitivity.
     const float DIRTY_DIFFERENCE_SCORE_THRESHOLD = 3.0;
 
-    bool solutionIsDirty =
+    bool ruleBasedDirty =
       (meanDifferenceScore > DIRTY_DIFFERENCE_SCORE_THRESHOLD) ||
       (cvDifferenceScore > DIRTY_DIFFERENCE_SCORE_THRESHOLD);
 
-    // ---------- Stable Classification Decision ----------
+    float deltaT_fouling = 0.0;
+    if (calibratedCleanMean != 0) {
+      deltaT_fouling =
+        fabs(sampleStats.mean - calibratedCleanMean) / fabs(calibratedCleanMean);
+    }
+
+    float modelTempC = 25.0;
+    int modelWearDays = 0;
+
+    int mlClass = lenslifeClassify(
+      deltaT_fouling,
+      modelTempC,
+      modelWearDays
+    );
+
+    float mlAnomalyScore = lenslifeAnomalyScore(
+      meanDifferenceScore,
+      cvDifferenceScore
+    );
+
+    bool mlClassDirty = (mlClass == 2);
+    bool mlAnomalyDirty = (mlAnomalyScore > ML_ANOMALY_THRESHOLD);
+    bool mlDecisionDirty = mlClassDirty || mlAnomalyDirty;
+
+    bool solutionIsDirty = ruleBasedDirty;
+
     if (solutionIsDirty) {
       dirtyConsecutiveCount++;
       cleanConsecutiveCount = 0;
@@ -796,8 +998,51 @@ void loop() {
     Serial.print("CV Difference Score: ");
     Serial.println(cvDifferenceScore, 3);
 
-    Serial.print("Decision: ");
-    Serial.println(solutionIsDirty ? "DIRTY" : "CLEAN");
+    Serial.println("----- Rule vs Model Test -----");
+
+    Serial.print("Rule-Based Decision: ");
+    Serial.println(ruleBasedDirty ? "DIRTY" : "CLEAN");
+
+    Serial.print("deltaT_fouling: ");
+    Serial.println(deltaT_fouling, 4);
+
+    Serial.print("ML Class: ");
+    Serial.print(mlClass);
+    Serial.print(" -> ");
+
+    if (mlClass == 0) {
+      Serial.println("SAFE");
+    }
+    else if (mlClass == 1) {
+      Serial.println("CAUTION");
+    }
+    else {
+      Serial.println("REPLACE / DIRTY");
+    }
+
+    Serial.print("ML Anomaly Score: ");
+    Serial.println(mlAnomalyScore, 3);
+
+    Serial.print("ML Decision: ");
+    Serial.println(mlDecisionDirty ? "DIRTY" : "CLEAN");
+
+    Serial.print("LED Decision Source: ");
+    Serial.println("RULE-BASED");
+
+    Serial.print("Prototype Action: ");
+
+    if (ledStatus == LED_DIRTY) {
+      Serial.println("Optical contamination detected");
+    }
+    else if (ledStatus == LED_CLEAN) {
+      Serial.println("KEEP LINER - IR signal near clean baseline");
+    }
+    else if (solutionIsDirty) {
+      Serial.println("RETEST / WATCH - possible optical contamination");
+    }
+    else {
+      Serial.println("COLLECTING STABLE DECISION - wait for more readings");
+    }
 
     Serial.print("Dirty Consecutive Count: ");
     Serial.println(dirtyConsecutiveCount);
@@ -814,6 +1059,34 @@ void loop() {
     }
     else {
       Serial.println("CALIBRATING - BLUE");
+    }
+
+    // ---------- Send result to LensLife app over BLE ----------
+    float deltaT_residual = fabs(1.0f - transmission);
+
+    // Placeholder values until pH and temperature sensors are merged.
+    float phCorrected = 7.00f;
+    float tempCelsius = modelTempC;
+
+    bool killTriggered = (ledStatus == LED_DIRTY);
+    bool phRisk = false;
+    bool tempReadValid = false;
+    bool blankIsStale = false;
+
+    sendLensLifeReading(
+      deltaT_fouling,
+      deltaT_residual,
+      phCorrected,
+      tempCelsius,
+      calibratedCleanMean,
+      killTriggered,
+      phRisk,
+      tempReadValid,
+      blankIsStale
+    );
+
+    if (bleClientConnected) {
+      Serial.println("BLE payload sent to LensLife app.");
     }
   }
 
