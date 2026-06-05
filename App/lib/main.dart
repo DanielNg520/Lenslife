@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:math' as math;
 import 'package:lenslifeapp/widgets/esp32_ble_connection_card.dart';
+import 'package:lenslifeapp/services/live_sensor_store.dart';
 
 void main() {
   runApp(const LensLifeApp());
@@ -916,12 +917,19 @@ class LensDashboardTab extends StatelessWidget {
             const SizedBox(height: 16),
             const Esp32BleConnectionCard(),
             const SizedBox(height: 18),
-            const WearStatusCard(),
+            ValueListenableBuilder<LiveSensorReading?>(
+              valueListenable: lensLiveReadingNotifier,
+              builder: (context, reading, _) => WearStatusCard(reading: reading),
+            ),
             const SizedBox(height: 18),
-            DynamicDashboardRings(
-              lensAgeDays: lensSettings.daysUsed,
-              lensLimitDays: lensSettings.limitDays,
-              lensTypeLabel: lensSettings.typeLabel,
+            ValueListenableBuilder<LiveSensorReading?>(
+              valueListenable: lensLiveReadingNotifier,
+              builder: (context, reading, _) => DynamicDashboardRings(
+                lensAgeDays: lensSettings.daysUsed,
+                lensLimitDays: lensSettings.limitDays,
+                lensTypeLabel: lensSettings.typeLabel,
+                reading: reading,
+              ),
             ),
             const SizedBox(height: 14),
             LayoutBuilder(
@@ -935,13 +943,16 @@ class LensDashboardTab extends StatelessWidget {
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   children: [
-                    const MetricTile(
-                      icon: Icons.filter_alt_outlined,
-                      title: 'Deposit Level',
-                      value: 'Moderate',
-                      detail: 'Signal loss vs baseline',
-                      cueLabel: 'Orange bar means monitor closely.',
-                      progress: 0.47,
+                    ValueListenableBuilder<LiveSensorReading?>(
+                      valueListenable: lensLiveReadingNotifier,
+                      builder: (context, reading, _) => MetricTile(
+                        icon: Icons.filter_alt_outlined,
+                        title: 'Deposit Level',
+                        value: reading?.depositLevel ?? 'Waiting',
+                        detail: reading?.detailText ?? 'Waiting for ESP32 reading',
+                        cueLabel: 'Deposit level from IR signal versus clean baseline.',
+                        progress: reading?.foulingRatio,
+                      ),
                     ),
                     MetricTile(
                       icon: Icons.event_available_outlined,
@@ -1021,7 +1032,13 @@ class LensDashboardTab extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 8),
-            StoredReadingsCard(lensSettings: lensSettings),
+            ValueListenableBuilder<LiveSensorReading?>(
+              valueListenable: lensLiveReadingNotifier,
+              builder: (context, reading, _) => StoredReadingsCard(
+                lensSettings: lensSettings,
+                reading: reading,
+              ),
+            ),
           ],
         ),
       ),
@@ -1169,34 +1186,43 @@ class DynamicDashboardRings extends StatelessWidget {
   final int lensAgeDays;
   final int lensLimitDays;
   final String lensTypeLabel;
+  final LiveSensorReading? reading;
 
   const DynamicDashboardRings({
     super.key,
     required this.lensAgeDays,
     required this.lensLimitDays,
     required this.lensTypeLabel,
+    this.reading,
   });
 
   @override
   Widget build(BuildContext context) {
-    final lensPercent = (lensAgeDays / lensLimitDays).clamp(0.0, 1.0);
+    final lensPercent = (lensAgeDays / lensLimitDays).clamp(0.0, 1.0).toDouble();
+
+    final cleanlinessText = reading?.cleanlinessText ?? '--';
+    final cleanlinessPercent = reading?.cleanlinessPercent ?? 0.0;
+    final cleanlinessSubText = reading == null ? 'waiting' : reading!.depositLevel.toLowerCase();
+    final eyeSafetyText = reading?.eyeSafetyText ?? '--';
+    final eyeSafetySubText = reading?.eyeSafetySubText ?? 'Waiting';
+    final eyeSafetyPercent = reading?.eyeSafetyPercent ?? 0.0;
 
     return LayoutBuilder(
       builder: (context, constraints) {
         final rings = [
-          const RingMetric(
+          RingMetric(
             title: 'Cleanliness',
-            centerText: '63%',
-            subText: 'clean',
-            percent: 0.63,
-            semanticLabel: 'Cleanliness is 63 percent clean.',
+            centerText: cleanlinessText,
+            subText: cleanlinessSubText,
+            percent: cleanlinessPercent,
+            semanticLabel: 'Cleanliness is $cleanlinessText.',
           ),
-          const RingMetric(
+          RingMetric(
             title: 'Eye Safety',
-            centerText: 'Caution',
-            subText: 'Irritation risk',
-            percent: 0.42,
-            semanticLabel: 'Eye safety status is caution due to irritation risk.',
+            centerText: eyeSafetyText,
+            subText: eyeSafetySubText,
+            percent: eyeSafetyPercent,
+            semanticLabel: 'Eye safety status is $eyeSafetyText.',
           ),
           RingMetric(
             title: 'Lens Age',
@@ -1777,13 +1803,19 @@ class AccountHeader extends StatelessWidget {
 }
 
 class WearStatusCard extends StatelessWidget {
-  const WearStatusCard({super.key});
+  final LiveSensorReading? reading;
+
+  const WearStatusCard({super.key, this.reading});
 
   @override
   Widget build(BuildContext context) {
+    final chipLabel = reading?.statusChipLabel ?? 'Waiting for reading';
+    final title = reading?.wearStatusTitle ?? 'No live reading yet';
+    final message = reading?.wearStatusMessage ??
+        'Connect to the LensLife case and enter measurement mode to update this card.';
+
     return Semantics(
-      label:
-          'Wear status monitor closely. Moderate buildup. Deposits have been accumulating since day one. Lenses are wearable, but an enzyme clean tonight will extend comfort and lens life.',
+      label: 'Wear status $chipLabel. $title. $message',
       child: Container(
         width: double.infinity,
         padding: const EdgeInsets.fromLTRB(18, 18, 18, 20),
@@ -1799,10 +1831,10 @@ class WearStatusCard extends StatelessWidget {
             ),
           ],
         ),
-        child: const Column(
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'WEAR STATUS',
               style: TextStyle(
                 fontSize: 12,
@@ -1811,22 +1843,22 @@ class WearStatusCard extends StatelessWidget {
                 letterSpacing: 1.5,
               ),
             ),
-            SizedBox(height: 9),
-            StatusChip(icon: Icons.visibility_outlined, label: 'Monitor closely'),
-            SizedBox(height: 12),
+            const SizedBox(height: 9),
+            StatusChip(icon: Icons.visibility_outlined, label: chipLabel),
+            const SizedBox(height: 12),
             Text(
-              'Moderate buildup',
-              style: TextStyle(
+              title,
+              style: const TextStyle(
                 fontSize: 25,
                 fontWeight: FontWeight.w900,
                 color: Color(0xFF151515),
                 letterSpacing: -0.5,
               ),
             ),
-            SizedBox(height: 7),
+            const SizedBox(height: 7),
             Text(
-              'Deposits accumulating since day 1. Lenses are wearable, but an enzyme clean tonight will extend comfort and lens life.',
-              style: TextStyle(
+              message,
+              style: const TextStyle(
                 fontSize: 16,
                 height: 1.36,
                 color: Color(0xFF3B3B3B),
@@ -2226,17 +2258,19 @@ class AccessibleAlertCard extends StatelessWidget {
 
 class StoredReadingsCard extends StatelessWidget {
   final LensSettings lensSettings;
+  final LiveSensorReading? reading;
 
   const StoredReadingsCard({
     super.key,
     required this.lensSettings,
+    this.reading,
   });
 
   @override
   Widget build(BuildContext context) {
     return Semantics(
       label:
-          'Stored readings list with deposit level moderate, solution pH 6.6, cleanliness 63 percent, and lens age ${lensSettings.lensAgeText}.',
+          'Stored readings list with latest live values and lens age ${lensSettings.lensAgeText}.',
       child: Container(
         decoration: BoxDecoration(
           color: Colors.white,
@@ -2245,11 +2279,11 @@ class StoredReadingsCard extends StatelessWidget {
         ),
         child: Column(
           children: [
-            const ReadingTile(title: 'Deposit Level', value: 'Moderate', time: 'Today'),
+            ReadingTile(title: 'Deposit Level', value: reading?.depositLevel ?? '--', time: 'Live'),
             const Divider(height: 1),
-            const ReadingTile(title: 'Solution pH', value: '6.6', time: 'Today'),
+            ReadingTile(title: 'Solution pH', value: reading?.phText ?? '--', time: 'Live'),
             const Divider(height: 1),
-            const ReadingTile(title: 'Cleanliness', value: '63%', time: 'Today'),
+            ReadingTile(title: 'Cleanliness', value: reading?.cleanlinessText ?? '--', time: 'Live'),
             const Divider(height: 1),
             ReadingTile(title: 'Lens Age', value: lensSettings.lensAgeText, time: lensSettings.typeLabel),
           ],

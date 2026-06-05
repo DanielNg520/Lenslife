@@ -6,6 +6,7 @@ import '../ble/esp32_ble_service.dart';
 import '../models/esp32_device_status.dart';
 import '../models/esp32_sensor_payload.dart';
 import '../services/sensor_session_handler.dart';
+import '../services/live_sensor_store.dart';
 
 /// Dashboard card: ESP32 BLE connect + NOTIFY → local analytics + FL server sync.
 class Esp32BleConnectionCard extends StatefulWidget {
@@ -32,33 +33,54 @@ class _Esp32BleConnectionCardState extends State<Esp32BleConnectionCard> {
     _ble.onSensorPayload = _handleSensorPayload;
   }
 
-  Future<void> _handleSensorPayload(
-    Esp32SensorPayload payload,
-    Esp32DeviceStatus? deviceStatus,
-  ) async {
-    final statusByte =
-        deviceStatus ?? await _ble.readDeviceStatus();
+ Future<void> _handleSensorPayload(
+  Esp32SensorPayload payload,
+  Esp32DeviceStatus? deviceStatus,
+) async {
+  Esp32DeviceStatus? statusByte = deviceStatus;
 
-    final result = await SensorSessionHandler.processPayload(
+  try {
+    statusByte ??= await _ble.readDeviceStatus();
+  } catch (e) {
+    debugPrint('Device status read failed: $e');
+  }
+
+  SensorSessionResult? result;
+
+  try {
+    result = await SensorSessionHandler.processPayload(
       payload,
       deviceStatus: statusByte,
     );
-
-    if (!mounted) return;
-
-    setState(() {
-      latestReading = payload.summary;
-      deviceStatusText = statusByte?.summary ?? '';
-      if (result != null) {
-        lastHealthScore = result.healthScore;
-        healthSummary =
-            'Health ${result.healthScore}%'
-            '${result.isAnomaly ? ' · anomaly' : ''}'
-            '${result.killTriggered ? ' · replace soon' : ''}'
-            '${result.phRisk ? ' · pH risk' : ''}';
-      }
-    });
+  } catch (e) {
+    debugPrint('Sensor session processing failed: $e');
   }
+
+  lensLiveReadingNotifier.value = LiveSensorReading.fromBle(
+    payload: payload,
+    deviceStatus: statusByte,
+    result: result,
+  );
+
+  if (!mounted) return;
+
+  setState(() {
+    latestReading = payload.summary;
+    deviceStatusText = statusByte?.summary ?? '';
+
+    if (result != null) {
+      lastHealthScore = result.healthScore;
+      healthSummary =
+          'Health ${result.healthScore}%'
+          '${result.isAnomaly ? ' · anomaly' : ''}'
+          '${result.killTriggered ? ' · replace soon' : ''}'
+          '${result.phRisk ? ' · pH risk' : ''}';
+    } else {
+      lastHealthScore = null;
+      healthSummary = 'Live reading received';
+    }
+  });
+}
 
   Future<void> _scanAndConnect() async {
     setState(() {
@@ -98,6 +120,7 @@ class _Esp32BleConnectionCardState extends State<Esp32BleConnectionCard> {
       healthSummary = '';
       lastHealthScore = null;
     });
+    lensLiveReadingNotifier.value = null;
   }
 
   Future<void> _sendCommand(Esp32Command command, String label) async {
