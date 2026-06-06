@@ -24,6 +24,21 @@ class LiveSensorReading {
     required this.receivedAt,
   });
 
+  static const double demoLowThreshold = 0.35;
+  static const double demoHighThreshold = 0.80;
+
+  static double _demoFoulingRatio(double deltaTFouling) {
+    final value = deltaTFouling.abs();
+
+    if (value <= demoLowThreshold) return 0.10;
+    if (value >= demoHighThreshold) return 1.0;
+
+    return ((value - demoLowThreshold) /
+            (demoHighThreshold - demoLowThreshold))
+        .clamp(0.0, 1.0)
+        .toDouble();
+  }
+
   factory LiveSensorReading.fromBle({
     required Esp32SensorPayload payload,
     required Esp32DeviceStatus? deviceStatus,
@@ -37,14 +52,11 @@ class LiveSensorReading {
         deviceStatus?.phRisk ??
         HealthAnalytics.isPhRisk(payload.phCorrected);
 
-    final score = result?.healthScore ??
-        HealthAnalytics.computeHealthScore(
-          deltaTFouling: payload.deltaTFouling,
-          phCorrected: payload.phCorrected,
-          killTriggered: kill,
-          phRisk: phBad,
-          anomaly: result?.isAnomaly ?? false,
-        );
+    final demoRatio = _demoFoulingRatio(payload.deltaTFouling);
+
+    final score = phBad || kill
+        ? 25
+        : ((1.0 - demoRatio) * 100).round().clamp(0, 100);
 
     return LiveSensorReading(
       payload: payload,
@@ -57,19 +69,20 @@ class LiveSensorReading {
     );
   }
 
-  double get foulingRatio =>
-    (payload.deltaTFouling / HealthAnalytics.deltaTKill).clamp(0.0, 1.0).toDouble();
+  double get foulingRatio => _demoFoulingRatio(payload.deltaTFouling);
 
   double get cleanlinessPercent =>
-    (1.0 - foulingRatio).clamp(0.0, 1.0).toDouble();
+      (1.0 - foulingRatio).clamp(0.0, 1.0).toDouble();
 
   String get cleanlinessText => '${(cleanlinessPercent * 100).round()}%';
 
   String get depositLevel {
-    if (killTriggered || payload.deltaTFouling >= HealthAnalytics.deltaTKill) {
+    final value = payload.deltaTFouling.abs();
+
+    if (killTriggered || value >= demoHighThreshold) {
       return 'High';
     }
-    if (payload.deltaTFouling >= HealthAnalytics.deltaTKill * 0.50) {
+    if (value >= demoLowThreshold) {
       return 'Moderate';
     }
     return 'Low';
@@ -98,24 +111,27 @@ class LiveSensorReading {
   }
 
   String get eyeSafetyText {
-    if (killTriggered || phRisk || isAnomaly) return 'Caution';
-    return 'Good';
+    if (healthScore >= 75) return 'Good';
+    if (healthScore >= 40) return 'Caution';
+    return 'High';
   }
 
   String get eyeSafetySubText {
     if (phRisk) return 'pH risk';
     if (killTriggered) return 'Dirty reading';
     if (isAnomaly) return 'Unusual trend';
-    return 'No risk';
+    if (healthScore >= 75) return 'No risk';
+    if (healthScore >= 40) return 'Medium risk';
+    return 'High risk';
   }
 
   double get eyeSafetyPercent =>
-    (healthScore / 100.0).clamp(0.0, 1.0).toDouble();
+      (healthScore / 100.0).clamp(0.0, 1.0).toDouble();
 
   String get phText => payload.phCorrected.toStringAsFixed(2);
 
   String get detailText =>
-      'ΔT ${payload.deltaTFouling.toStringAsFixed(4)} • residual ${payload.deltaTResidual.toStringAsFixed(4)}';
+      'ΔT ${payload.deltaTFouling.toStringAsFixed(4)} • pH ${payload.phCorrected.toStringAsFixed(2)}';
 }
 
 final ValueNotifier<LiveSensorReading?> lensLiveReadingNotifier =
