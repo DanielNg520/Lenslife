@@ -21,6 +21,7 @@ class _Esp32BleConnectionCardState extends State<Esp32BleConnectionCard> {
 
   bool scanning = false;
   bool connecting = false;
+  bool hasRequestedRead = false;
   String status = 'Not connected';
   String latestReading = 'Waiting for device';
   String deviceStatusText = '';
@@ -33,61 +34,80 @@ class _Esp32BleConnectionCardState extends State<Esp32BleConnectionCard> {
     _ble.onSensorPayload = _handleSensorPayload;
   }
 
- Future<void> _handleSensorPayload(
-  Esp32SensorPayload payload,
-  Esp32DeviceStatus? deviceStatus,
-) async {
-  Esp32DeviceStatus? statusByte = deviceStatus;
-
-  try {
-    statusByte ??= await _ble.readDeviceStatus();
-  } catch (e) {
-    debugPrint('Device status read failed: $e');
-  }
-
-  SensorSessionResult? result;
-
-  try {
-    result = await SensorSessionHandler.processPayload(
-      payload,
-      deviceStatus: statusByte,
-    );
-  } catch (e) {
-    debugPrint('Sensor session processing failed: $e');
-  }
-
-  lensLiveReadingNotifier.value = LiveSensorReading.fromBle(
-    payload: payload,
-    deviceStatus: statusByte,
-    result: result,
-  );
-
-  if (!mounted) return;
-
-  setState(() {
-    latestReading = payload.summary;
-    deviceStatusText = statusByte?.summary ?? '';
-
-    if (result != null) {
-      lastHealthScore = result.healthScore;
-      healthSummary =
-          'Health ${result.healthScore}%'
-          '${result.isAnomaly ? ' · anomaly' : ''}'
-          '${result.killTriggered ? ' · replace soon' : ''}'
-          '${result.phRisk ? ' · pH risk' : ''}';
-    } else {
-      lastHealthScore = null;
-      healthSummary = 'Live reading received';
+  Future<void> _handleSensorPayload(
+    Esp32SensorPayload payload,
+    Esp32DeviceStatus? deviceStatus,
+  ) async {
+    // The BLE service may read an initial cached/default value right after connecting.
+    // Do not show Health 40% or update the dashboard until the user taps Read now.
+    if (!hasRequestedRead) {
+      if (!mounted) return;
+      setState(() {
+        latestReading = 'Connected. Tap Read now to take a reading.';
+        healthSummary = '';
+        lastHealthScore = null;
+      });
+      lensLiveReadingNotifier.value = null;
+      return;
     }
-  });
-}
+
+    Esp32DeviceStatus? statusByte = deviceStatus;
+
+    try {
+      statusByte ??= await _ble.readDeviceStatus();
+    } catch (e) {
+      debugPrint('Device status read failed: $e');
+    }
+
+    SensorSessionResult? result;
+
+    try {
+      result = await SensorSessionHandler.processPayload(
+        payload,
+        deviceStatus: statusByte,
+      );
+    } catch (e) {
+      debugPrint('Sensor session processing failed: $e');
+    }
+
+    lensLiveReadingNotifier.value = LiveSensorReading.fromBle(
+      payload: payload,
+      deviceStatus: statusByte,
+      result: result,
+    );
+
+    if (!mounted) return;
+
+    setState(() {
+      latestReading = payload.summary;
+      deviceStatusText = statusByte?.summary ?? '';
+
+      if (result != null) {
+        lastHealthScore = result.healthScore;
+        healthSummary =
+            'Health ${result.healthScore}%'
+            '${result.isAnomaly ? ' · anomaly' : ''}'
+            '${result.killTriggered ? ' · replace soon' : ''}'
+            '${result.phRisk ? ' · pH risk' : ''}';
+      } else {
+        lastHealthScore = null;
+        healthSummary = 'Live reading received';
+      }
+    });
+  }
 
   Future<void> _scanAndConnect() async {
     setState(() {
       scanning = true;
       connecting = true;
+      hasRequestedRead = false;
       status = 'Scanning...';
+      latestReading = 'Waiting for device';
+      deviceStatusText = '';
+      healthSummary = '';
+      lastHealthScore = null;
     });
+    lensLiveReadingNotifier.value = null;
 
     try {
       await _ble.scanAndConnect(
@@ -102,7 +122,9 @@ class _Esp32BleConnectionCardState extends State<Esp32BleConnectionCard> {
         setState(() {
           scanning = false;
           connecting = false;
-          if (!_ble.isConnected) {
+          if (_ble.isConnected) {
+            latestReading = 'Connected. Tap Read now to take a reading.';
+          } else {
             status = status.contains('Connected') ? status : 'Not connected';
           }
         });
@@ -114,6 +136,7 @@ class _Esp32BleConnectionCardState extends State<Esp32BleConnectionCard> {
     await _ble.disconnect();
     if (!mounted) return;
     setState(() {
+      hasRequestedRead = false;
       status = 'Disconnected';
       latestReading = 'Waiting for device';
       deviceStatusText = '';
@@ -124,7 +147,18 @@ class _Esp32BleConnectionCardState extends State<Esp32BleConnectionCard> {
   }
 
   Future<void> _sendCommand(Esp32Command command, String label) async {
+    final isReadCommand = command == Esp32Command.requestSensorRead;
+
     try {
+      if (isReadCommand && mounted) {
+        setState(() {
+          hasRequestedRead = true;
+          latestReading = 'Reading sensor data...';
+          healthSummary = '';
+          lastHealthScore = null;
+        });
+      }
+
       await _ble.sendCommand(command);
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -132,6 +166,12 @@ class _Esp32BleConnectionCardState extends State<Esp32BleConnectionCard> {
         );
       }
     } catch (e) {
+      if (isReadCommand && mounted) {
+        setState(() {
+          hasRequestedRead = false;
+          latestReading = 'Connected. Tap Read now to take a reading.';
+        });
+      }
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Command failed: $e')),
